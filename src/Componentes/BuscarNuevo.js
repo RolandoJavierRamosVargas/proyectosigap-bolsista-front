@@ -697,8 +697,11 @@ class BuscarNuevo extends React.Component {
     //Submit que se enviara para hacer la peticion
     onSubmitCuentasPorCobrar(e)
     {
-        var fechaInicio = this.fechaInicio.value;
-        var fechaFin = this.fechaFin.value;
+        var fechaInicio = this.fechaInicio.value
+        var fechaFin = this.fechaFin.value
+
+        console.log("***** ",fechaInicio);
+        console.log("***** ",fechaFin);
 
         if (!fechaInicio && !fechaFin) {
             swal("Ingrese la fecha a buscar", " ", "info");
@@ -726,7 +729,7 @@ class BuscarNuevo extends React.Component {
                 nombre: '',
                 observacion: '',
             })
-            fetch(CONFIG + '/recaudaciones/cuentasPorCobrar/' + fechaInicio + '/' + fechaFin)/*PONER PARAMETROS LAS FECHAS Y LISTO*/
+            fetch(CONFIG + 'recaudaciones/cuentasPorCobrar/' + fechaInicio + '/' + fechaFin)/*PONER PARAMETROS LAS FECHAS Y LISTO*/
                 .then((response) => {
                     return response.json();
                 })
@@ -737,23 +740,6 @@ class BuscarNuevo extends React.Component {
                     })
                 })
         }
-        e.preventDefault();
-    }
-    onSubmitExportExcel=e=>{
-        var fechaInicio = this.fechaInicio.value;
-        var fechaFin = this.fechaFin.value;
-        console.log(fechaInicio + " "+ fechaFin);
-
-        fetch(CONFIG+'recaudaciones/cuentasPorCobrar/exportExcel/' + fechaInicio + '/' + fechaFin)
-        .then(response=>{
-            return response.json();
-        })
-        .then(data=>{
-            console.log(data);
-        })
-        .catch(e=>{
-            console.log("Hubo un error ",e);
-        })
         e.preventDefault();
     }
 
@@ -1091,7 +1077,7 @@ class BuscarNuevo extends React.Component {
                 {this.state.transf ? (
                     <div>
                         <form>
-                            Esto es parte de transf
+                           
                             <div className="SplitPane row">
                                 <div className="col-xs-3 margen2">
                                     <input ref={(input) => this.fechaInicio = input} type="date" maxLength="100" placeholder="Fecha de Inicio" />
@@ -1120,7 +1106,7 @@ class BuscarNuevo extends React.Component {
                 {this.state.cuentasPorCobrar ? (
                     <div>
                         <form>
-                            esto es parte de cuentaspor
+                           
                             <div className="SplitPane row">
                                 <div className="col-xs-3 margen2">
                                     <input ref={(input) => this.fechaInicio = input} name="fechaDeInicio" value={this.state.fechaDeInicio} onChange={e=>this.setField(e)} type="date" maxLength="100" placeholder="Fecha de Inicio" />
@@ -1134,7 +1120,7 @@ class BuscarNuevo extends React.Component {
                                         <i className="large material-icons left">search</i>
                                     </button>
 
-                                    <a href={CONFIG+`recaudaciones/cuentasPorCobrar/exportExcel/${this.state.fechaDeInicio}/${this.state.fechaDeFin}`} > Exportar a Excel </a>
+                                    <a className="waves-effect waves-light btn-large center" href={CONFIG+`recaudaciones/cuentasPorCobrar/exportExcel/${this.state.fechaDeInicio}/${this.state.fechaDeFin}`} > Exportar Excel </a>
                                 </div>
                             </div>
                         </form>
