@@ -18,7 +18,7 @@ const opciones = [
     { value: 'Búsqueda por recibo', label: 'Búsqueda por recibo' },
     { value: 'Pendiente de asignación', label: 'Pendiente de asignación' },
     { value: 'Transferencia', label: 'Transferencia' },
-    { value: 'CuentasPorCobrar', label: 'Cuentas por Cobrar' }												  
+    { value: 'CuentasPorCobrar', label: 'Deudas' }												  
 ];
 
 
