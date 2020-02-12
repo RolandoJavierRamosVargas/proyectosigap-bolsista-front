@@ -536,11 +536,11 @@ this.setState({
     //console.log("arreglo sin espacios en blanco");
     //console.log(arreglo);
     var nombrenuevo = arreglo.join(" & ");
-    //console.log("arreglo con join &")
-    //console.log(nombrenuevo);
+    console.log("arreglo con join &")
+    console.log(nombrenuevo); // este es el codigo del alumno EJ: 18207001
     var nombreAlumno = arreglo.join(" ");
-    //console.log("arreglo con join")
-    //console.log(nombreAlumno);
+    console.log("arreglo con join")
+    console.log(nombreAlumno);
 //ANTERIOR LINK
 //https://modulo-alumno-zuul.herokuapp.com/modulo-alumno-jdbc-client/recaudaciones/alumno/concepto/listar/
 
@@ -770,13 +770,18 @@ if(isNaN(pruebita)){
           codigoAlumno: pagos[0].codAlumno,
           anioIngresoAlumno: pagos[0].anio_ingreso
           })
-          console.log(this.state.estadoAlumno);
-          console.log(this.state.nombrePrograma);
-          console.log(this.state.codigoPrograma);
-          console.log(this.state.codigoAlumno);
-          console.log(this.state.anioIngresoAlumno);
+          console.log("Debemos buscar esto");
 
-          
+          //todo esta data es para el ejemplo 18207001
+          console.log(this.state.estadoAlumno); //soltero
+          console.log(this.state.nombrePrograma);//DISI
+          console.log(this.state.codigoPrograma); //8
+          console.log(this.state.codigoAlumno);//182007001
+          console.log(this.state.anioIngresoAlumno);//2018-1
+
+          //****************************************** */
+          //*********************INICIO*************** */
+          //****************************************** */
 
           fetch(CONFIG+'importealumno/search/'+this.state.codigoAlumno+'/'+this.state.codigoPrograma+'/9')
           .then((response)=>{
@@ -874,6 +879,10 @@ if(isNaN(pruebita)){
           this.setState({
             costoxciclo:arrayCostosDet,
           })
+
+          //****************************************** */
+          //*********************FIN***************** */
+          //****************************************** */
           console.log("DATA COSTOxCICLO4");
           console.log(this.state.costoxciclo);
 

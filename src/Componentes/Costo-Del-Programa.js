@@ -71,8 +71,8 @@ class CostoDelPrograma extends React.Component {
       </tr>
 
         
-      {this.props.datosPrograma.map((data)=>
-        <tr>
+      {this.props.datosPrograma.map((data,key)=>
+        <tr key={key}>
             <td className="td">{data.benef_otrogado}%</td>
             <td className="td">{data.autorizacion}</td>
             <td className="td">{data.condicion}</td>

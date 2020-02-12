@@ -3,12 +3,15 @@ import '../App.css';
 class CostoDelProgramaDet extends React.Component {
 
   render() {
+    // console.log("El costo por ciclo es _>>>>>>>>>>>>", this.props.costoxciclo);
+
     return(
       
 			<div>
       <h6 align= "center" className="Alumno"><b>Costo Detalle del Programa:</b></h6>
       
       <table className="tableScroll">
+        <thead>
       <tr>      
         
         <th className="th">N°</th>
@@ -17,17 +20,19 @@ class CostoDelProgramaDet extends React.Component {
         <th className="th">MONTO</th>
         
       </tr>
-      
-      {this.props.costoxciclo.map((data)=>
+      </thead>
+      <tbody>
+      {this.props.costoxciclo.map((data,key)=>
         
-        <tr>
+        <tr key={key}>
             <td className="td">{data.id}</td>
             <td className="td">Ciclo {data.ciclo}</td>
             <td className="td">{data.concepto}</td>
             <td className="td">{data.monto}</td>
         </tr>
+
       )}
-      
+      </tbody>
       </table>
       
       
