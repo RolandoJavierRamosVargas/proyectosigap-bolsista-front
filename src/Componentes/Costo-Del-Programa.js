@@ -10,6 +10,7 @@ class CostoDelPrograma extends React.Component {
       <h6 align= "center" className="Alumno"><b>Costo Real del Programa:</b></h6>
       
       <table>
+
       <tr>      
         
         <th className="th">MATRÍCULA UPG</th>
@@ -60,6 +61,7 @@ class CostoDelPrograma extends React.Component {
       <h6 align="center" className="Alumno"><b>Datos del Beneficio:</b></h6>
       
       <table>
+        <thead>
       <tr>      
         
         <th className="th">BENEFICIO</th>
@@ -69,7 +71,8 @@ class CostoDelPrograma extends React.Component {
         <th className="th">RESOLUCIÓN</th>
         
       </tr>
-
+      </thead>
+      <tbody>
         
       {this.props.datosPrograma.map((data,key)=>
         <tr key={key}>
@@ -80,6 +83,7 @@ class CostoDelPrograma extends React.Component {
             <td className="td">{data.resolucion}</td>
         </tr>
       )}
+      </tbody>
       </table>
       </div>
     

@@ -1217,7 +1217,9 @@ this.setState({
                 <a href="#" onClick={this.enviarFormulario}>Revisar Beneficio</a>
 				<a href="#" onClick={this.importePago}>Importe de Pago</a>
                 {/*<a href="#" onClick={this.Regresar}>Regresar</a>*/}
-                <a href="#" onClick={browserHistory.goBack}>Regresar</a>
+
+                {/* aqui esta el boton de regresar eeeeeeeeeeeeeee*/}
+                <a href="#" onClick={this.regresarPaginaPrincipal}>Regresar ee</a>
               </div>
               {/*Fin*/}
               <table className="table-small">
@@ -1279,7 +1281,7 @@ this.setState({
                     <h3>
                     Lista de Beneficios
                     <ul id="nav-mobile" className="row right hide-on-med-and-down">
-                    <li ><a className="seleccionar col" onClick={this.enviarFormulario} >Regresar<i className="material-icons right">reply</i></a></li>
+                    <li ><a className="seleccionar col" onClick={this.enviarFormulario} >Regresar ee<i className="material-icons right">reply</i></a></li>
 
                     </ul>
                     </h3>
@@ -1544,6 +1546,10 @@ importePago=(e)=>{
   browserHistory.push(this.state.name+'/vista/importe');
   e.preventDefault();
 
+}
+regresarPaginaPrincipal=(e)=>{
+  browserHistory.push("/");
+  e.preventDefault();
 }
 enviarFormulario=(e)=>{
   try{
