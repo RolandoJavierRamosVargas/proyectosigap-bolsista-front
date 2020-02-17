@@ -12,13 +12,15 @@ import AR_ProgramaAsignacion from './AR_ProgramaAsignacion'
 import AR_PendienteAsignacion from './AR_PendienteAsignacion';
 import AR_Transferencia from './AR_Transferencia';												  
 import ListaCuentasPorCobrar from './ListaCuentasPorCobrar';
+import ListaCuentasPorCobrar2 from './ListaCuentasPorCobrar2';
 
 const opciones = [
     { value: 'Búsqueda por nombre', label: 'Búsqueda por nombre' },
     { value: 'Búsqueda por recibo', label: 'Búsqueda por recibo' },
     { value: 'Pendiente de asignación', label: 'Pendiente de asignación' },
     { value: 'Transferencia', label: 'Transferencia' },
-    { value: 'CuentasPorCobrar', label: 'Deudas' }												  
+    { value: 'CuentasPorCobrar', label: 'Deudas' }, 
+    { value: 'Deudas con mas informacion', label: 'Deudas con mas informacion' }
 ];
 
 
@@ -55,6 +57,9 @@ class BuscarNuevo extends React.Component {
             /* Cuentas por cobrar */ /*Sabado 8 de febrero del 2020 */
             cuentasPorCobrar:false,
             buscarCuentasPorCobrar:false,
+
+            deudasMasInfo:false,
+            buscarDeudasMasInfo:false,
 
 
             dni: '',
@@ -209,6 +214,28 @@ class BuscarNuevo extends React.Component {
                 buscarTransferencia: false,		   
                 mostrarResultadoAlumnos: false,
                 cuentasPorCobrar:true
+            })
+
+            console.log("Se hara la configuracion del state para buscar por ese algo");
+            
+            this.props.flag(false);
+        }
+        
+        else if (selectedOption.value == 'Deudas con mas informacion') {
+            this.setState({
+                value: selectedOption,
+                nomB: false,
+                recB: false,
+                buscarRecAlum: false,
+                posgradoB: false,
+                transf: false,
+                buscarRec: false,
+                asignarRec: false,
+                buscarPendiente: false,
+                buscarTransferencia: false,		   
+                mostrarResultadoAlumnos: false,
+                cuentasPorCobrar:false,
+                deudasMasInfo:true
             })
 
             console.log("Se hara la configuracion del state para buscar por ese algo");
@@ -743,6 +770,61 @@ class BuscarNuevo extends React.Component {
         e.preventDefault();
     }
 
+    /*
+    * Se ha agregado lunes 17 de Febrero del 2019
+    */
+    DeudasMasInfo=(e)=>
+    {
+        var fechaInicio = this.fechaInicio.value
+        var fechaFin = this.fechaFin.value
+
+        console.log("***** ",fechaInicio);
+        console.log("***** ",fechaFin);
+
+        if (!fechaInicio && !fechaFin) {
+            swal("Ingrese la fecha a buscar", " ", "info");
+        } else {
+            this.setState({
+                objRecaudaciones: [],
+
+                objAlumnos: [],
+                ObjAsignación: [],
+                posgradoB: false,
+                buscarPendiente: false,
+                buscarTransferencia: false,
+                buscarCuentasPorCobrar:false,
+
+                buscarDeudasMasInfo:true,
+
+                buscarRecAlum: false,
+                buscarRec: false,
+                transf: false,
+                asignarRec: false,
+                estado: false,
+                alumno: null,
+                opcAlumno: [],
+                dni: '',
+                codigo: '',
+                apePat: '',
+                apeMat: '',
+                nombre: '',
+                observacion: '',
+            })
+            fetch(CONFIG + 'recaudaciones/cuentasPorCobrar2/' + fechaInicio + '/' + fechaFin)/*PONER PARAMETROS LAS FECHAS Y LISTO*/
+                .then((response) => {
+                    return response.json();
+                })
+                .then((respuesta) => {
+                    console.log(respuesta);
+                    this.setState({
+                        objObservacion:respuesta
+                    })
+                })
+        }
+        e.preventDefault();
+    }
+
+
     getDetalleTransferencia = (objRec) => { /* an */
         let objRecibo_estado;
         if (objRec[0].codAlum != null) {
@@ -1134,6 +1216,37 @@ class BuscarNuevo extends React.Component {
                     </div>
                 ):(null)}
                 
+                {this.state.deudasMasInfo ? (
+                    <div>
+                        <form>
+                           
+                            <div className="SplitPane row">
+                                <div className="col-xs-3 margen2">
+                                    <input ref={(input) => this.fechaInicio = input} name="fechaDeInicio" value={this.state.fechaDeInicio} onChange={e=>this.setField(e)} type="date" maxLength="100" placeholder="Fecha de Inicio" />
+                                </div>
+                                <div className="col-xs-3 margen2">
+                                    <input ref={(input) => this.fechaFin = input} name="fechaDeFin" value={this.state.fechaDeFin} onChange={e=>this.setField(e)} type="date" maxLength="100" placeholder="Fecha de Fin" />
+                                </div>
+                                <div className="col-xs-2 margen2">
+                                    <button className="waves-effect waves-light btn-large center" type="submit" onClick={this.DeudasMasInfo}>
+                                        Buscar
+                                        <i className="large material-icons left">search</i>
+                                    </button>
+
+                                    {/* <a className="waves-effect waves-light btn-large center" href={CONFIG+`recaudaciones/cuentasPorCobrar/exportExcel/${this.state.fechaDeInicio}/${this.state.fechaDeFin}`} > Exportar Excel </a> */}
+                                </div>
+                            </div>
+                        </form>
+                        {this.state.buscarDeudasMasInfo ? (
+                            <div>
+                                <h1>wuwuwu</h1>
+                                <ListaCuentasPorCobrar2 listaCuentasPorCobrar={this.state.objObservacion} />
+                            </div>
+                            ) : (null)
+                        }
+                        
+                    </div>
+                ):(null)}
             </div>
         )
     }
