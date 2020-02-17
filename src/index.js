@@ -20,6 +20,8 @@ import AsignarPresupuesto from './Componentes/AsignarPresupuesto';
 import ImportePagos from './Componentes/Importe-Pagos';
 import RegistroCostoPrograma from './Componentes/RegistroCostoPrograma';
 import RegistroPresupuesto from './Componentes/RegistroPresupuesto';
+import PrivateRoute from './Componentes/Login';
+
 
 class Index extends React.Component {
     render() {
@@ -35,7 +37,10 @@ class Index extends React.Component {
             <Route path="/filtro/:name/:cod" component={VistaIntermediaLoginAlumno}></Route>
             <Route path="/vista/programas" component={VistaIntermediaLoginAlumno}></Route>
             <Route path="/vista/nueva" component={AppNueva}></Route>
+
             <Route path="/vista/nueva2" component={AppNueva2}></Route>
+            {/* <PrivateRoute path="/vista/nueva2" component={AppNueva2} /> */}
+
             <Route path="/vista/tabla" component={ VistaTablaNuevo}></Route>
             <Route path="/vista/loginNyA" component={LoginFormNombreApellidos}></Route>
             <Route path="/vista/imprimir" component={ComponenteEditable}></Route>

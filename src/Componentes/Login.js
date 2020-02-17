@@ -1,10 +1,34 @@
 import React from 'react';
 import '../sass/_loginSty.css';
 import swal from 'sweetalert';
-import {browserHistory} from 'react-router-3';
+import {browserHistory,Redirect,Route} from 'react-router-3';
 import CONFIG from '../Configuracion/Config';
+import LoginApp from './LoginApp';
+
 //LOGIN DE USUARIO
+const fakeAuth = {
+  isAuthenticated: false,
+  authenticate(cb) {
+    this.isAuthenticated = true
+    setTimeout(cb, 100)
+  },
+  signout(cb) {
+    this.isAuthenticated = false
+    setTimeout(cb, 100)
+  }
+}
+
+const PrivateRoute = ({ component: Component, ...rest }) => (
+  <Route {...rest} render={(props) => (
+    fakeAuth.isAuthenticated === true
+      ? <Component {...props} />
+      : browserHistory.push('/')
+  )} />
+)
+export {PrivateRoute};
+
 class Login extends React.Component {
+  
   constructor(props) {
     super(props);
     this.state = {
@@ -14,6 +38,7 @@ class Login extends React.Component {
         usuario:null,
         pwdstate: null,
         perfil:false
+
     }; 
   }
   clearValidationErr(elm) {
@@ -47,6 +72,18 @@ class Login extends React.Component {
           .then(tourJson => {this.setState({usuario:tourJson})
             estadoup = this.state.usuario.estadoUp;
             if(estadoup){
+              /**
+               * Aca se deben hacer los cambios
+               */
+
+              fakeAuth.authenticate(() => {
+                this.setState(() => ({
+                  redirectToReferrer: true
+                }))
+              })
+              /**
+               * Fin de los cambios
+               */
               swal("Usuario administrador encontrado !" ,"", "success").then(
                 this.VistaNueva2)
             }else{

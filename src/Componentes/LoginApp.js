@@ -1,7 +1,7 @@
 import React,{Component} from 'react';
 import FadeTransition from "./FadeTransition";
 import '../sass/_loginSty.css';
-import Login from './Login';
+import Login  from './Login';
 import LoginCambiar from './LoginCambiar';
 import LoginReset from './LoginReset';
 
