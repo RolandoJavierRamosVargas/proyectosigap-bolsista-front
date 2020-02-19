@@ -37,10 +37,7 @@ class Index extends React.Component {
             <Route path="/filtro/:name/:cod" component={VistaIntermediaLoginAlumno}></Route>
             <Route path="/vista/programas" component={VistaIntermediaLoginAlumno}></Route>
             <Route path="/vista/nueva" component={AppNueva}></Route>
-
             <Route path="/vista/nueva2" component={AppNueva2}></Route>
-            {/* <PrivateRoute path="/vista/nueva2" component={AppNueva2} /> */}
-
             <Route path="/vista/tabla" component={ VistaTablaNuevo}></Route>
             <Route path="/vista/loginNyA" component={LoginFormNombreApellidos}></Route>
             <Route path="/vista/imprimir" component={ComponenteEditable}></Route>

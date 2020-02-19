@@ -1074,6 +1074,7 @@ Regresar=(e)=>{
                         </tr>
                       </thead>
                       <TableImporteHeader   />
+                      
                       <ImporteList funcion={this.FuncionUno} listado={this.state.pagoUno}  conceptos={this.state.concepto} datos={this.state.datos} datosMonedas={this.state.monedas}  monedas={this.state.monedasvl} ubicaciones={this.state.ubicacionesv1} cuentas={this.state.cuentasv1} configuraciones={this.state.configuraciones}/>
                       <TableImporteFooter total ={this.CalcularImporteUno()} costo ={this.state.importeTabla1} />
                     </table>
@@ -1112,6 +1113,9 @@ Regresar=(e)=>{
                         </tr>
                       </thead>
                       <TableImporteHeader   />
+                      /*
+                      *Aca empieza el detecho de enseñanza
+                       */
                       <ImporteList funcion={this.FuncionDos} listado={this.state.pagoDos}  conceptos={this.state.concepto} datos={this.state.datos} datosMonedas={this.state.monedas}  monedas={this.state.monedasvl} ubicaciones={this.state.ubicacionesv1} cuentas={this.state.cuentasv1} configuraciones={this.state.configuraciones}/>
                       <TableImporteFooter total ={this.CalcularImporteDos()} costo ={this.state.importeTabla2}/>
                     </table>
@@ -1129,6 +1133,7 @@ Regresar=(e)=>{
                           </tr>
                       </thead>*/}
                       <TableImporteHeader   />
+                      
                       <ImporteList  funcion={this.FuncionCuatro} listado={this.state.pagoCuatro}  conceptos={this.state.concepto} datos={this.state.datos} datosMonedas={this.state.monedas}  monedas={this.state.monedasvl} ubicaciones={this.state.ubicacionesv1} cuentas={this.state.cuentasv1} configuraciones={this.state.configuraciones}/>
                       {/*<TableImporteFooter total ={this.CalcularImporteCuatro()}/>*/}
                     </table>

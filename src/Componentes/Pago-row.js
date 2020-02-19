@@ -466,6 +466,8 @@ class PagoRow extends React.Component {
     stringss = this.props.pago.idRec.toString() + num.toString() + "importe";
     importe = document.getElementById(stringss).value;
 
+    console.log("El nuevo importe es ->",importe );
+
     if (importe == "") {
       importe = 0;
     } else {
@@ -848,7 +850,7 @@ class PagoRow extends React.Component {
           </form>
         </td>
 
-        <td className="xd">
+        <td  className="xd">
           {/* <form action="#">
           <label className="row center-xs color_white">
             <input
@@ -892,7 +894,7 @@ class PagoRow extends React.Component {
 
         <td className="td">
           <form action="#">
-            <label className=" center-xs color_white">
+            <label className=" center-xs color_white"> 
               <input
                 name={this.props.pago.idRec.toString() + this.props.pago.idAlum.toString()}
                 placeholder={this.props.pago.fecha.replace(/^(\d{4})-(\d{2})-(\d{2})$/g, '$3-$2-$1')}
@@ -927,7 +929,7 @@ class PagoRow extends React.Component {
                     id={this.props.pago.idRec.toString() + "250296" + "importe"}
                     placeholder={this.props.pago.importe}
                     disabled="true"
-                    type="text" />
+                    type="number" />
                   <span></span>
                 </label>
               </form>
@@ -936,15 +938,15 @@ class PagoRow extends React.Component {
         </td>
 
         <td className="td"/*CTA BANCO*/ id={"banco" + (this.props.numero + 1)} style={{display: 'none'}}>
-        <h6 align="left">
-        <Select
-            inputId = {this.props.pago.idRec.toString() + "250296" + "ctabanco"}
-            value={this.state.selectedOption4}
-            onChange={this.handleChange4}
-            options= {this.props.cuentas}
-            disabled={this.state.desabilitar4} style ={{width: '180px'}}
-          />
-          </h6>
+            <h6 align="left">
+            <Select
+                inputId = {this.props.pago.idRec.toString() + "250296" + "ctabanco"}
+                value={this.state.selectedOption4}
+                onChange={this.handleChange4}
+                options= {this.props.cuentas}
+                disabled={this.state.desabilitar4} style ={{width: '180px'}}
+              />
+              </h6>
         </td>
 
         <td className="td"/*UBICACION*/ id={"ubicacion" + (this.props.numero + 1)} style={{display: 'none'}}>

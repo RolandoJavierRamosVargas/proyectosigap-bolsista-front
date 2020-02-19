@@ -20,7 +20,7 @@ const opciones = [
     { value: 'Pendiente de asignación', label: 'Pendiente de asignación' },
     { value: 'Transferencia', label: 'Transferencia' },
     { value: 'CuentasPorCobrar', label: 'Deudas' }, 
-    { value: 'Deudas con mas informacion', label: 'Deudas con mas informacion' }
+    { value: 'Deudas con mas informacion', label: 'Deudas con informacion personal' }
 ];
 
 
@@ -53,7 +53,7 @@ class BuscarNuevo extends React.Component {
 
             fechaDeInicio:'',
             fechaDeFin:'',
-            
+                
             /* Cuentas por cobrar */ /*Sabado 8 de febrero del 2020 */
             cuentasPorCobrar:false,
             buscarCuentasPorCobrar:false,
@@ -146,7 +146,8 @@ class BuscarNuevo extends React.Component {
                 buscarPendiente: false,
 				buscarTransferencia: false,						   
                 mostrarResultadoAlumnos: false,
-                cuentasPorCobrar:false
+                cuentasPorCobrar:false,
+                deudasMasInfo:false
             });
             this.props.flag(false);
         } else if (selectedOption.value == 'Búsqueda por recibo') {
@@ -162,7 +163,8 @@ class BuscarNuevo extends React.Component {
                 buscarPendiente: false,
 				buscarTransferencia: false,						   
                 mostrarResultadoAlumnos: false,
-                cuentasPorCobrar:false
+                cuentasPorCobrar:false,
+                deudasMasInfo:false
             });
             this.props.flag(false);
         } else if (selectedOption.value == 'Pendiente de asignación') {
@@ -178,7 +180,8 @@ class BuscarNuevo extends React.Component {
                 buscarPendiente: false,
                 buscarTransferencia: false,
                 mostrarResultadoAlumnos: false,
-                cuentasPorCobrar:false
+                cuentasPorCobrar:false,
+                deudasMasInfo:false
             });
             this.props.flag(false);
         }
@@ -196,7 +199,8 @@ class BuscarNuevo extends React.Component {
                 buscarPendiente: false,
                 buscarTransferencia: false,		   
                 mostrarResultadoAlumnos: false,
-                cuentasPorCobrar:false
+                cuentasPorCobrar:false,
+                deudasMasInfo:false
             });
             this.props.flag(false);
         }
@@ -213,7 +217,8 @@ class BuscarNuevo extends React.Component {
                 buscarPendiente: false,
                 buscarTransferencia: false,		   
                 mostrarResultadoAlumnos: false,
-                cuentasPorCobrar:true
+                cuentasPorCobrar:true,
+                deudasMasInfo:false
             })
 
             console.log("Se hara la configuracion del state para buscar por ese algo");
@@ -235,7 +240,7 @@ class BuscarNuevo extends React.Component {
                 buscarTransferencia: false,		   
                 mostrarResultadoAlumnos: false,
                 cuentasPorCobrar:false,
-                deudasMasInfo:true
+                deudasMasInfo:true,
             })
 
             console.log("Se hara la configuracion del state para buscar por ese algo");
@@ -742,6 +747,9 @@ class BuscarNuevo extends React.Component {
                 buscarPendiente: false,
                 buscarTransferencia: false,
                 buscarCuentasPorCobrar:true,
+
+                buscarDeudasMasInfo:false,
+                
                 buscarRecAlum: false,
                 buscarRec: false,
                 transf: false,
@@ -1202,7 +1210,11 @@ class BuscarNuevo extends React.Component {
                                         <i className="large material-icons left">search</i>
                                     </button>
 
-                                    <a className="waves-effect waves-light btn-large center" href={CONFIG+`recaudaciones/cuentasPorCobrar/exportExcel/${this.state.fechaDeInicio}/${this.state.fechaDeFin}`} > Exportar Excel </a>
+                                    <a className="waves-effect waves-light btn-large center" href={CONFIG+`recaudaciones/cuentasPorCobrar/exportExcel/${this.state.fechaDeInicio}/${this.state.fechaDeFin}`} >
+                                         Excel 
+                                         <i className="large material-icons left">import_export</i>
+                                         
+                                    </a>
                                 </div>
                             </div>
                         </form>
@@ -1233,13 +1245,16 @@ class BuscarNuevo extends React.Component {
                                         <i className="large material-icons left">search</i>
                                     </button>
 
-                                    {/* <a className="waves-effect waves-light btn-large center" href={CONFIG+`recaudaciones/cuentasPorCobrar/exportExcel/${this.state.fechaDeInicio}/${this.state.fechaDeFin}`} > Exportar Excel </a> */}
+                                     <a className="waves-effect waves-light btn-large center" href={CONFIG+`recaudaciones/cuentasPorCobrar2/exportExcelMasInfoPersonal/${this.state.fechaDeInicio}/${this.state.fechaDeFin}`} > 
+                                      Excel
+                                     <i className="large material-icons left">import_export</i>
+                                      </a> 
                                 </div>
                             </div>
                         </form>
                         {this.state.buscarDeudasMasInfo ? (
                             <div>
-                                <h1>wuwuwu</h1>
+                                
                                 <ListaCuentasPorCobrar2 listaCuentasPorCobrar={this.state.objObservacion} />
                             </div>
                             ) : (null)
