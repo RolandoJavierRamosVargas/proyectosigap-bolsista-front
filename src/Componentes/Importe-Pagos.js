@@ -244,10 +244,10 @@ componentWillMount() {
    var concepA = [];
    concepA.push("210010  ");
    var concepB = [];
-   concepB.push("210011  ");
+   concepB.push("210011","210024");
    var concepC = [];
    concepC.push("207010  ");
-   var concepD = ["210322  ","201158  ","210003","210024","201158  ","210209  ",
+   var concepD = ["210322  ","201158  ","210003","201158  ","210209  ",
                 "210059  ","210353  ","210509  ","210308  ","210322  ","201011  ",
                 "210104  ", "999998  ","207011  ","210508  ","210003  ","207004  ",
                 "210154  ","96509700", "96509701","210025  ","96509702","210014  ",
@@ -303,6 +303,7 @@ componentWillMount() {
    })
    .then((pagos) => {
      if(pagos.length > 0){
+       
        this.setState({  pagoUno: pagos  });
        //swal("Filtro realizado exitosamente!","","success");
      }else{
@@ -336,6 +337,7 @@ componentWillMount() {
    })
    .then((pagos) => {
      if(pagos.length > 0){
+      console.log("Este es el importe de pagos de dos ",pagos);
        this.setState({  pagoDos: pagos  });
        //swal("Filtro realizado exitosamente!","","success");
      }else{
@@ -401,6 +403,7 @@ componentWillMount() {
      return response.json()
    })
    .then((pagos) => {
+    console.log("Este es el importe de pagos de D -> ",pagos );
      if(pagos.length > 0){
        this.setState({  pagoCuatro: pagos  });
        
@@ -762,7 +765,6 @@ if(isNaN(pruebita)){
         .then((pagos)  =>{
           console.log("Programa de lista de pagos");
          console.log(pagos);
-
           this.setState({
           estadoAlumno: pagos[0].estado_civil,
           nombrePrograma: pagos[0].sigla_programa,
@@ -1113,9 +1115,9 @@ Regresar=(e)=>{
                         </tr>
                       </thead>
                       <TableImporteHeader   />
-                      /*
-                      *Aca empieza el detecho de enseñanza
-                       */
+                      
+                      {/* Aca empieza el detecho de enseñanza */}
+                       
                       <ImporteList funcion={this.FuncionDos} listado={this.state.pagoDos}  conceptos={this.state.concepto} datos={this.state.datos} datosMonedas={this.state.monedas}  monedas={this.state.monedasvl} ubicaciones={this.state.ubicacionesv1} cuentas={this.state.cuentasv1} configuraciones={this.state.configuraciones}/>
                       <TableImporteFooter total ={this.CalcularImporteDos()} costo ={this.state.importeTabla2}/>
                     </table>
