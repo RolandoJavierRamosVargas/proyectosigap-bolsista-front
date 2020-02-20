@@ -68,6 +68,15 @@ class App extends React.Component {
       monedasvl:[],
       ubicaciones:[],
       ubicacionesv1:[],
+      
+      /**
+       * Aca entran las repitencias
+       */
+      repitenciav1:[
+        {value:"N",label:"NO"},
+        {value:"S",label:"SI"},
+      ],
+
       tipos:[],
       tiposv1:[],
       defuncion: 1,
@@ -124,6 +133,7 @@ class App extends React.Component {
     this.show_or_hide = this.show_or_hide.bind(this);
   }
 componentDidUpdate(){
+  console.log("Esto es segundo");
     if(this.state.estado!=0){
       var checks=document.getElementsByClassName("checkbox1");
       for(let i=0;i<checks.length;i++){
@@ -241,11 +251,11 @@ componentDidUpdate(){
 
 
   componentWillMount() {
-
+    console.log("esto es primero");
 
       setTimeout(() => {
         
-
+    console.log("Este es el id del programa",this.state.idPrograma)
     fetch(CONFIG+'alumno/alumnoprograma/programa/'+this.state.idPrograma)
    .then((response)=>{
      return response.json();
@@ -286,11 +296,14 @@ componentDidUpdate(){
     
     this.hallarBeneficios(this.state.alumno.apeNom);
   }, 2000);
-
+    console.log("El pago cero es: ",this.pagocero)
 
     this.pageOfItems = this.pagocero;
+    console.log("El page of items es: ",this.pageOfItems)
     var checkbox_selec=[];
+
     var nombres = this.state.name;
+    console.log("los nombres son -> ",nombres);
     var checks=document.getElementsByClassName("checkbox1");
     var checks_normales=Array.from(checks);
     checks_normales.map((checkbox)=>{
@@ -453,6 +466,7 @@ this.setState({
 
     var separador = " "; // un espacio en blanco
     var arregloDeSubCadenas = nombres.split(separador);
+    console.log("el arreglo de subcadenas es  ->",arregloDeSubCadenas);
     var arreglo = [];
     for (let i = 0; i< arregloDeSubCadenas.length; i++) {
       if(arregloDeSubCadenas[i]!==''){
@@ -460,8 +474,13 @@ this.setState({
       }
     }
 
-    var nombrenuevo = arreglo.join(" & ");
+    console.log("el arreglo luego de pasar por el for es ->",arreglo);
+
+    var nombrenuevo = arreglo.join(" & ");  //esto es 18207001
+    
     var nombreAlumno = arreglo.join(" ");
+    console.log("El nombre del alumno es ->",nombreAlumno);//esto es 18207001
+    //por la weba hizo el for este weon : > desde la linea 467 hasta la 481 esta por las puras.
 //ANTERIOR LINK
 //https://modulo-alumno-zuul.herokuapp.com/modulo-alumno-jdbc-client/recaudaciones/alumno/concepto/listar/
 
@@ -470,8 +489,9 @@ this.setState({
     var nombresTrans = nombres;
     var pruebita = parseInt(nombresTrans);
 
-
+    console.log("pruebita es de tipo -> ",typeof(pruebita));
     if(isNaN(pruebita)){
+      console.log("pruebita no es un numero");
       this.clase=Alumno;
     fetch(CONFIG+'recaudaciones/alumno/concepto/listar/' + nombrenuevo)
       .then((response) => {
@@ -500,6 +520,7 @@ this.setState({
       // console.log(this.state.pagocero);
 
       }
+      //los pagos son los pagos cero del codigo del alumno
     )
       .catch(error => {
         // si hay algún error lo mostramos en consola
@@ -531,7 +552,7 @@ this.setState({
             return response.json()
         }).then((datos)=>{
 
-          console.log("datos");
+          console.log("datos del beneficio que posee el alumno");
           console.log(datos);
           this.setState({datosformulario: datos})
 
@@ -540,15 +561,15 @@ this.setState({
             console.error(error)
         });
 
+        // El nombre nuevo es el codigo del alumno por favor escribir los nombres de las variables para que tengan sentido
+        // console.log("el codigo del alumno es ->",nombrenuevo)
       fetch(CONFIG+'recaudaciones/alumno/concepto/listar_cod/' + nombrenuevo)
       .then((response) => {
         return response.json()
       })
       .then((pagos) => {
 
-         console.log("pagos de la consulta de acuerdo el nombre ingresado");
-
-         console.log(pagos);
+         console.log("pagos de la consulta de acuerdo al codigo  ingresado son ->",pagos);
          console.log(pagos[0].idPrograma)
          this.setState({
            idPrograma : pagos[0].idPrograma
@@ -556,7 +577,7 @@ this.setState({
 
          console.log("UN IDREC");
         // console.log(pagos[1].idRec);
-        var auxPagos = pagos;
+        var auxPagos = pagos
 
       var alumnoDetalle = {
       apeNom: nombreAlumno
@@ -713,7 +734,7 @@ this.setState({
           estadoAlumno:this.state.pagos[0].estado_civil,
           })
         });
-          }
+}
 
 
   Regresar=(e)=>{
@@ -1224,7 +1245,8 @@ this.setState({
               {/*Fin*/}
               <table className="table-small">
                 <TableHeader   />
-                <PagoList funcion={this.Funcion} listado={this.state.pageOfItems}  conceptos={this.state.concepto} datos={this.state.datos} datosMonedas={this.state.monedas}  monedas={this.state.monedasvl} ubicaciones={this.state.ubicacionesv1} cuentas={this.state.cuentasv1} configuraciones={this.state.configuraciones}/>
+
+                <PagoList funcion={this.Funcion} listado={this.state.pageOfItems}  conceptos={this.state.concepto} datos={this.state.datos} datosMonedas={this.state.monedas}  monedas={this.state.monedasvl} ubicaciones={this.state.ubicacionesv1} repitencia={this.state.repitenciav1} cuentas={this.state.cuentasv1} configuraciones={this.state.configuraciones}/>
               </table>
               <div className="margen_top"> <Paginacion items={this.state.pagocero} onChangePage={this.onChangePage}/></div>
               <div className="row">
@@ -1528,10 +1550,12 @@ show_or_hide() {
 
   document.getElementById("ubicacion_header").style.display = statusInfo;
   document.getElementById("banco_header").style.display = statusInfo;
+  document.getElementById("repitencia_header").style.display = statusInfo;
 
   for(var i=1; i<=len; i++){
     document.getElementById("ubicacion" + i).style.display = statusInfo;  
-    document.getElementById("banco" + i).style.display = statusInfo;  
+    document.getElementById("banco" + i).style.display = statusInfo; 
+    document.getElementById("repitencia" + i).style.display = statusInfo; 
   }
 }
 
@@ -1718,7 +1742,7 @@ FiltrarFecha(Fechas) {
       checkbox_:total,
       pageOfItems: pageOfItems });
 
-     console.log(pageOfItems)
+     console.log("los page of items son: ",pageOfItems)
   }
 
 

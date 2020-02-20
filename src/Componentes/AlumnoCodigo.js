@@ -6,7 +6,8 @@ class AlumnoCodigo extends React.Component {
   render() {
       
         if(this.props.alumno){
-          return (<div className="Alumno">
+          return (
+        <div className="Alumno">
         <h4 className="center ">Datos personales</h4>
         <div className="center datos">
         <div>
@@ -16,7 +17,8 @@ class AlumnoCodigo extends React.Component {
         <div>
         </div>
         <div className="negro">
-        {this.props.sigla} - {this.props.alumno.apeNom}
+          {/* apeNom es el codigo del alumno pinches pendejos porque no escriben bien las variables */}
+        {this.props.sigla} - {this.props.alumno.apeNom} 
         
          </div>
          </div>

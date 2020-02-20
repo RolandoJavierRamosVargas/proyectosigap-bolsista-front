@@ -72,18 +72,6 @@ class Login extends React.Component {
           .then(tourJson => {this.setState({usuario:tourJson})
             estadoup = this.state.usuario.estadoUp;
             if(estadoup){
-              /**
-               * Aca se deben hacer los cambios
-               */
-
-              fakeAuth.authenticate(() => {
-                this.setState(() => ({
-                  redirectToReferrer: true
-                }))
-              })
-              /**
-               * Fin de los cambios
-               */
               swal("Usuario administrador encontrado !" ,"", "success").then(
                 this.VistaNueva2)
             }else{

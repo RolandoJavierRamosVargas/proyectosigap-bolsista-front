@@ -19,10 +19,13 @@ class PagoRow extends React.Component {
       desabilitar3: true,
       desabilitar4: true,
       desabilitar5: true,
+      desabilitar6: true,
       selectedOption: null,
       selectedOption2: null,
       selectedOption3: null,
       selectedOption4: null,
+      selectedOption5: null,
+      selectedOption6: null,
       idconcepto: '',
       idmoneda: '',
       array: this.props.datos,
@@ -47,6 +50,8 @@ class PagoRow extends React.Component {
       selectedOption2: { value: this.props.pago.moneda2, label: this.props.pago.moneda2 },
       selectedOption3: { value: this.props.pago.descripcion_ubi, label: this.props.pago.descripcion_ubi },
       selectedOption4: { value: this.props.pago.descripcion_tipo, label: this.props.pago.descripcion_tipo },
+      selectedOption6: { value: this.props.pago.repitencia, label: this.props.pago.repitencia=='S' ? 'SI' : 'NO'},
+      
       idmoneda: this.idmoneda(this.props.pago.moneda2),
       estado: this.setEstado(this.props.pago.estado),
       isChecked: this.props.pago.validado,
@@ -181,6 +186,18 @@ class PagoRow extends React.Component {
     }
   }
 
+  handleChange6 = (selectedOption) => {
+    if (selectedOption != null) {
+      this.setState({
+        selectedOption6: selectedOption,
+      });
+      // console.log(`Option selected:`, selectedOption);
+      // console.log("idconcepto : "+this.idmoneda(selectedOption.value));
+    } else {
+      swal("Seleccione una opcion", "", "info");
+    }
+  }
+
 
   colocar = () => {
     var checkbox = document.getElementById(this.props.pago.idRec);
@@ -297,6 +314,10 @@ class PagoRow extends React.Component {
       this.setState({
         desabilitar5: false
       })
+
+      this.setState({
+        desabilitar6: false
+      })
       /*var editUbicacion;
       var num = 250296;
       editUbicacion = this.props.pago.idRec.toString() + num.toString() + "ubicacion";
@@ -371,6 +392,9 @@ class PagoRow extends React.Component {
 
       this.setState({
         desabilitar5: false
+      })
+      this.setState({
+        desabilitar6: false
       })
     }
     else{
@@ -505,6 +529,15 @@ class PagoRow extends React.Component {
     }
     */
     return ubicacion;
+
+  }
+
+  SeleccionRepitencia = () => {
+
+    var num = 250296;
+    var stringss;
+    var repitencia = this.state.selectedOption6.value;
+    return repitencia;
 
   }
 
@@ -664,6 +697,9 @@ class PagoRow extends React.Component {
       var importe = "";
       importe = this.SeleccionImporte();
 
+      var repitencia = "";
+      repitencia = this.SeleccionRepitencia();
+
       var ubicacion = "";
       ubicacion = this.SeleccionUbicacion();
 
@@ -690,6 +726,7 @@ class PagoRow extends React.Component {
               "id_concepto": this.state.idconcepto,
               "id_moneda": this.state.idmoneda,
               "importe": importe,
+              "repitencia":repitencia, //linea que recien se agrega
               "ubicacion": ubicacion,
               "ctabanco": ctabanco,
               "validado": validado
@@ -936,6 +973,19 @@ class PagoRow extends React.Component {
             </td>
           </table>
         </td>
+
+        <td className="td"/*REPITENCIA*/ id={"repitencia" + (this.props.numero + 1)} style={{display: 'none'}}>
+            <h6 align="left">
+            <Select
+                inputId = {this.props.pago.idRec.toString() + "250296" + "repitencia"}
+                value={this.state.selectedOption6}
+                onChange={this.handleChange6}
+                options= {this.props.repitencia}
+                disabled={this.state.desabilitar6} style ={{width: '100px'}}
+              />
+              </h6>
+        </td>
+
 
         <td className="td"/*CTA BANCO*/ id={"banco" + (this.props.numero + 1)} style={{display: 'none'}}>
             <h6 align="left">
