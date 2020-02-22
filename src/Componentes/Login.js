@@ -5,27 +5,6 @@ import {browserHistory,Redirect,Route} from 'react-router-3';
 import CONFIG from '../Configuracion/Config';
 import LoginApp from './LoginApp';
 
-//LOGIN DE USUARIO
-const fakeAuth = {
-  isAuthenticated: false,
-  authenticate(cb) {
-    this.isAuthenticated = true
-    setTimeout(cb, 100)
-  },
-  signout(cb) {
-    this.isAuthenticated = false
-    setTimeout(cb, 100)
-  }
-}
-
-const PrivateRoute = ({ component: Component, ...rest }) => (
-  <Route {...rest} render={(props) => (
-    fakeAuth.isAuthenticated === true
-      ? <Component {...props} />
-      : browserHistory.push('/')
-  )} />
-)
-export {PrivateRoute};
 
 class Login extends React.Component {
   
@@ -72,8 +51,13 @@ class Login extends React.Component {
           .then(tourJson => {this.setState({usuario:tourJson})
             estadoup = this.state.usuario.estadoUp;
             if(estadoup){
+              localStorage.setItem('user',true);
+                localStorage.setItem('tipo','admi');
               swal("Usuario administrador encontrado !" ,"", "success").then(
                 this.VistaNueva2)
+                
+
+
             }else{
               swal("Usuario no esta registrado como administrador o no esta activo!!", "", "info");
             }
@@ -101,12 +85,20 @@ class Login extends React.Component {
                   .then(Response => Response.json())
                   .then((tourJson)=> {
                     if(tourJson.length == 1){
+                         localStorage.setItem('user',true);
+                         localStorage.setItem('tipo','alumno');
                       swal("Alumno solo tiene un programa!" ,"", "success").then(
                          //browserHistory.push('/'+this.state.usuario.codAlumno))
+                         
                          browserHistory.push('/'+ this.state.usuario.codAlumno +'/vista/importe'))
+                         
+                         
                     }else if(tourJson.length >1){                
+                      localStorage.setItem('user',true);
+                        localStorage.setItem('tipo','alumno');
                       swal("Alumno tiene mas de un programa!" ,"", "success").then(
                         browserHistory.push('/filtro/'+ this.state.usuario.apePaterno + "/" + this.state.usuario.codAlumno))
+                        
                     }else {
                       swal("No se encontraron programas del alumno, usuario no esta matriculado", "", "info");
                     }

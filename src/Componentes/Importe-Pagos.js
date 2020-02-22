@@ -1103,8 +1103,11 @@ Regresar=(e)=>{
                           <th className="thVacio"></th><th className="thVacio"></th><th className="thVacio"></th>
                           <th className="th">COSTO</th>
                           <th >S/ <input id ="costoUno"  disabled="true" type="number" color="white" className="inputCosto"/></th>
-                          <th className="thVacio" ><button onClick={this.EditarCostoUno} className="waves-effect waves-light btn-small"><i className="large material-icons center">edit</i></button>
-                          <button onClick={this.GuardarCostoUno} className="waves-effect waves-light btn-small"><i className="large material-icons center">save</i></button></th>
+                          <th className="thVacio" >
+                          {localStorage.getItem('tipo')=='alumno' ? '' : <button onClick={this.EditarCostoUno} className="waves-effect waves-light btn-small"><i className="large material-icons center">edit</i>
+                          </button>}
+                          
+                          {(localStorage.getItem('tipo')=='alumno') ? '' : <button onClick={this.GuardarCostoUno} className="waves-effect waves-light btn-small"><i className="large material-icons center">save</i></button>}</th> 
                         </tr>
                       </thead>
                       <TableImporteHeader   />
@@ -1120,8 +1123,14 @@ Regresar=(e)=>{
                           <th className="thVacio"></th><th className="thVacio"></th><th className="thVacio"></th>
                           <th className="th">COSTO</th>
                           <th  >S/ <input id ="costoTres"  disabled="true" type="number" className="inputCosto"/></th>
-                          <th className="thVacio" ><button onClick={this.EditarCostoTres} className="waves-effect waves-light btn-small"><i className="large material-icons center">edit</i></button>
-                          <button onClick={this.GuardarCostoTres} className="waves-effect waves-light btn-small"><i className="large material-icons center">save</i></button></th>
+                          <th className="thVacio" >
+                           {localStorage.getItem('tipo')=='alumno' ? ''  : 
+                           <span>
+                           <button onClick={this.EditarCostoTres} className="waves-effect waves-light btn-small"><i className="large material-icons center">edit</i></button>
+                           <button onClick={this.GuardarCostoTres} className="waves-effect waves-light btn-small"><i className="large material-icons center">save</i></button>
+                           </span>
+                           } 
+                          </th>
                         </tr>
                       </thead>
                       <TableImporteHeader   />
@@ -1142,8 +1151,14 @@ Regresar=(e)=>{
                           <th className="thVacio"></th><th className="thVacio"></th><th className="thVacio"></th>
                           <th className="th">COSTO</th>
                           <th  >S/ <input id ="costoDos"  disabled="true" type="number" className="inputCosto"/></th>
-                          <th className="thVacio" ><button onClick={this.EditarCostoDos} className="waves-effect waves-light btn-small"><i className="large material-icons center">edit</i></button>
-                          <button onClick={this.GuardarCostoDos} className="waves-effect waves-light btn-small"><i className="large material-icons center">save</i></button></th>
+                          <th className="thVacio" >
+                            {localStorage.getItem('tipo')=='alumno' ? '' : 
+                            <span>
+                              <button onClick={this.EditarCostoDos} className="waves-effect waves-light btn-small"><i className="large material-icons center">edit</i></button>
+                          <button onClick={this.GuardarCostoDos} className="waves-effect waves-light btn-small"><i className="large material-icons center">save</i></button>
+                            </span>
+                            }
+                          </th>
                         </tr>
                       </thead>
                       <TableImporteHeader   />
