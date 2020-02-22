@@ -763,6 +763,7 @@ if(isNaN(pruebita)){
         return response.json();
         })
         .then((pagos)  =>{
+          const diplomatura='06';
           console.log("Programa de lista de pagos");
          console.log(pagos);
           this.setState({
@@ -772,84 +773,115 @@ if(isNaN(pruebita)){
           codigoAlumno: pagos[0].codAlumno,
           anioIngresoAlumno: pagos[0].anio_ingreso
           })
-          console.log("Debemos buscar esto");
-
+          console.log("Debemos buscar esto"); 
+          let identifiTipGrado=pagos[0].id_tip_grado;
           //todo esta data es para el ejemplo 18207001
           console.log(this.state.estadoAlumno); //soltero
           console.log(this.state.nombrePrograma);//DISI
-          console.log(this.state.codigoPrograma); //8
+          console.log("El codigo de programa es :->",this.state.codigoPrograma); //8
           console.log(this.state.codigoAlumno);//182007001
           console.log(this.state.anioIngresoAlumno);//2018-1
 
           //****************************************** */
           //*********************INICIO*************** */
           //****************************************** */
+          if(identifiTipGrado==diplomatura){
+            console.log("entro aqui",CONFIG+'importealumno/search/'+this.state.codigoAlumno+'/'+this.state.codigoPrograma+'/62');
+            fetch(CONFIG+'importealumno/search/'+this.state.codigoAlumno+'/'+this.state.codigoPrograma+'/62')
+            
+            .then((response)=>{
+                return response.json()
+            })
+            .then((data)=>{
+              console.log("Importe 5");
+                console.log(data.importe)
+                this.setState({
+                  importeTabla2: data.importe,
+                  bool2: 1,
+                  })
+                  listaImportesTabla.push(data.importe);
+                  console.log("Importe 6");
+                  console.log(this.state.importeTabla2);
+                  console.log(this.state.listaImportesTabla);
+                  
+                  document.getElementById("costoDos").value = this.state.importeTabla2;
+            })
+            .catch(error => {
+              console.error(error)
+            });
+          }
 
-          fetch(CONFIG+'importealumno/search/'+this.state.codigoAlumno+'/'+this.state.codigoPrograma+'/9')
-          .then((response)=>{
-              return response.json()
-          })
-          .then((data)=>{
-            console.log("Importe 1");
-              console.log(data.importe)
-              this.setState({
-                importeTabla1: data.importe,
-                bool1: 1,
-                })
-                listaImportesTabla.push(data.importe);
-                console.log("Importe 2");
-                console.log(this.state.importeTabla1);
-                
-                console.log(this.state.listaImportesTabla);
-                document.getElementById("costoUno").value = this.state.importeTabla1;
-          })
-          .catch(error => {
-            console.error(error)
-          });
+          else{
 
-          fetch(CONFIG+'importealumno/search/'+this.state.codigoAlumno+'/'+this.state.codigoPrograma+'/21')
-          .then((response)=>{
-              return response.json()
-          })
-          .then((data)=>{
-            console.log("Importe 3");
-              console.log(data.importe)
-              this.setState({
-                importeTabla2: data.importe,
-                bool2: 1,
-                })
-                listaImportesTabla.push(data.importe);
-                console.log("Importe 4");
-                console.log(this.state.importeTabla2);
-                console.log(this.state.listaImportesTabla);
-                
-                document.getElementById("costoDos").value = this.state.importeTabla2;
-          })
-          .catch(error => {
-            console.error(error)
-          });
+          
 
-          fetch(CONFIG+'importealumno/search/'+this.state.codigoAlumno+'/'+this.state.codigoPrograma+'/117')
-          .then((response)=>{
-              return response.json()
-          })
-          .then((data)=>{
-            console.log("Importe 5");
-              console.log(data.importe)
-              this.setState({
-                importeTabla3: data.importe,
-                bool3: 1,
-                })
-                listaImportesTabla.push(data.importe);
-                console.log("Importe 6");
-                console.log(this.state.importeTabla3);
-                console.log(this.state.listaImportesTabla);
-                
-                document.getElementById("costoTres").value = this.state.importeTabla3;
-          })
-          .catch(error => {
-            console.error(error)
-          });
+              fetch(CONFIG+'importealumno/search/'+this.state.codigoAlumno+'/'+this.state.codigoPrograma+'/9')
+              .then((response)=>{
+                  return response.json()
+              })
+              .then((data)=>{
+                console.log("Importe 1");
+                  console.log(data.importe)
+                  this.setState({
+                    importeTabla1: data.importe,
+                    bool1: 1,
+                    })
+                    listaImportesTabla.push(data.importe);
+                    console.log("Importe 2");
+                    console.log(this.state.importeTabla1);
+                    
+                    console.log(this.state.listaImportesTabla);
+                    document.getElementById("costoUno").value = this.state.importeTabla1;
+              })
+              .catch(error => {
+                console.error(error)
+              });
+
+              fetch(CONFIG+'importealumno/search/'+this.state.codigoAlumno+'/'+this.state.codigoPrograma+'/21')
+              .then((response)=>{
+                  return response.json()
+              })
+              .then((data)=>{
+                console.log("Importe 3");
+                  console.log(data.importe)
+                  this.setState({
+                    importeTabla2: data.importe,
+                    bool2: 1,
+                    })
+                    listaImportesTabla.push(data.importe);
+                    console.log("Importe 4");
+                    console.log(this.state.importeTabla2);
+                    console.log(this.state.listaImportesTabla);
+                    
+                    document.getElementById("costoDos").value = this.state.importeTabla2;
+              })
+              .catch(error => {
+                console.error(error)
+              });
+
+              fetch(CONFIG+'importealumno/search/'+this.state.codigoAlumno+'/'+this.state.codigoPrograma+'/117')
+              .then((response)=>{
+                  return response.json()
+              })
+              .then((data)=>{
+                console.log("Importe 5");
+                  console.log(data.importe)
+                  this.setState({
+                    importeTabla3: data.importe,
+                    bool3: 1,
+                    })
+                    listaImportesTabla.push(data.importe);
+                    console.log("Importe 6");
+                    console.log(this.state.importeTabla3);
+                    console.log(this.state.listaImportesTabla);
+                    
+                    document.getElementById("costoTres").value = this.state.importeTabla3;
+              })
+              .catch(error => {
+                console.error(error)
+              });
+        } 
+        
 
           this.setState({
             importeTabla:listaImportesTabla
