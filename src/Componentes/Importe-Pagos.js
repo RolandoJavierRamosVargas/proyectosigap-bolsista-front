@@ -242,11 +242,11 @@ componentWillMount() {
   var listaImportesTabla=[];
 
    var concepA = [];
-   concepA.push("210010  ");
+   concepA.push("210010");
    var concepB = [];
    concepB.push("210011","210024");
    var concepC = [];
-   concepC.push("207010  ");
+   concepC.push("207010");
    var concepD = ["210322  ","201158  ","210003","201158  ","210209  ",
                 "210059  ","210353  ","210509  ","210308  ","210322  ","201011  ",
                 "210104  ", "999998  ","207011  ","210508  ","210003  ","207004  ",
@@ -279,7 +279,13 @@ componentWillMount() {
    console.log("ABCD:-"+nombrenuevoFiltro+"-");
    
    
-  
+  console.log("la cosa que tiene que aparecer es", {
+    "nom_ape": nombrenuevoFiltro,
+    "fechaInicial": filtrodel,
+    "fechaFinal": filtroal,
+    "conceptos": concepA,
+    "recibos":this.state.filtroNumeros
+  })
    
    fetch(CONFIG+'recaudaciones/alumno/concepto/listar/filtrar', //CONFIG+'recaudaciones/alumno/concepto/listar/filtrar'
    {
@@ -287,6 +293,7 @@ componentWillMount() {
        'Content-Type': 'application/json'
      },
      method: "POST",
+     
      body: JSON.stringify(
        {
          "nom_ape": nombrenuevoFiltro,
