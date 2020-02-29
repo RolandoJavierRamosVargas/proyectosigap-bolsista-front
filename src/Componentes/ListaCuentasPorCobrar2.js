@@ -1,36 +1,102 @@
 import React,{Component} from 'react';
 import {
-    ModalFooter, ModalBody, ModalHeader, Modal, Button,Input, Container, Row, Col 
+    ModalFooter, ModalBody, ModalHeader, Modal, Button,Input, Container, Row, Col, Label 
   } from 'reactstrap';
 import { Async } from "react-async-await";
 import CONFIG from '../Configuracion/Config'
 
-class ListaCuentasPorCobrar2 extends Component{
+class ListaCuentasPorCobrar2 extends Component{ 
 
 
     constructor(props){
         super(props)
         this.state={
+            correoEnvio:'electrofisi.fidelizacion@gmail.com',
             mostrarModal:false,
             filasSelec:[],
             notificacionCorre:{},
             numNotifi: 0,
-            numCorrelativo:0,
-            tempEnvio:{
-                from:'',
-                to:'',
-                subject:'',
-                body:''
-            }
+            numCorrelativo:0, //este es el numero con el que se empieza
+            asuntoEnvio:'UPG - NOTIFICACION DEUDA  N°',
+            descripcionEnvio: '',
+            footerEnvio:'*Una vez realizado el pago debe entregar el recibo en la Oficina de la Unidad de Posgrado. \n \n \n Atte,Unidad de Posgrado',
+            fechaEnvio:'',
 
+            agregarDias:0,
 
+                
         }
     }
 /****************************************** */
     componentWillMount =() =>{
         this.recogerNotificacionCorrelativos();
+        let aumentarDias=0;
+        const mensajeAntesFecha = 'Previo cordial saludo, le informamos que mantiene deuda pendiente de pago a la Unidad de Posgrado de la Facultad de Ingeniería de Sistemas e Informatica.Por lo expuesto le exhortamos a realizar la cancelación de deuda según se indica, teniendo como plazo máximo el día ';
+        let fecha = "--Fecha--";
+        fecha=this.sumarDias(aumentarDias);
+        const mensajePostFecha=' pasado el plazo indicado se procederá a informar a las dependencias pertinentes con fines de cobranza.\n\n'
+        const body = mensajeAntesFecha+fecha+mensajePostFecha;
+
+        this.setState({
+            descripcionEnvio:body,
+
+        })
     }
 
+    // aplicarNuevaFecha = e=>{
+    //     const mensajeAntesFecha = 'Previo cordial saludo, le informamos que mantiene deuda pendiente de pago a la Unidad de Posgrado de la Facultad de Ingeniería de Sistemas e Informatica.Por lo expuesto le exhortamos a realizar la cancelación de deuda según se indica, teniendo como plazo máximo el día ';
+    //     let fechaSinFormato=this.state.fechaEnvio;
+    //     let fechaConFormato=this.sumarDias();
+    //     const mensajePostFecha=' pasado el plazo indicado se procederá a informar a las dependencias pertinentes con fines de cobranza.\n\n'
+    // }
+/****************************************** */
+     sumarDias = (dias)=>{
+        var meses = new Array ("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
+        var diasSemana = new Array("Domingo","Lunes","Martes","Miércoles","Jueves","Viernes","Sábado");
+        var f=new Date();
+        f.setDate(f.getDate() + dias);
+        let fechaFormateada=diasSemana[f.getDay()] + ", " + (f.getDate()) + " de " + meses[f.getMonth()] + " de " + f.getFullYear();
+        
+        return fechaFormateada;
+      }
+      
+
+      mostrarAgregarDias = (dias) => {
+        
+        const mensajeAntesFecha = 'Previo cordial saludo, le informamos que mantiene deuda pendiente de pago a la Unidad de Posgrado de la Facultad de Ingeniería de Sistemas e Informatica.Por lo expuesto le exhortamos a realizar la cancelación de deuda según se indica, teniendo como plazo máximo el día ';
+        let fecha = "--Fecha--";
+        fecha=this.sumarDias(dias);
+        
+        const mensajePostFecha=' pasado el plazo indicado se procederá a informar a las dependencias pertinentes con fines de cobranza.\n\n'
+        const body = mensajeAntesFecha+fecha+mensajePostFecha;
+
+        
+
+        this.setState({
+            descripcionEnvio:body,
+
+        })
+      }
+
+/****************************************** */
+      enviarMensaje = () =>{
+    
+        fetch(CONFIG+"mail/sendMail",{
+            headers: {
+            'Content-Type': 'application/json'
+            },
+            method: "POST",
+            body: JSON.stringify({
+                from: this.state.correoEnvio,
+                to: " ",
+                subject: this.state.asuntoEnvio,
+                body: this.state.descripcionEnvio,
+                datos: JSON.stringify(this.state.filasSelec).toString(),
+                footer:this.state.footerEnvio,
+            })
+            } )
+        
+    }
 /****************************************** */
 
   
@@ -161,33 +227,6 @@ class ListaCuentasPorCobrar2 extends Component{
    }
    /****************************************** */
 
-
-   enviarMensaje = () =>{
-    console.log("************************");
-    const arreglo=[...this.state.filasSelec]
-    console.log("el arreglo es ->",arreglo);
-    console.log(JSON.stringify(arreglo));
-
-    console.log("************************");
-    
-    fetch(CONFIG+"mail/sendMail",{
-        headers: {
-        'Content-Type': 'application/json'
-        },
-        method: "POST",
-        body: JSON.stringify({
-            from: "electrofisi.fidelizacion@gmail.com",
-            to: "rolandojavier.ramos@gmail.com",
-            subject: "NOTIFICACION DE DEUDA N° 20",
-            body: JSON.stringify(this.state.filasSelec).toString()
-        })
-        } )
-    
-}
-
-/****************************************** */
-
-
    agregarRow = (row) =>{
     this.setState((state) =>{
         return {filasSelec:[...state.filasSelec,row]};
@@ -212,17 +251,13 @@ class ListaCuentasPorCobrar2 extends Component{
         }
     }
 /****************************************** */
-//     setField(e) {
-//         console.log("El valor de  e es ",e);
-    
-// }
+setField = (e) => {
+    this.setState({ [e.target.name]: e.target.value })
+}
 /****************************************** */
    modal = () =>{
-       const notificacion="NOTIFICACION DEUDA "+this.state.numNotifi;
-       const descripcion="ESTA ES UNA DESCRIPCION DE PRUEBA"
-       
         return (
-            <Modal isOpen={this.state.mostrarModal} toggle={this.closeModal}  
+            <Modal className="modal-lg" isOpen={this.state.mostrarModal} toggle={this.closeModal}  
                       aria-labelledby="contained-modal-title-vcenter">
                       <div>
                       <ModalHeader toggle={this.closeModal}>Notificaciones Electronicas</ModalHeader>
@@ -233,24 +268,35 @@ class ListaCuentasPorCobrar2 extends Component{
                                         <h6><b>Asunto</b></h6>
                                     </Col>
                                     <Col sm="9">
-                                        <Input type="text" defaultValue={notificacion} />          
-                                    </Col>
-    
-                                </Row>
-                                <Row>
-                                    <Col sm="3">
-                                        <h6><b>Para : </b></h6>
-                                    </Col>
-                                    <Col sm="9">
-                                        <Input type="text" defaultValue={ this.state.filasSelec.length!=0 ? this.state.filasSelec[0].coe_alu_personal : 'No ha seleccionado ningun alumno' }/>          
+                                        <Input type="text" name="asuntoEnvio" defaultValue={this.state.asuntoEnvio} onChange={(e)=>this.setField(e)} /> 
                                     </Col>
     
                                 </Row>
                                 
+                                
                                 <Row> 
                                     <h6 align="left" className=""><b>Descripcion</b></h6>
-                                    <Input type="textarea" className="" name="text" id="exampleText" defaultValue={descripcion}/>
+                                    <Input type="textarea" rows="10" name="descripcionEnvio"  value={this.state.descripcionEnvio} onChange={(e)=>this.setField(e)}/>
                                 </Row>
+                                <br />
+                                <br />
+                                <Row> 
+                                    <Col sm="3" >
+                                    <Label><h6 align="left" className=""><b>Agregar Dias</b></h6></Label>
+                                    </Col>
+                                    <Col sm="3">
+                                    <Input type="number" name="descripcionEnvio" name="agregarDias" value={this.state.agregarDias} onChange={(e)=>this.setField(e)} />     
+                                    </Col>
+                                    <Col sm="3">
+                                    <Button className="btn btn-danger" onClick={()=>this.mostrarAgregarDias(this.state.agregarDias)}>Agregar</Button>
+                                    </Col>
+                                </Row>
+
+                                {/* <Row> 
+                                    <h6 align="left" className=""><b>Ingrese fecha</b></h6>
+                                    <Input type="date" name="fechaEnvio" onChange={(e)=>this.setField(e)}/>
+                                    <Button color="yellow" onClick={this.aplicarNuevaFecha}>Enviar</Button><p></p>
+                                </Row> */}
                           
                           
                           
