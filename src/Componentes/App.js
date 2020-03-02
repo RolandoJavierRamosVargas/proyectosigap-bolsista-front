@@ -1245,7 +1245,7 @@ this.setState({
               {/*Fin*/}
               <table className="table-small">
                 <TableHeader   />
-
+               
                 <PagoList funcion={this.Funcion} listado={this.state.pageOfItems}  conceptos={this.state.concepto} datos={this.state.datos} datosMonedas={this.state.monedas}  monedas={this.state.monedasvl} ubicaciones={this.state.ubicacionesv1} repitencia={this.state.repitenciav1} cuentas={this.state.cuentasv1} configuraciones={this.state.configuraciones}/>
               </table>
               <div className="margen_top"> <Paginacion items={this.state.pagocero} onChangePage={this.onChangePage}/></div>

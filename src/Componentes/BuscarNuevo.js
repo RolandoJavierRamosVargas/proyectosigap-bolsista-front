@@ -1077,7 +1077,7 @@ class BuscarNuevo extends React.Component {
                                             <td className="td1">{this.state.detalleRecaudaciones.moneda}</td>
                                             <td className="td1">{this.state.detalleRecaudaciones.importe}</td>
                                             <td className="td1">{this.state.detalleRecaudaciones.fecha}</td>
-											<td className="td1">{this.state.detalleRecaudaciones.observacion}</td>																												  
+																																						  
 
                                             <td className="td1">
                                                 <AR_CodigoAsignacion codAlum={this.state.detalleRecaudaciones.codAlumno} />
@@ -1188,8 +1188,7 @@ class BuscarNuevo extends React.Component {
                             <div>
                                 <AR_Transferencia listObservacion={this.state.objObservacion} />
                             </div>
-                            ) : (null) 
-                        }
+                            ) : (null)}
                         </div>
                     ) : (null)
                 }
@@ -1262,6 +1261,46 @@ class BuscarNuevo extends React.Component {
                         
                     </div>
                 ):(null)}
+				                <hr />
+                {this.state.asignarRec ? (
+                    <div>
+                        <div className="row justify-content-md-center">
+                            <div className="col col-lg-2">
+                                <input className="autocomplete" value={this.state.dni} onChange={this.onChangeDni} placeholder="DNI"></input>
+                            </div>
+                            <div className="col col-lg-2">
+                                <input className="autoomplete" value={this.state.codigo} onChange={this.onChangeCodigo} placeholder="Código"></input>
+                            </div>
+                        </div>
+					
+                        <div className="row justify-content-md-center">
+						  
+                            <div className="col col-lg-2">
+                                <input className="autocomplete" value={this.state.apePat} onChange={this.onChangeApePaterno} placeholder="Apellido paterno"></input>
+							
+                            </div>
+                            <div className="col col-lg-2">
+                                <input className="autocomplete" value={this.state.apeMat} onChange={this.onChangeApeMaterno} placeholder="Apellido materno"></input>
+																						   
+                            </div>
+                            <div className="col col-lg-2">
+																  
+                                <input className="autocomplete" value={this.state.nombre} onChange={this.onChangeNombre} placeholder="Nombres"></input>
+								
+                            </div>
+                        </div>
+                        <br />
+                        <div className="row justify-content-md-center">
+                            <div className="col col-lg-2">
+                                <button className="waves-effect waves-light btn-large center" type="submit" onClick={this.onSubmitAsignar}>
+                                    Buscar <i className="large material-icons left">search</i>
+                                </button>
+                            </div>
+                        </div>
+						 
+						
+                    </div>
+                ) : (null)}
             </div>
         )
     }

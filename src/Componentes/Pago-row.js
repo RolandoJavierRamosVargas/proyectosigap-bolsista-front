@@ -486,10 +486,10 @@ class PagoRow extends React.Component {
 
     var num = 250296;
     var stringss;
-    var importe;
+    var importe=0;
     stringss = this.props.pago.idRec.toString() + num.toString() + "importe";
+    console.log("ss",stringss);
     importe = document.getElementById(stringss).value;
-
     console.log("El nuevo importe es ->",importe );
 
     if (importe == "") {
@@ -710,6 +710,21 @@ class PagoRow extends React.Component {
       console.log("Validado: " + String(this.state.isChecked));
       validado = String(this.state.isChecked);
 
+      console.log("lo que se envia es ->",JSON.stringify({
+        "idRec": idRecG,
+        "ciclo": cicloG,
+        "concepto": conceptoG,
+        "recibo": numeroReciboG,
+        "fecha": fechaG,
+        "id_concepto": this.state.idconcepto,
+        "id_moneda": this.state.idmoneda,
+        "importe": importe,
+        "repitencia":repitencia, //linea que recien se agrega
+        "ubicacion": ubicacion,
+        "ctabanco": ctabanco,
+        "validado": validado
+      }))
+
       fetch(CONFIG + "recaudaciones/alumno/concepto/actualizar",
         {
           headers: {
@@ -785,6 +800,9 @@ class PagoRow extends React.Component {
       var importe = "";
       importe = this.SeleccionImporte();
 
+      var repitencia = "";
+      repitencia = this.SeleccionRepitencia();
+
       var ubicacion = "";
       ubicacion = this.SeleccionUbicacion();
 
@@ -811,6 +829,7 @@ class PagoRow extends React.Component {
               "id_concepto": this.state.idconcepto,
               "id_moneda": this.state.idmoneda,
               "importe": importe,
+              "repitencia":repitencia, //linea que recien se agrega
               "ubicacion": ubicacion,
               "ctabanco": ctabanco,
               "validado": validado
@@ -964,7 +983,7 @@ class PagoRow extends React.Component {
                 <label className="center-xs color_white">
                   <input
                     id={this.props.pago.idRec.toString() + "250296" + "importe"}
-                    placeholder={this.props.pago.importe}
+                    value={this.props.pago.importe}
                     disabled="true"
                     type="number" />
                   <span></span>

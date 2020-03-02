@@ -11,7 +11,7 @@ class ListaCuentasPorCobrar2 extends Component{
     constructor(props){
         super(props)
         this.state={
-            correoEnvio:'electrofisi.fidelizacion@gmail.com',
+            correoEnvio:'rolando.ramos2@unmsm.edu.pe',
             mostrarModal:false,
             filasSelec:[],
             notificacionCorre:{},
@@ -54,7 +54,7 @@ class ListaCuentasPorCobrar2 extends Component{
         var meses = new Array ("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
         var diasSemana = new Array("Domingo","Lunes","Martes","Miércoles","Jueves","Viernes","Sábado");
         var f=new Date();
-        f.setDate(f.getDate() + dias);
+        f.setDate(f.getDate() + parseInt( dias));
         let fechaFormateada=diasSemana[f.getDay()] + ", " + (f.getDate()) + " de " + meses[f.getMonth()] + " de " + f.getFullYear();
         
         return fechaFormateada;
@@ -134,7 +134,7 @@ class ListaCuentasPorCobrar2 extends Component{
                 this.quitarRow(lista[index]);
             
         }
-    }
+    }   
 
     
         console.log("el state acutal es ->",this.state.filasSelec);
