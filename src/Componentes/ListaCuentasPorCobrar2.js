@@ -4,6 +4,7 @@ import {
   } from 'reactstrap';
 import { Async } from "react-async-await";
 import CONFIG from '../Configuracion/Config'
+import swal from 'sweetalert'
 
 class ListaCuentasPorCobrar2 extends Component{ 
 
@@ -95,6 +96,13 @@ class ListaCuentasPorCobrar2 extends Component{
                 footer:this.state.footerEnvio,
             })
             } )
+            .then(()=>{
+                swal("Enviado exitoso!", "", "success")
+            })
+            .catch((error)=>{
+                swal("Hubo un error", "", "error")
+            })
+
         
     }
 /****************************************** */
