@@ -101,6 +101,7 @@ class ImportePagos extends React.Component {
       bool1:0,
       bool2:0,
       bool3:0,
+      diplomado:false,
 
       valor: true,
       estadoAlumnoInput:{value:"-1",label:"Escoga un nuevo estado"},
@@ -793,6 +794,9 @@ if(isNaN(pruebita)){
           //*********************INICIO*************** */
           //****************************************** */
           if(identifiTipGrado==diplomatura){
+            this.setState({
+              diplomado:true
+            })
             console.log("entro aqui",CONFIG+'importealumno/search/'+this.state.codigoAlumno+'/'+this.state.codigoPrograma+'/62');
             fetch(CONFIG+'importealumno/search/'+this.state.codigoAlumno+'/'+this.state.codigoPrograma+'/62')
             
@@ -849,16 +853,13 @@ if(isNaN(pruebita)){
                   return response.json()
               })
               .then((data)=>{
-                console.log("Importe 3");
-                  console.log(data.importe)
+                //ESTA TABLA ES LA DE DERECHO DE ENSEÑANZA
+                  console.log("El importe a pagar es ->",data.importe);
                   this.setState({
                     importeTabla2: data.importe,
                     bool2: 1,
                     })
                     listaImportesTabla.push(data.importe);
-                    console.log("Importe 4");
-                    console.log(this.state.importeTabla2);
-                    console.log(this.state.listaImportesTabla);
                     
                     document.getElementById("costoDos").value = this.state.importeTabla2;
               })
@@ -1173,6 +1174,7 @@ Regresar=(e)=>{
                       {/* Aca empieza el detecho de enseñanza */}
                        
                       <ImporteList funcion={this.FuncionDos} listado={this.state.pagoDos}  conceptos={this.state.concepto} datos={this.state.datos} datosMonedas={this.state.monedas}  monedas={this.state.monedasvl} ubicaciones={this.state.ubicacionesv1} cuentas={this.state.cuentasv1} configuraciones={this.state.configuraciones}/>
+                      
                       <TableImporteFooter total ={this.CalcularImporteDos()} costo ={this.state.importeTabla2}/>
                     </table>
                   </td>
@@ -1394,29 +1396,30 @@ GuardarCostoUno=(e)=>{
     
     
 }
+//ANALISIS DEL CODIGO
 GuardarCostoDos=(e)=>{
   var costo ="costoDos";
   
   document.getElementById(costo).disabled = true;
-  console.log("COSTOOOOOOO: "+document.getElementById(costo).value);
+  console.log("COSTO DERECHO ENSEÑANZA: "+document.getElementById(costo).value);
 
-  var codConcepto = 21;
+  //Regresar aqui
+  var codConcepto = (this.state.diplomado) ? 62 : 21;
   var importePago = document.getElementById(costo).value;
 
   this.setState({
     importeTabla2: importePago
     })
-
-    console.log("BOOL1:"+this.state.bool2);
     if(this.state.bool2 == 0){
       this.AddCostoImporte(codConcepto,importePago);
     }else if(this.state.importeTabla2>=0){
+      alert("Se actualizará el importe");
     this.UpdateCostoImporte(codConcepto,importePago);
   
     //this.setState({  bool2: 1  });
   }
   
-  console.log("BOOL1:"+this.state.bool2);
+  
 }
 
 GuardarCostoTres=(e)=>{
@@ -1494,6 +1497,15 @@ AddCostoImporte=(codConcepto,importePago)=>{
 
 
 UpdateCostoImporte=(codConcepto,importePago)=>{
+  console.log("Data actualizar ",JSON.stringify(
+    {
+      "cod_alumno": this.state.codigoAlumno,
+      "cod_programa": this.state.codigoPrograma,
+      "cod_concepto": codConcepto,
+      "importe": importePago
+    }
+
+  ));
   fetch(CONFIG+'importealumno/update',
   {
     headers: {

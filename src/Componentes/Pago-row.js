@@ -983,7 +983,7 @@ class PagoRow extends React.Component {
                 <label className="center-xs color_white">
                   <input
                     id={this.props.pago.idRec.toString() + "250296" + "importe"}
-                    value={this.props.pago.importe}
+                    defaultValue={this.props.pago.importe}
                     disabled="true"
                     type="number" />
                   <span></span>
