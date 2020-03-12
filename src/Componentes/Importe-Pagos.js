@@ -1411,12 +1411,11 @@ GuardarCostoDos=(e)=>{
     importeTabla2: importePago
     })
     if(this.state.bool2 == 0){
+      alert("entro a add importe");
       this.AddCostoImporte(codConcepto,importePago);
     }else if(this.state.importeTabla2>=0){
       alert("Se actualizará el importe");
     this.UpdateCostoImporte(codConcepto,importePago);
-  
-    //this.setState({  bool2: 1  });
   }
   
   

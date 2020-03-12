@@ -2,9 +2,9 @@ import React,{Component} from 'react';
 import {
     ModalFooter, ModalBody, ModalHeader, Modal, Button,Input, Container, Row, Col, Label 
   } from 'reactstrap';
-import { Async } from "react-async-await";
 import CONFIG from '../Configuracion/Config'
 import swal from 'sweetalert'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 class ListaCuentasPorCobrar2 extends Component{ 
 
@@ -24,6 +24,7 @@ class ListaCuentasPorCobrar2 extends Component{
             fechaEnvio:'',
 
             agregarDias:0,
+            loading:false
 
                 
         }
@@ -81,7 +82,7 @@ class ListaCuentasPorCobrar2 extends Component{
 
 /****************************************** */
       enviarMensaje = () =>{
-    
+        this.setState({loading:true})
         fetch(CONFIG+"mail/sendMail",{
             headers: {
             'Content-Type': 'application/json'
@@ -98,6 +99,7 @@ class ListaCuentasPorCobrar2 extends Component{
             } )
             .then(()=>{
                 swal("Enviado exitoso!", "", "success")
+                this.setState({loading:false})
             })
             .catch((error)=>{
                 swal("Hubo un error", "", "error")
@@ -264,6 +266,7 @@ setField = (e) => {
 }
 /****************************************** */
    modal = () =>{
+       const {loading} = this.state;
         return (
             <Modal className="modal-lg" isOpen={this.state.mostrarModal} toggle={this.closeModal}  
                       aria-labelledby="contained-modal-title-vcenter">
@@ -310,7 +313,10 @@ setField = (e) => {
                           
                         </ModalBody>
                         <ModalFooter>
-                          <Button color="green" onClick={this.guardarCambios}>Enviar</Button><p></p>
+                          <Button color="green" onClick={this.guardarCambios} disabled={this.state.loading}>
+                            {  loading && <span>Cargando ....</span>}
+                            {  !loading && <span>Enviar</span>}
+                              </Button><p></p>
                           <Button color="secondary" onClick={this.closeModal}>Salir</Button>
                       </ModalFooter>
                     </div>      
