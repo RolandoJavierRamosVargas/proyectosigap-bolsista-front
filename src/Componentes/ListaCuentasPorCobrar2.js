@@ -302,13 +302,6 @@ setField = (e) => {
                                     <Button className="btn btn-danger" onClick={()=>this.mostrarAgregarDias(this.state.agregarDias)}>Agregar</Button>
                                     </Col>
                                 </Row>
-
-                                {/* <Row> 
-                                    <h6 align="left" className=""><b>Ingrese fecha</b></h6>
-                                    <Input type="date" name="fechaEnvio" onChange={(e)=>this.setField(e)}/>
-                                    <Button color="yellow" onClick={this.aplicarNuevaFecha}>Enviar</Button><p></p>
-                                </Row> */}
-                          
                           
                           
                         </ModalBody>
@@ -351,24 +344,28 @@ setField = (e) => {
                 <tr>
                     <th className="th">#</th>
                     <th className="th">Cod Alumno</th>
+                    <th className="th">Id de Programa</th>
                     <th className="th">Ape. Paterno</th>
                     <th className="th">Ape. Materno</th>
                     <th className="th">Nom. alumno</th>
                     <th className="th">Numero Prioridad</th>
                     <th className="th">Sigla Programa</th>
-                    <th className="th">Año de Ongreso</th>
+                    <th className="th">Año de Ingreso</th>
                     <th className="th">Codigo perm</th>
                     <th className="th">Max. años de estudio</th>
                     <th className="th">Beneficio Otorgado</th>
                     <th className="th">Autorizacion</th>
                     <th className="th">Moneda</th>
                     <th className="th">Prioridad</th>
+                    <th className="th">Id de Concepto</th>
                     <th className="th">concepto</th>
                     <th className="th">Descrip. minima</th>
                     <th className="th">Importe por Pagar</th>
                     <th className="th">Importe Pagado</th>
                     <th className="th">Deuda</th>
-                    <th className="th">No me acuerdo el nombre</th>
+                    <th className="th">Notificacion Deuda</th>
+                    <th className="th">Deuda estado</th>
+                    <th className="th">verificar</th>
                     <th className="th">estado</th>
                     <th className="th">Correo electronico </th>
                     <th className="th">Correo electronico Personal</th>
@@ -399,6 +396,7 @@ setField = (e) => {
                     <tr key={key}>
                         <td className="td">{key+1}</td>
                         <td className="td">{row.cod_alumno}</td>
+                        <td className="td">{row.id_programa}</td>
                         <td className="td">{row.ape_paterno}</td>
                         <td className="td">{row.ape_materno}</td>
                         <td className="td">{row.nom_alumno}</td>
@@ -411,11 +409,14 @@ setField = (e) => {
                         <td className="td">{row.autorizacion}</td>
                         <td className="td">{row.moneda}</td>
                         <td className="td">{row.n_prioridad2}</td>
+                        <td className="td">{row.id_concepto}</td>
                         <td className="td">{row.concepto}</td>
                         <td className="td">{row.descripcion_min}</td>
                         <td className="td">{row.importe_xpagar}</td>
                         <td className="td">{row.importe_pagado}</td>
                         <td className="td">{row.deuda}</td>
+                        <td className="td">{row.notificacion_deuda}</td>
+                        <td className="td">{row.deuda_estado} {!row.deuda_estado && <span>--</span> }</td>
 
                         <td className="td">
                         <form action="#">

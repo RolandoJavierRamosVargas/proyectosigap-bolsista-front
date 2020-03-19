@@ -266,7 +266,7 @@ componentWillMount() {
    var filtrodel = "0000-00-00";
    var filtroal = "9999-12-12";
    
-   let nombreFiltro = this.state.name;
+   let nombreFiltro = this.state.name;//18207001 por ejemplo
    var separadorFiltro = " "; // un espacio en blanco
    var arregloDeSubCadenasFiltro = nombreFiltro.split(separadorFiltro);
    var arregloFiltro = [];
@@ -1147,8 +1147,10 @@ Regresar=(e)=>{
                     </table>
                   </td>
                 </tr>
+
+                {/* ************************************************* */}
                 <tr className="trTable">
-                  <th className="thLabel">DERECHO ENSEÑANZA</th>
+                  <th className="thLabel">DERECHO ENSEÑANZAaa</th>
                   <th className="thLabel">OTROS PAGOS</th>
                 </tr>
                 <tr className="trTable">
@@ -1202,6 +1204,44 @@ Regresar=(e)=>{
 
                   </td>
                 </tr>
+                  {/* ************************************************* */}
+
+                  <tr className="trTable">
+                      <th className="thLabel">REPITENCIA</th>
+                  </tr>
+
+                  <tr className="trTable">
+                      <td className="tdTable">
+                        <table className="tableImporte">
+                          <thead>
+                            <tr>
+                              <th className="thVacio"></th><th className="thVacio"></th><th className="thVacio"></th>
+                              <th className="th">COSTO</th>
+                              <th  >S/ <input id ="repitencia"  disabled="true" type="number" className="inputCosto"/></th>
+                              <th className="thVacio" >
+                                {localStorage.getItem('tipo')=='alumno' ? '' : 
+                                <span>
+                                  <button onClick={this.EditarCostoDos} className="waves-effect waves-light btn-small"><i className="large material-icons center">edit</i></button>
+                              <button onClick={this.GuardarCostoDos} className="waves-effect waves-light btn-small"><i className="large material-icons center">save</i></button>
+                                </span>
+                                }
+                              </th>
+                            </tr>
+                          </thead>
+                          <TableImporteHeader   />
+                          
+                          {/* Aca empieza el detecho de enseñanza */}
+                          
+                          <ImporteList funcion={this.FuncionDos} listado={this.state.pagoDos}  conceptos={this.state.concepto} datos={this.state.datos} datosMonedas={this.state.monedas}  monedas={this.state.monedasvl} ubicaciones={this.state.ubicacionesv1} cuentas={this.state.cuentasv1} configuraciones={this.state.configuraciones}/>
+                          
+                          <TableImporteFooter total ={this.CalcularImporteDos()} costo ={this.state.importeTabla2}/>
+                        </table>
+                      </td>
+                  
+                </tr>
+                  
+
+
                 {/**Aqui Va las tablas obligaciones */}
                 {/*<tr className="trTable">
                   <td className="tdTable" >
