@@ -873,8 +873,8 @@ class ImporteRow extends React.Component {
             <label className=" center-xs color_white">{this.props.pago.fecha.replace(/^(\d{4})-(\d{2})-(\d{2})$/g, '$3-$2-$1')}</label>
           </form>
         </td>
-        {/*}
-        <td className="td" id={"coins" + (this.props.numero + 1)} style={{display: 'none'}}>
+        
+        <td className="td" id={"coins" + (this.props.numero + 1)} >
           
           <Select
 
@@ -884,7 +884,7 @@ class ImporteRow extends React.Component {
             disabled={this.state.desabilitar2}
           />
         </td>
-        */}
+        
         <td className="td" id={"imports" + (this.props.numero + 1)}>
           
               <form action="#">
