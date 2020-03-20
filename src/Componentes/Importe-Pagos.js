@@ -112,7 +112,7 @@ class ImportePagos extends React.Component {
       {value:"separado",label:"Separado"},
       {value:"conviviente",label:"Conviviente"},
       {value:"fallecido",label:"Fallecido"}
-    ],
+      ],
       showModalConfiguracion:false,
 
       tipoObligacionInput:{value:"-1",label:"Escoga un Tipo de Obligación"},
@@ -121,6 +121,8 @@ class ImportePagos extends React.Component {
                              ],
 
       showAgregarObligacion:false,
+
+      listaRepitencia:[]
     }
     this.clase='';
     this.alumno = '';
@@ -321,7 +323,17 @@ componentWillMount() {
    .catch(error => {
    swal("Oops, Algo salió mal!!", "","error")// si hay algún error lo mostramos en consola
    });
- 
+   
+   console.log("DERECHO ENSEÑANZA",JSON.stringify(
+    {
+      "nom_ape": nombrenuevoFiltro,
+      "fechaInicial": filtrodel,
+      "fechaFinal": filtroal,
+      "conceptos": concepB,
+      "recibos":this.state.filtroNumeros
+    }
+
+  ))
    fetch(CONFIG+'recaudaciones/alumno/concepto/listar/filtrar', //CONFIG+'recaudaciones/alumno/concepto/listar/filtrar'
    {
     
@@ -344,9 +356,24 @@ componentWillMount() {
      return response.json()
    })
    .then((pagos) => {
+
      if(pagos.length > 0){
-      console.log("Este es el importe de pagos de dos ",pagos);
-       this.setState({  pagoDos: pagos  });
+      console.log("Este es el importe de DERECHO ENSEÑANZA ",pagos);
+        let listaDerechoEnseñanza = [];
+        let listaRepitencia = [];
+        pagos.forEach( pago => {
+          if (pago.repitencia == "N")
+            listaDerechoEnseñanza.push(pago)
+          else
+           listaRepitencia.push(pago); 
+          
+        } );
+
+       this.setState({  
+         pagoDos: listaDerechoEnseñanza,
+         listaRepitencia
+          });
+       
        //swal("Filtro realizado exitosamente!","","success");
      }else{
        //swal("No se encontraron registros","","info");
@@ -1232,7 +1259,7 @@ Regresar=(e)=>{
                           
                           {/* Aca empieza el detecho de enseñanza */}
                           
-                          <ImporteList funcion={this.FuncionDos} listado={this.state.pagoDos}  conceptos={this.state.concepto} datos={this.state.datos} datosMonedas={this.state.monedas}  monedas={this.state.monedasvl} ubicaciones={this.state.ubicacionesv1} cuentas={this.state.cuentasv1} configuraciones={this.state.configuraciones}/>
+                          <ImporteList funcion={this.FuncionDos} listado={this.state.listaRepitencia}  conceptos={this.state.concepto} datos={this.state.datos} datosMonedas={this.state.monedas}  monedas={this.state.monedasvl} ubicaciones={this.state.ubicacionesv1} cuentas={this.state.cuentasv1} configuraciones={this.state.configuraciones}/>
                           
                           <TableImporteFooter total ={this.CalcularImporteDos()} costo ={this.state.importeTabla2}/>
                         </table>

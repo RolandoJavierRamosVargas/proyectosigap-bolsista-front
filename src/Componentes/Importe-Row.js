@@ -875,14 +875,9 @@ class ImporteRow extends React.Component {
         </td>
         
         <td className="td" id={"coins" + (this.props.numero + 1)} >
-          
-          <Select
-
-            value={this.state.selectedOption2}
-            onChange={this.handleChange2}
-            options={this.props.monedas}
-            disabled={this.state.desabilitar2}
-          />
+        <form action="#">
+        <label className="center-xs color_white">{this.props.pago.moneda2}</label>
+          </form>
         </td>
         
         <td className="td" id={"imports" + (this.props.numero + 1)}>
