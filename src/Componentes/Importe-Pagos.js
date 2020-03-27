@@ -101,6 +101,7 @@ class ImportePagos extends React.Component {
       bool1:0,
       bool2:0,
       bool3:0,
+      tieneImporteRepitencia:0,
       diplomado:false,
 
       valor: true,
@@ -122,7 +123,8 @@ class ImportePagos extends React.Component {
 
       showAgregarObligacion:false,
 
-      listaRepitencia:[]
+      listaRepitencia:[],
+      importeRepitencia:0
     }
     this.clase='';
     this.alumno = '';
@@ -825,7 +827,7 @@ if(isNaN(pruebita)){
               diplomado:true
             })
             console.log("entro aqui",CONFIG+'importealumno/search/'+this.state.codigoAlumno+'/'+this.state.codigoPrograma+'/62');
-            fetch(CONFIG+'importealumno/search/'+this.state.codigoAlumno+'/'+this.state.codigoPrograma+'/62')
+            fetch(CONFIG+'importealumno/search/'+this.state.codigoAlumno+'/'+this.state.codigoPrograma+'/62/3')
             
             .then((response)=>{
                 return response.json()
@@ -853,7 +855,7 @@ if(isNaN(pruebita)){
 
           
 
-              fetch(CONFIG+'importealumno/search/'+this.state.codigoAlumno+'/'+this.state.codigoPrograma+'/9')
+              fetch(CONFIG+'importealumno/search/'+this.state.codigoAlumno+'/'+this.state.codigoPrograma+'/9/1')
               .then((response)=>{
                   return response.json()
               })
@@ -875,7 +877,7 @@ if(isNaN(pruebita)){
                 console.error(error)
               });
 
-              fetch(CONFIG+'importealumno/search/'+this.state.codigoAlumno+'/'+this.state.codigoPrograma+'/21')
+              fetch(CONFIG+'importealumno/search/'+this.state.codigoAlumno+'/'+this.state.codigoPrograma+'/21/3')
               .then((response)=>{
                   return response.json()
               })
@@ -894,7 +896,28 @@ if(isNaN(pruebita)){
                 console.error(error)
               });
 
-              fetch(CONFIG+'importealumno/search/'+this.state.codigoAlumno+'/'+this.state.codigoPrograma+'/117')
+
+              fetch(CONFIG+'importealumno/search/'+this.state.codigoAlumno+'/'+this.state.codigoPrograma+'/21/4')
+              .then((response)=>{
+                  return response.json()
+              })
+              .then((data)=>{
+                //ESTA TABLA ES LA DE DERECHO DE ENSEÑANZA
+                  console.log("El importe a pagar es ->",data.importe);
+                  this.setState({
+                    importeRepitencia: data.importe,
+                    tieneImporteRepitencia: 1,
+                    })
+                    listaImportesTabla.push(data.importe);
+                    
+                    document.getElementById("repitencia").value = this.state.importeRepitencia;
+              })
+              .catch(error => {
+                console.error(error)
+              });
+
+
+              fetch(CONFIG+'importealumno/search/'+this.state.codigoAlumno+'/'+this.state.codigoPrograma+'/117/2')
               .then((response)=>{
                   return response.json()
               })
@@ -1244,12 +1267,12 @@ Regresar=(e)=>{
                             <tr>
                               <th className="thVacio"></th><th className="thVacio"></th><th className="thVacio"></th>
                               <th className="th">COSTO</th>
-                              <th  >S/ <input id ="repitencia"  disabled="true" type="number" className="inputCosto"/></th>
+                              <th  >S/ <input id ="repitencia"  disabled="true" type="number" className="inputCosto" /></th>
                               <th className="thVacio" >
                                 {localStorage.getItem('tipo')=='alumno' ? '' : 
                                 <span>
-                                  <button onClick={this.EditarCostoDos} className="waves-effect waves-light btn-small"><i className="large material-icons center">edit</i></button>
-                              <button onClick={this.GuardarCostoDos} className="waves-effect waves-light btn-small"><i className="large material-icons center">save</i></button>
+                                  <button onClick={this.EditarRepitencia} className="waves-effect waves-light btn-small"><i className="large material-icons center">edit</i></button>
+                              <button onClick={this.GuardarCostoRepitencia} className="waves-effect waves-light btn-small"><i className="large material-icons center">save</i></button>
                                 </span>
                                 }
                               </th>
@@ -1261,7 +1284,7 @@ Regresar=(e)=>{
                           
                           <ImporteList funcion={this.FuncionDos} listado={this.state.listaRepitencia}  conceptos={this.state.concepto} datos={this.state.datos} datosMonedas={this.state.monedas}  monedas={this.state.monedasvl} ubicaciones={this.state.ubicacionesv1} cuentas={this.state.cuentasv1} configuraciones={this.state.configuraciones}/>
                           
-                          <TableImporteFooter total ={this.CalcularImporteDos()} costo ={this.state.importeTabla2}/>
+                          <TableImporteFooter total ={this.CalcularImporteRepitencia()} costo ={this.state.importeRepitencia}/>
                         </table>
                       </td>
                   
@@ -1404,6 +1427,12 @@ EditarCostoDos(){
   document.getElementById(costo).disabled = false;
   document.getElementById(costo).focus();
 }
+EditarRepitencia(){
+  var costo ="repitencia";
+  console.log("repitencia: "+document.getElementById(costo).value);
+  document.getElementById(costo).disabled = false;
+  document.getElementById(costo).focus();
+}
 EditarCostoTres(){
   var costo ="costoTres";
   console.log("COSTOOOOOOO: "+document.getElementById(costo).value);
@@ -1441,6 +1470,7 @@ GuardarCostoUno=(e)=>{
   console.log("COSTOOOOOOO: "+document.getElementById(costo).value);
 
   var codConcepto = 9;
+  let id_tipo_recaudacion=1
   var importePago = document.getElementById(costo).value;
 
   this.setState({
@@ -1451,9 +1481,10 @@ GuardarCostoUno=(e)=>{
   console.log("BOOL1:"+this.state.bool1);
 
   if(this.state.bool1 == 0){
-    this.AddCostoImporte(codConcepto,importePago);
+    this.AddCostoImporte(codConcepto,importePago,id_tipo_recaudacion);
   }else  if(this.state.importeTabla1>=0){
-    this.UpdateCostoImporte(codConcepto,importePago);
+    alert("actualizara el importe");
+    this.UpdateCostoImporte(codConcepto,importePago,id_tipo_recaudacion);
   
     //this.setState({  bool1: 1  });
   }
@@ -1473,20 +1504,46 @@ GuardarCostoDos=(e)=>{
   //Regresar aqui
   var codConcepto = (this.state.diplomado) ? 62 : 21;
   var importePago = document.getElementById(costo).value;
+  let id_tipo_recaudacion=3
 
   this.setState({
     importeTabla2: importePago
     })
     if(this.state.bool2 == 0){
       alert("entro a add importe");
-      this.AddCostoImporte(codConcepto,importePago);
+      this.AddCostoImporte(codConcepto,importePago,id_tipo_recaudacion);
     }else if(this.state.importeTabla2>=0){
       alert("Se actualizará el importe");
-    this.UpdateCostoImporte(codConcepto,importePago);
+    this.UpdateCostoImporte(codConcepto,importePago,id_tipo_recaudacion);
   }
   
   
 }
+
+GuardarCostoRepitencia=(e)=>{
+  var idRepitencia ="repitencia";
+  
+  document.getElementById(idRepitencia).disabled = true;
+  console.log("COSTO REPITENCIA: "+document.getElementById(idRepitencia).value);
+
+  //Regresar aqui
+  var codConcepto = (this.state.diplomado) ? 62 : 21;
+  var importeRepitencia = document.getElementById(idRepitencia).value;
+
+  let id_tipo_recaudacion=4;
+
+  this.setState({
+    importeRepitencia
+    })
+    if(this.state.tieneImporteRepitencia == 0){
+      alert("entro a add importe");
+       this.AddCostoImporte(codConcepto,importeRepitencia,id_tipo_recaudacion);
+    }else if(this.state.importeRepitencia>=0){
+      alert("Se actualizará el importe");
+     this.UpdateCostoImporte(codConcepto,importeRepitencia,id_tipo_recaudacion);
+  }
+}
+
 
 GuardarCostoTres=(e)=>{
   var costo ="costoTres";
@@ -1496,6 +1553,7 @@ GuardarCostoTres=(e)=>{
 
   var codConcepto = 117;
   var importePago = document.getElementById(costo).value;
+  let id_tipo_recaudacion= 2;
 
   this.setState({
     importeTabla3: importePago
@@ -1503,9 +1561,9 @@ GuardarCostoTres=(e)=>{
 
     console.log("BOOL1:"+this.state.bool3);
     if(this.state.bool3 == 0){
-      this.AddCostoImporte(codConcepto,importePago);
+      this.AddCostoImporte(codConcepto,importePago,id_tipo_recaudacion);
     }else if(this.state.importeTabla3>=0){
-    this.UpdateCostoImporte(codConcepto,importePago);
+    this.UpdateCostoImporte(codConcepto,importePago,id_tipo_recaudacion);
   
     //this.setState({  bool3: 1  });
   }
@@ -1539,7 +1597,22 @@ CalcularDeudaTotal=(e)=>{
   return deudaTotal;
 }
 
-AddCostoImporte=(codConcepto,importePago)=>{
+AddCostoImporte=(codConcepto,importePago,id_tipo_recaudacion)=>{
+  console.log("el mensaje de prueba",
+  JSON.stringify(
+    {
+      "cod_alumno": this.state.codigoAlumno,
+      "cod_programa": this.state.codigoPrograma,
+      "cod_concepto": codConcepto,
+      "importe": importePago,
+      "id_tipo_recaudacion": id_tipo_recaudacion,
+      "id_moneda": "108"
+    }
+
+  )
+)
+
+
   fetch(CONFIG+'importealumno/add',
   {
     headers: {
@@ -1551,7 +1624,9 @@ AddCostoImporte=(codConcepto,importePago)=>{
         "cod_alumno": this.state.codigoAlumno,
         "cod_programa": this.state.codigoPrograma,
         "cod_concepto": codConcepto,
-        "importe": importePago
+        "importe": importePago,
+        "id_tipo_recaudacion": id_tipo_recaudacion,
+        "id_moneda": "108"
       }
 
     )
@@ -1562,13 +1637,14 @@ AddCostoImporte=(codConcepto,importePago)=>{
 }
 
 
-UpdateCostoImporte=(codConcepto,importePago)=>{
+UpdateCostoImporte=(codConcepto,importePago,id_tipo_recaudacion)=>{
   console.log("Data actualizar ",JSON.stringify(
     {
       "cod_alumno": this.state.codigoAlumno,
       "cod_programa": this.state.codigoPrograma,
       "cod_concepto": codConcepto,
-      "importe": importePago
+      "importe": importePago,
+      "id_tipo_recaudacion" : id_tipo_recaudacion
     }
 
   ));
@@ -1583,7 +1659,8 @@ UpdateCostoImporte=(codConcepto,importePago)=>{
         "cod_alumno": this.state.codigoAlumno,
         "cod_programa": this.state.codigoPrograma,
         "cod_concepto": codConcepto,
-        "importe": importePago
+        "importe": importePago,
+        "id_tipo_recaudacion" : id_tipo_recaudacion
       }
 
     )
@@ -1683,17 +1760,33 @@ CalcularImporteUno() {
 }
 CalcularImporteDos() {
 
-  let pagos = this.state.pagoDos;
+  let pagoDerechoEnseñanza = this.state.pagoDos;
   let importe = 0;
   console.log("Pago Tabla 2");
-  console.log(pagos)
-  for (var indice in pagos) {
-    if(pagos[indice].moneda=="108")
-    importe = importe + pagos[indice].importe;
+  console.log(pagoDerechoEnseñanza)
+  for (var indice in pagoDerechoEnseñanza) {
+    if(pagoDerechoEnseñanza[indice].moneda=="108")
+    importe = importe + pagoDerechoEnseñanza[indice].importe;
   }
   //this.setState({  sumaImporteDE: importe  });
   return importe;
 }
+/************************************************* */
+CalcularImporteRepitencia() {
+
+  let pagoRepitencia = this.state.listaRepitencia;
+  let importe = 0;
+  console.log("Pago Tabla 2");
+  console.log(pagoRepitencia)
+  for (var indice in pagoRepitencia) {
+    if(pagoRepitencia[indice].moneda=="108")
+    importe = importe + pagoRepitencia[indice].importe;
+  }
+  //this.setState({  sumaImporteDE: importe  });
+  return importe;
+}
+
+/************************************************* */
 CalcularImporteTres() {
 
   let pagos = this.state.pagoTres;
