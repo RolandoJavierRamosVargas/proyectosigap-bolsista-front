@@ -124,7 +124,15 @@ class ImportePagos extends React.Component {
       showAgregarObligacion:false,
 
       listaRepitencia:[],
-      importeRepitencia:0
+      importeRepitencia:0,
+      tiposMoneda:[{value:"SOL", label:"SOLES"},{ value:"DOL", label:"DOLARES"}],
+      idMoneda:[],
+      tipoMonedaMatriculaUpg:'',
+      tipoMonedaMatriculaEpg:'',
+      tipoMonedaDerechoEnseñanza:'',
+      tipoMonedaRepitencia:'',
+
+      
     }
     this.clase='';
     this.alumno = '';
@@ -833,11 +841,13 @@ if(isNaN(pruebita)){
                 return response.json()
             })
             .then((data)=>{
-              console.log("Importe 5");
+             //ESTA TABLA ES LA DE DERECHO DE ENSEÑANZA
+
                 console.log(data.importe)
                 this.setState({
                   importeTabla2: data.importe,
                   bool2: 1,
+                 
                   })
                   listaImportesTabla.push(data.importe);
                   console.log("Importe 6");
@@ -862,9 +872,14 @@ if(isNaN(pruebita)){
               .then((data)=>{
                 console.log("Importe 1");
                   console.log(data.importe)
-                  this.setState({
-                    importeTabla1: data.importe,
-                    bool1: 1,
+                  this.setState((state)=>{
+                    return {
+                      importeTabla1: data.importe,
+                      bool1: 1,
+                      tipoMonedaMatriculaUpg:data.id_moneda
+                      
+                    }
+                    
                     })
                     listaImportesTabla.push(data.importe);
                     console.log("Importe 2");
@@ -882,11 +897,16 @@ if(isNaN(pruebita)){
                   return response.json()
               })
               .then((data)=>{
+                
                 //ESTA TABLA ES LA DE DERECHO DE ENSEÑANZA
+                  console.log("El data es  ->",data);
                   console.log("El importe a pagar es ->",data.importe);
-                  this.setState({
-                    importeTabla2: data.importe,
-                    bool2: 1,
+                  this.setState((state)=>{
+                    return {
+                        importeTabla2: data.importe,
+                        bool2: 1,
+                        tipoMonedaDerechoEnseñanza:data.id_moneda
+                    }
                     })
                     listaImportesTabla.push(data.importe);
                     
@@ -904,9 +924,13 @@ if(isNaN(pruebita)){
               .then((data)=>{
                 //ESTA TABLA ES LA DE DERECHO DE ENSEÑANZA
                   console.log("El importe a pagar es ->",data.importe);
-                  this.setState({
-                    importeRepitencia: data.importe,
-                    tieneImporteRepitencia: 1,
+                  this.setState((state)=>{
+                    return {
+                      importeRepitencia: data.importe,
+                      tieneImporteRepitencia: 1,
+                      tipoMonedaRepitencia:data.id_moneda
+
+                    }
                     })
                     listaImportesTabla.push(data.importe);
                     
@@ -924,9 +948,12 @@ if(isNaN(pruebita)){
               .then((data)=>{
                 console.log("Importe 5");
                   console.log(data.importe)
-                  this.setState({
-                    importeTabla3: data.importe,
-                    bool3: 1,
+                  this.setState((state)=>{
+                    return {
+                      importeTabla3: data.importe,
+                      bool3: 1,
+                      tipoMonedaMatriculaEpg:data.id_moneda
+                    }
                     })
                     listaImportesTabla.push(data.importe);
                     console.log("Importe 6");
@@ -1067,6 +1094,10 @@ console.log(this.state.importeTabla)
   }
 
 //FUNCION PARA REGRESAR A LA VISTA ANTERIOR
+setField(e) {
+  this.setState({ [e.target.name]: e.target.value });
+}
+
 Regresar=(e)=>{
     //browserHistory.push('/'+this.state.name);
     browserHistory.push('/');
@@ -1145,153 +1176,221 @@ Regresar=(e)=>{
           
 
           <div className="row">
-            <div className="  col-md-12">
+            <div className="col-md-12">
               
-            <table className="tableImportes">
-                <tr >
-                  <th className="thLabel">MATRÍCULA UPG</th>
-                  <th className="thLabel">MATRÍCULA EPG</th>
-                </tr>
-                
-                <tr className="trTable">
-                  <td className="tdTable">
-                    <table className="tableImporte" >
-                      <thead>
-                        <tr>
-                          <th className="thVacio"></th><th className="thVacio"></th><th className="thVacio"></th>
-                          <th className="th">COSTO</th>
-                          <th >S/ <input id ="costoUno"  disabled="true" type="number" color="white" className="inputCosto"/></th>
-                          <th className="thVacio" >
-                          {localStorage.getItem('tipo')=='alumno' ? '' : <button onClick={this.EditarCostoUno} className="waves-effect waves-light btn-small"><i className="large material-icons center">edit</i>
-                          </button>}
-                          
-                          {(localStorage.getItem('tipo')=='alumno') ? '' : <button onClick={this.GuardarCostoUno} className="waves-effect waves-light btn-small"><i className="large material-icons center">save</i></button>}</th> 
+           <table className="tableImportes">
+                  <thead>
+                    <tr>
+                      <th className="thLabel">MATRÍCULA UPG</th>
+                      <th className="thLabel">MATRÍCULA EPG</th>
+                    </tr>
+                  </thead> 
+                  <tbody>
+                        <tr className="trTable">
+                          <td className="tdTable"> 
+                            <table className="tableImporte" >
+                              <thead>
+                                  <tr>
+                                      <th className="thVacio"></th><th className="thVacio"></th>
+                                      <th className="thVacio">
+                                        <div class="form-group">
+                                          <select class="form-control" name="tipoMonedaMatriculaUpg" id="tipoMonedaMatriculaUpg" value={this.state.tipoMonedaMatriculaUpg} onChange={e => this.setField(e)} disabled>
+                                            <option value="default">--Seleccione una opcion</option>
+                                            <option value="108" >SOLES</option>
+                                            <option value="113"> DOLARES</option>
+                                            
+                                          </select>
+                                        </div>
+                                      </th>
+                                      <th className="th">COSTO</th>
+                                      <th > {this.state.tipoMonedaMatriculaUpg=='108' ? <span>S/.</span> : <span>$</span> } <input id ="costoUno"  disabled="true" type="number" color="white" className="inputCosto"/></th>
+                                      <th className="thVacio" >
+                                      {localStorage.getItem('tipo')=='alumno' ? '' : <button onClick={this.EditarCostoUno} className="waves-effect waves-light btn-small"><i className="large material-icons center">edit</i>
+                                      </button>}
+                                      
+                                      {(localStorage.getItem('tipo')=='alumno') ? '' : <button onClick={this.GuardarCostoUno} className="waves-effect waves-light btn-small"><i className="large material-icons center">save</i></button>}</th> 
+                                  </tr>
+                                  <TableImporteHeader   />
+                              </thead>
+                              <tbody>
+                                  <ImporteList funcion={this.FuncionUno} listado={this.state.pagoUno}  conceptos={this.state.concepto} datos={this.state.datos} datosMonedas={this.state.monedas}  monedas={this.state.monedasvl} ubicaciones={this.state.ubicacionesv1} cuentas={this.state.cuentasv1} configuraciones={this.state.configuraciones}/>
+                                  <TableImporteFooter total ={this.CalcularImporteUno()} costo ={this.state.importeTabla1} />
+                              </tbody>
+                            </table>
+                          </td>    
+                          <td className="tdTable">
+                            <table className="tableImporte">
+                              <thead>
+                                <tr>
+                                      <th className="thVacio"></th><th className="thVacio"></th>
+                                      <th className="thVacio">
+                                      <div class="form-group">
+                                          <select class="form-control" name="tipoMonedaMatriculaEpg" id="tipoMonedaMatriculaEpg" value={this.state.tipoMonedaMatriculaEpg} onChange={e => this.setField(e)} disabled>
+                                            <option value="default">--Seleccione una opcion</option>
+                                            <option value="108" >SOLES</option>
+                                            <option value="113"> DOLARES</option>
+                                            
+                                          </select>
+                                        </div>
+                                      </th>
+                                      <th className="th">COSTO</th>
+                                      <th  > {this.state.tipoMonedaMatriculaEpg=='108' ? <span>S/.</span> : <span>$</span> } <input id ="costoTres"  disabled="true" type="number" className="inputCosto"/></th>
+                                      <th className="thVacio" >
+                                      {localStorage.getItem('tipo')=='alumno' ? ''  : 
+                                      <span>
+                                      <button onClick={this.EditarCostoTres} className="waves-effect waves-light btn-small"><i className="large material-icons center">edit</i></button>
+                                      <button onClick={this.GuardarCostoTres} className="waves-effect waves-light btn-small"><i className="large material-icons center">save</i></button>
+                                      </span>
+                                      } 
+                                      </th>
+                                </tr>
+                                  <TableImporteHeader   />
+                              </thead>
+                              <tbody>
+                                  <ImporteList funcion={this.FuncionTres} listado={this.state.pagoTres}  conceptos={this.state.concepto} datos={this.state.datos} datosMonedas={this.state.monedas}  monedas={this.state.monedasvl} ubicaciones={this.state.ubicacionesv1} cuentas={this.state.cuentasv1} configuraciones={this.state.configuraciones}/>
+                                  <TableImporteFooter total ={this.CalcularImporteTres()} costo ={this.state.importeTabla3}/>
+                              </tbody>
+                            </table>
+                          </td>
                         </tr>
-                      </thead>
-                      <TableImporteHeader   />
-                      
-                      <ImporteList funcion={this.FuncionUno} listado={this.state.pagoUno}  conceptos={this.state.concepto} datos={this.state.datos} datosMonedas={this.state.monedas}  monedas={this.state.monedasvl} ubicaciones={this.state.ubicacionesv1} cuentas={this.state.cuentasv1} configuraciones={this.state.configuraciones}/>
-                      <TableImporteFooter total ={this.CalcularImporteUno()} costo ={this.state.importeTabla1} />
-                    </table>
-                  </td>
-                  <td className="tdTable">
-                    <table className="tableImporte">
+                  </tbody>
+              </table>    
+               
+              {/* ************************************************* */}
+              <table className="tableImportes">
                       <thead>
-                        <tr>
-                          <th className="thVacio"></th><th className="thVacio"></th><th className="thVacio"></th>
-                          <th className="th">COSTO</th>
-                          <th  >S/ <input id ="costoTres"  disabled="true" type="number" className="inputCosto"/></th>
-                          <th className="thVacio" >
-                           {localStorage.getItem('tipo')=='alumno' ? ''  : 
-                           <span>
-                           <button onClick={this.EditarCostoTres} className="waves-effect waves-light btn-small"><i className="large material-icons center">edit</i></button>
-                           <button onClick={this.GuardarCostoTres} className="waves-effect waves-light btn-small"><i className="large material-icons center">save</i></button>
-                           </span>
-                           } 
-                          </th>
-                        </tr>
-                      </thead>
-                      <TableImporteHeader   />
-                      <ImporteList funcion={this.FuncionTres} listado={this.state.pagoTres}  conceptos={this.state.concepto} datos={this.state.datos} datosMonedas={this.state.monedas}  monedas={this.state.monedasvl} ubicaciones={this.state.ubicacionesv1} cuentas={this.state.cuentasv1} configuraciones={this.state.configuraciones}/>
-                      <TableImporteFooter total ={this.CalcularImporteTres()} costo ={this.state.importeTabla3}/>
-                    </table>
-                  </td>
-                </tr>
-
-                {/* ************************************************* */}
-                <tr className="trTable">
-                  <th className="thLabel">DERECHO ENSEÑANZAaa</th>
-                  <th className="thLabel">OTROS PAGOS</th>
-                </tr>
-                <tr className="trTable">
-                  <td className="tdTable">
-                    <table className="tableImporte">
-                      <thead>
-                        <tr>
-                          <th className="thVacio"></th><th className="thVacio"></th><th className="thVacio"></th>
-                          <th className="th">COSTO</th>
-                          <th  >S/ <input id ="costoDos"  disabled="true" type="number" className="inputCosto"/></th>
-                          <th className="thVacio" >
-                            {localStorage.getItem('tipo')=='alumno' ? '' : 
-                            <span>
-                              <button onClick={this.EditarCostoDos} className="waves-effect waves-light btn-small"><i className="large material-icons center">edit</i></button>
-                          <button onClick={this.GuardarCostoDos} className="waves-effect waves-light btn-small"><i className="large material-icons center">save</i></button>
-                            </span>
-                            }
-                          </th>
-                        </tr>
-                      </thead>
-                      <TableImporteHeader   />
-                      
-                      {/* Aca empieza el detecho de enseñanza */}
-                       
-                      <ImporteList funcion={this.FuncionDos} listado={this.state.pagoDos}  conceptos={this.state.concepto} datos={this.state.datos} datosMonedas={this.state.monedas}  monedas={this.state.monedasvl} ubicaciones={this.state.ubicacionesv1} cuentas={this.state.cuentasv1} configuraciones={this.state.configuraciones}/>
-                      
-                      <TableImporteFooter total ={this.CalcularImporteDos()} costo ={this.state.importeTabla2}/>
-                    </table>
-                  </td>
-                  <td className="tdTable">
-                    <table className="tableImporte"> 
-                      {/*<thead>
-                        <tr>
-                          <th className="thVacio"></th><th className="thVacio"></th><th className="thVacio"></th>
-                          <th className="th">COSTO</th>
-                          <th className="th" >S/ <input id ="costoCuatro"  disabled="true" type="number" className="th"/></th>
-                          <th className="thVacio" ><button onClick={this.EditarCostoCuatro} className="waves-effect waves-light btn-small"><i className="large material-icons center">edit</i></button>
-                          <button onClick={this.GuardarCostoCuatro} className="waves-effect waves-light btn-small"><i className="large material-icons center">save</i></button></th>
-                          
+                          <tr className="trTable">
+                            <th className="thLabel">DERECHO ENSEÑANZA</th>
+                            <th className="thLabel">REPITENCIA</th>
                           </tr>
-                      </thead>*/}
-                      <TableImporteHeader   />
-                      
-                      <ImporteList  funcion={this.FuncionCuatro} listado={this.state.pagoCuatro}  conceptos={this.state.concepto} datos={this.state.datos} datosMonedas={this.state.monedas}  monedas={this.state.monedasvl} ubicaciones={this.state.ubicacionesv1} cuentas={this.state.cuentasv1} configuraciones={this.state.configuraciones}/>
-                      {/*<TableImporteFooter total ={this.CalcularImporteCuatro()}/>*/}
-                    </table>
-                        {/**Aqui iba las tablas obligaciones */}
-                        <TablaOtrasObligaciones otrasObligaciones={this.ActualizarObligaciones()}  codAlumno={this.state.codigoAlumno} codPrograma={this.state.codigoPrograma} dataConcepto={this.state.datos} conceptoVL={this.state.concepto} dataMoneda={this.state.monedas} monedaVL ={this.state.monedasvl}/>
-                   
-                    {/**Aqui iba las tablas obligaciones */}
+                      </thead>
+                      <tbody>
+                            <tr className="trTable">
+                              <td className="tdTable">
+                                <table className="tableImporte">
+                                  <thead>
+                                    <tr>
+                                          <th className="thVacio"></th><th className="thVacio"></th>
+                                          <th className="thVacio">
+                                              <div class="form-group">
+                                                <select className="form-control" name="tipoMonedaDerechoEnseñanza" id="tipoMonedaDerechoEnseñanza" value={this.state.tipoMonedaDerechoEnseñanza} onChange={e => this.setField(e)} disabled>
+                                                    <option value="default">--Seleccione una opcion</option>
+                                                    <option value="108">SOLES</option>
+                                                    <option value="113">DOLARES</option>
+                                                
+                                                </select>
+                                              </div>
+                                          </th>
+                                          <th className="th">COSTO</th>
+                                          <th  > {this.state.tipoMonedaDerechoEnseñanza=='108' ? <span>S/.</span> : <span>$</span> } <input id ="costoDos"  disabled="true" type="number" className="inputCosto"/></th>
+                                          <th className="thVacio" >
+                                            {localStorage.getItem('tipo')=='alumno' ? '' : 
+                                            <span>
+                                              <button onClick={this.EditarCostoDos} className="waves-effect waves-light btn-small"><i className="large material-icons center">edit</i></button>
+                                          <button onClick={this.GuardarCostoDos} className="waves-effect waves-light btn-small"><i className="large material-icons center">save</i></button>
+                                            </span>
+                                            }
+                                          </th>
+                                    </tr>
+                                      <TableImporteHeader   />                                
+                                  </thead>
+                                  <tbody>
+                                      <ImporteList funcion={this.FuncionDos} listado={this.state.pagoDos}  conceptos={this.state.concepto} datos={this.state.datos} datosMonedas={this.state.monedas}  monedas={this.state.monedasvl} ubicaciones={this.state.ubicacionesv1} cuentas={this.state.cuentasv1} configuraciones={this.state.configuraciones}/>
+                                      <TableImporteFooter total ={this.CalcularImporteDos()} costo ={this.state.importeTabla2}/>
+                                  </tbody>
+                                </table>
+                              </td>
+                              
+                              <td className="tdTable">
+                                      <table className="tableImporte">
+                                        <thead>
+                                              <tr>
+                                                <th className="thVacio"></th><th className="thVacio"></th>
+                                                <th className="thVacio">
+                                                      <div className="form-group">
+                                                          <select class="form-control" name="tipoMonedaRepitencia" id="tipoMonedaRepitencia" value={this.state.tipoMonedaRepitencia} onChange={e => this.setField(e)} disabled>
+                                                              <option value="default">Seleccione opcion</option>
+                                                              <option value="108" >SOLES</option>
+                                                              <option value="113" > DOLARES</option>
+                                                          
+                                                          </select>
+                                                    </div>
+                                                </th>
+                                                <th className="th">COSTO</th>
+                                                <th  > {this.state.tipoMonedaRepitencia =='108' ? <span>S/.</span> : <span>$</span> } <input id ="repitencia"  disabled="true" type="number" className="inputCosto" /></th>
+                                                <th className="thVacio" >
+                                                  {localStorage.getItem('tipo')=='alumno' ? '' : 
+                                                  <span>
+                                                    <button onClick={this.EditarRepitencia} className="waves-effect waves-light btn-small"><i className="large material-icons center">edit</i></button>
+                                                <button onClick={this.GuardarCostoRepitencia} className="waves-effect waves-light btn-small"><i className="large material-icons center">save</i></button>
+                                                  </span>
+                                                  }
+                                                </th>
+                                              </tr>
+                                            <TableImporteHeader   />
+                                        </thead>
 
-                  </td>
-                </tr>
+                                        <tbody>
+
+                                            <ImporteList funcion={this.FuncionDos} listado={this.state.listaRepitencia}  conceptos={this.state.concepto} datos={this.state.datos} datosMonedas={this.state.monedas}  monedas={this.state.monedasvl} ubicaciones={this.state.ubicacionesv1} cuentas={this.state.cuentasv1} configuraciones={this.state.configuraciones}/>
+                                            <TableImporteFooter total ={this.CalcularImporteRepitencia()} costo ={this.state.importeRepitencia}/>
+
+                                        </tbody>
+                                      </table>
+                                    </td>
+                            </tr>
+
+                        </tbody>
+                </table >
                   {/* ************************************************* */}
 
-                  <tr className="trTable">
-                      <th className="thLabel">REPITENCIA</th>
-                  </tr>
-
-                  <tr className="trTable">
-                      <td className="tdTable">
-                        <table className="tableImporte">
-                          <thead>
-                            <tr>
-                              <th className="thVacio"></th><th className="thVacio"></th><th className="thVacio"></th>
-                              <th className="th">COSTO</th>
-                              <th  >S/ <input id ="repitencia"  disabled="true" type="number" className="inputCosto" /></th>
-                              <th className="thVacio" >
-                                {localStorage.getItem('tipo')=='alumno' ? '' : 
-                                <span>
-                                  <button onClick={this.EditarRepitencia} className="waves-effect waves-light btn-small"><i className="large material-icons center">edit</i></button>
-                              <button onClick={this.GuardarCostoRepitencia} className="waves-effect waves-light btn-small"><i className="large material-icons center">save</i></button>
-                                </span>
-                                }
-                              </th>
+                  <table className="tableImportes">
+                        <thead>
+                            <tr className="trTable">
+                              <th className="thLabel">OTROS PAGOS</th>
+                              <th className="thLabel">OTRAS OBLIGACIONES</th>
                             </tr>
-                          </thead>
-                          <TableImporteHeader   />
-                          
-                          {/* Aca empieza el detecho de enseñanza */}
-                          
-                          <ImporteList funcion={this.FuncionDos} listado={this.state.listaRepitencia}  conceptos={this.state.concepto} datos={this.state.datos} datosMonedas={this.state.monedas}  monedas={this.state.monedasvl} ubicaciones={this.state.ubicacionesv1} cuentas={this.state.cuentasv1} configuraciones={this.state.configuraciones}/>
-                          
-                          <TableImporteFooter total ={this.CalcularImporteRepitencia()} costo ={this.state.importeRepitencia}/>
-                        </table>
-                      </td>
-                  
-                </tr>
-                  
+                        </thead>  
 
+                          <tbody>
+                                <tr className="trTable">
+                                      <td className="tdTable">
+                                          <table className="tableImporte"> 
+                                            
 
+                                              {/* 
+                                                  <tr>
+                                                    <th className="thVacio"></th><th className="thVacio"></th><th className="thVacio"></th>
+                                                    <th className="th">COSTO</th>
+                                                    <th className="th" >S/ <input id ="costoCuatro"  disabled="true" type="number" className="th"/></th>
+                                                    <th className="thVacio" ><button onClick={this.EditarCostoCuatro} className="waves-effect waves-light btn-small"><i className="large material-icons center">edit</i></button>
+                                                    <button onClick={this.GuardarCostoCuatro} className="waves-effect waves-light btn-small"><i className="large material-icons center">save</i></button></th>
+                                                    
+                                                  </tr> 
+                                              */}
+                                            <thead>
+                                              <TableImporteHeader   />
+                                            </thead>
+                                            <tbody>
+                                                <ImporteList  funcion={this.FuncionCuatro} listado={this.state.pagoCuatro}  conceptos={this.state.concepto} datos={this.state.datos} datosMonedas={this.state.monedas}  monedas={this.state.monedasvl} ubicaciones={this.state.ubicacionesv1} cuentas={this.state.cuentasv1} configuraciones={this.state.configuraciones}/>
+                                            </tbody>
+                                            {/*<TableImporteFooter total ={this.CalcularImporteCuatro()}/>*/}
+                                          </table>
+                                          {/**Aqui iba las tablas obligaciones */}
+                                          
+                                    
+                                      {/**Aqui iba las tablas obligaciones */}
+
+                                    </td>
+                                    <td className="tdTable">
+                                        <TablaOtrasObligaciones otrasObligaciones={this.ActualizarObligaciones()}  codAlumno={this.state.codigoAlumno} codPrograma={this.state.codigoPrograma} dataConcepto={this.state.datos} conceptoVL={this.state.concepto} dataMoneda={this.state.monedas} monedaVL ={this.state.monedasvl}/>
+                                    </td>
+                                
+                              </tr>
+                        </tbody>
+                  
+                </table>
+{/* *************************************************************** */}
                 {/**Aqui Va las tablas obligaciones */}
                 {/*<tr className="trTable">
                   <td className="tdTable" >
@@ -1304,8 +1403,8 @@ Regresar=(e)=>{
                   </td>
                     </tr>*/}
                 {/**Aqui Va las tablas obligaciones */}
- {/***/}
-              </table>
+ {/* *************************************************************** */}
+              
 
 
             </div>
@@ -1418,24 +1517,28 @@ ActualizarObligaciones=()=>{
 EditarCostoUno(){
       var costo ="costoUno";
       console.log("COSTOOOOOOO: "+document.getElementById(costo).value);
+      document.getElementById("tipoMonedaMatriculaUpg").disabled=false;
       document.getElementById(costo).disabled = false;
       document.getElementById(costo).focus();
 }
 EditarCostoDos(){
   var costo ="costoDos";
   console.log("COSTOOOOOOO: "+document.getElementById(costo).value);
+  document.getElementById("tipoMonedaDerechoEnseñanza").disabled=false;
   document.getElementById(costo).disabled = false;
   document.getElementById(costo).focus();
 }
 EditarRepitencia(){
   var costo ="repitencia";
   console.log("repitencia: "+document.getElementById(costo).value);
+  document.getElementById("tipoMonedaRepitencia").disabled=false;
   document.getElementById(costo).disabled = false;
   document.getElementById(costo).focus();
 }
 EditarCostoTres(){
   var costo ="costoTres";
   console.log("COSTOOOOOOO: "+document.getElementById(costo).value);
+  document.getElementById("tipoMonedaMatriculaEpg").disabled=false;
   document.getElementById(costo).disabled = false;
   document.getElementById(costo).focus();
 }
@@ -1465,8 +1568,11 @@ MostrarImporte(codigoalumno,codigoprograma,codigoconcepto){
 //GUARDAMOS EL COSTO EDITADO
 GuardarCostoUno=(e)=>{
   var costo ="costoUno";
-  var existeImporte = 0;
+  let idMoneda = this.state.tipoMonedaMatriculaUpg;
+
   document.getElementById(costo).disabled = true;
+  document.getElementById("tipoMonedaMatriculaUpg").disabled=true;
+  
   console.log("COSTOOOOOOO: "+document.getElementById(costo).value);
 
   var codConcepto = 9;
@@ -1481,10 +1587,10 @@ GuardarCostoUno=(e)=>{
   console.log("BOOL1:"+this.state.bool1);
 
   if(this.state.bool1 == 0){
-    this.AddCostoImporte(codConcepto,importePago,id_tipo_recaudacion);
+    this.AddCostoImporte(codConcepto,importePago,id_tipo_recaudacion,idMoneda);
   }else  if(this.state.importeTabla1>=0){
     alert("actualizara el importe");
-    this.UpdateCostoImporte(codConcepto,importePago,id_tipo_recaudacion);
+    this.UpdateCostoImporte(codConcepto,importePago,id_tipo_recaudacion,idMoneda);
   
     //this.setState({  bool1: 1  });
   }
@@ -1497,8 +1603,9 @@ GuardarCostoUno=(e)=>{
 //ANALISIS DEL CODIGO
 GuardarCostoDos=(e)=>{
   var costo ="costoDos";
-  
+  let idMoneda= this.state.tipoMonedaDerechoEnseñanza;
   document.getElementById(costo).disabled = true;
+  document.getElementById("tipoMonedaDerechoEnseñanza").disabled=true;
   console.log("COSTO DERECHO ENSEÑANZA: "+document.getElementById(costo).value);
 
   //Regresar aqui
@@ -1511,10 +1618,10 @@ GuardarCostoDos=(e)=>{
     })
     if(this.state.bool2 == 0){
       alert("entro a add importe");
-      this.AddCostoImporte(codConcepto,importePago,id_tipo_recaudacion);
+      this.AddCostoImporte(codConcepto,importePago,id_tipo_recaudacion,idMoneda);
     }else if(this.state.importeTabla2>=0){
       alert("Se actualizará el importe");
-    this.UpdateCostoImporte(codConcepto,importePago,id_tipo_recaudacion);
+    this.UpdateCostoImporte(codConcepto,importePago,id_tipo_recaudacion,idMoneda);
   }
   
   
@@ -1522,8 +1629,9 @@ GuardarCostoDos=(e)=>{
 
 GuardarCostoRepitencia=(e)=>{
   var idRepitencia ="repitencia";
-  
+  let idMoneda = this.state.tipoMonedaRepitencia;
   document.getElementById(idRepitencia).disabled = true;
+  document.getElementById("tipoMonedaRepitencia").disabled=true;
   console.log("COSTO REPITENCIA: "+document.getElementById(idRepitencia).value);
 
   //Regresar aqui
@@ -1537,18 +1645,19 @@ GuardarCostoRepitencia=(e)=>{
     })
     if(this.state.tieneImporteRepitencia == 0){
       alert("entro a add importe");
-       this.AddCostoImporte(codConcepto,importeRepitencia,id_tipo_recaudacion);
+       this.AddCostoImporte(codConcepto,importeRepitencia,id_tipo_recaudacion,idMoneda);
     }else if(this.state.importeRepitencia>=0){
       alert("Se actualizará el importe");
-     this.UpdateCostoImporte(codConcepto,importeRepitencia,id_tipo_recaudacion);
+     this.UpdateCostoImporte(codConcepto,importeRepitencia,id_tipo_recaudacion,idMoneda);
   }
 }
 
 
 GuardarCostoTres=(e)=>{
   var costo ="costoTres";
-  
+  let idMoneda = this.state.tipoMonedaMatriculaEpg
   document.getElementById(costo).disabled = true;
+  document.getElementById("tipoMonedaMatriculaEpg").disabled=true;
   console.log("COSTOOOOOOO: "+document.getElementById(costo).value);
 
   var codConcepto = 117;
@@ -1561,9 +1670,9 @@ GuardarCostoTres=(e)=>{
 
     console.log("BOOL1:"+this.state.bool3);
     if(this.state.bool3 == 0){
-      this.AddCostoImporte(codConcepto,importePago,id_tipo_recaudacion);
+      this.AddCostoImporte(codConcepto,importePago,id_tipo_recaudacion,idMoneda);
     }else if(this.state.importeTabla3>=0){
-    this.UpdateCostoImporte(codConcepto,importePago,id_tipo_recaudacion);
+    this.UpdateCostoImporte(codConcepto,importePago,id_tipo_recaudacion,idMoneda);
   
     //this.setState({  bool3: 1  });
   }
@@ -1576,6 +1685,7 @@ CalcularDeudaTotal=(e)=>{
   var deudaUpg = this.state.importeTabla1 - this.CalcularImporteUno();
   var deudaEpg = this.state.importeTabla3 - this.CalcularImporteTres();
   var deudaDE = this.state.importeTabla2 - this.CalcularImporteDos();
+  var deudaRepitencia = this.state.importeRepitencia -this.CalcularImporteRepitencia();
   var deudaTotal = 0;
 
   console.log("DeudaUPGl:"+this.state.importeTabla1);
@@ -1593,11 +1703,14 @@ CalcularDeudaTotal=(e)=>{
   if(deudaDE>=0){
     deudaTotal = deudaTotal + deudaDE;
   }
+  if(deudaRepitencia>=0){
+    deudaTotal = deudaTotal+ deudaRepitencia;
+  }
 
   return deudaTotal;
 }
 
-AddCostoImporte=(codConcepto,importePago,id_tipo_recaudacion)=>{
+AddCostoImporte=(codConcepto,importePago,id_tipo_recaudacion,idMoneda)=>{
   console.log("el mensaje de prueba",
   JSON.stringify(
     {
@@ -1626,7 +1739,7 @@ AddCostoImporte=(codConcepto,importePago,id_tipo_recaudacion)=>{
         "cod_concepto": codConcepto,
         "importe": importePago,
         "id_tipo_recaudacion": id_tipo_recaudacion,
-        "id_moneda": "108"
+        "id_moneda": idMoneda
       }
 
     )
@@ -1637,7 +1750,7 @@ AddCostoImporte=(codConcepto,importePago,id_tipo_recaudacion)=>{
 }
 
 
-UpdateCostoImporte=(codConcepto,importePago,id_tipo_recaudacion)=>{
+UpdateCostoImporte=(codConcepto,importePago,id_tipo_recaudacion,idMoneda)=>{
   console.log("Data actualizar ",JSON.stringify(
     {
       "cod_alumno": this.state.codigoAlumno,
@@ -1645,6 +1758,7 @@ UpdateCostoImporte=(codConcepto,importePago,id_tipo_recaudacion)=>{
       "cod_concepto": codConcepto,
       "importe": importePago,
       "id_tipo_recaudacion" : id_tipo_recaudacion
+
     }
 
   ));
@@ -1660,7 +1774,8 @@ UpdateCostoImporte=(codConcepto,importePago,id_tipo_recaudacion)=>{
         "cod_programa": this.state.codigoPrograma,
         "cod_concepto": codConcepto,
         "importe": importePago,
-        "id_tipo_recaudacion" : id_tipo_recaudacion
+        "id_tipo_recaudacion" : id_tipo_recaudacion,
+        "id_moneda" : idMoneda
       }
 
     )

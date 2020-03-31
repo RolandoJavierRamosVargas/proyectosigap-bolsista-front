@@ -317,9 +317,8 @@ componentDidUpdate(){
    fetch(CONFIG+'/concepto/conceptos')
    .then((response)=>{
        return response.json()
-   }).then((listas)=>{
-       console.log("holaaaaaaaa")
-       console.log(listas)
+   })
+   .then((listas)=>{
 
        this.setState({
          datos:listas
@@ -545,182 +544,181 @@ this.setState({
 
     }
     else{
-      this.clase=AlumnoCodigo
+            this.clase=AlumnoCodigo
 
-      fetch(CONFIG+'/beneficio/listar/' + nombrenuevo)
-        .then((response)=>{
-            return response.json()
-        }).then((datos)=>{
+            fetch(CONFIG+'/beneficio/listar/' + nombrenuevo)
+              .then((response)=>{
+                  return response.json()
+              }).then((datos)=>{
 
-          console.log("datos del beneficio que posee el alumno");
-          console.log(datos);
-          this.setState({datosformulario: datos})
+                console.log("datos del beneficio que posee el alumno");
+                console.log(datos);
+                this.setState({datosformulario: datos})
 
-        })
-        .catch(error=>{
-            console.error(error)
-        });
-
-        // El nombre nuevo es el codigo del alumno por favor escribir los nombres de las variables para que tengan sentido
-        // console.log("el codigo del alumno es ->",nombrenuevo)
-      fetch(CONFIG+'recaudaciones/alumno/concepto/listar_cod/' + nombrenuevo)
-      .then((response) => {
-        return response.json()
-      })
-      .then((pagos) => {
-
-         console.log("pagos de la consulta de acuerdo al codigo  ingresado son ->",pagos);
-         console.log(pagos[0].idPrograma)
-         this.setState({
-           idPrograma : pagos[0].idPrograma
-         })
-
-         console.log("UN IDREC");
-        // console.log(pagos[1].idRec);
-        var auxPagos = pagos
-
-      var alumnoDetalle = {
-      apeNom: nombreAlumno
-      }
-        this.setState({
-          pagocero: pagos,
-          pagos: pagos,
-          alumno: alumnoDetalle,
-        },
-
-        );
-      var total=this.state.pagocero;
-
-     this.state.pagocero.map((pago)=>{
-       pago.check=false
-     })
-      // console.log(this.state.pagocero); colocar=()=>{
-
-      fetch(CONFIG+'beneficio/comprobacion/' + nombrenuevo)//CONFIG+'beneficio/breporte/' + nombrenuevo+'/'+auxPagos[0].idPrograma
-      .then((response)=>{
-          return response.json()
-      }).then((comprobacion)=>{//costos
-          console.log(comprobacion);
-          if(this.state.suma){
-            if(this.state.costosP.creditos){
-              this.setState({
-                idProgramaOriginal : pagos[0].idPrograma
               })
-            }
-           else {
-            this.setState({
-              idProgramaOriginal : 0
+              .catch(error=>{
+                  console.error(error)
+              });
+
+              // El nombre nuevo es el codigo del alumno por favor escribir los nombres de las variables para que tengan sentido
+              // console.log("el codigo del alumno es ->",nombrenuevo)
+            fetch(CONFIG+'recaudaciones/alumno/concepto/listar_cod/' + nombrenuevo)
+            .then((response) => {
+              return response.json()
             })
-           }
-           this.setState({
-             suma: false
-           })
-          }
-          if(comprobacion ==  1 ){
-              //console.log("toffe");
-              this.reporte_credito(comprobacion,nombrenuevo,auxPagos);
-              setTimeout(() => {
-                this.setState({
-                  costosP2: this.state.costosP
-                })
-                if(this.state.costosP.creditos){
-                  this.setState({
-                    idProgramaMostrar : pagos[0].idPrograma
-                  })
-                }
-               else {
-                this.setState({
-                  idProgramaMostrar : 0
-                })
-               }
-              }, 500);
-          }
-          else if(comprobacion == 2) {
-              //console.log("oso");
-              this.reporte_ciclo(nombrenuevo,auxPagos,2);
-              setTimeout(() => {
-                this.setState({
-                  costosP2: this.state.costosP
-                })
-                if(this.state.costosP.creditos){
-                  this.setState({
-                    idProgramaMostrar : pagos[0].idPrograma
-                  })
-                }
-               else {
-                this.setState({
-                  idProgramaMostrar : 0
-                })
-               }
-              }, 500);
-          }
-          else if(comprobacion == 3){
-               if(comprobacion.tipo == "por ciclo"){
-                   this.reporte_ciclo(nombrenuevo,auxPagos,0);
-                   setTimeout(() => {
-                    this.setState({
-                      costosP2: this.state.costosP
-                    })
-                    if(this.state.costosP.creditos){
-                      this.setState({
-                        idProgramaMostrar : pagos[0].idPrograma
-                      })
-                    }
-                   else {
-                    this.setState({
-                      idProgramaMostrar : 0
-                    })
-                   }
-                  }, 500);
-               }
-               else{
-                   this.reporte_credito(comprobacion,nombrenuevo,auxPagos);
-                   setTimeout(() => {
-                    this.setState({
-                      costosP2: this.state.costosP
-                    })
-                    if(this.state.costosP.creditos){
-                      this.setState({
-                        idProgramaMostrar : pagos[0].idPrograma
-                      })
-                    }
-                   else {
-                    this.setState({
-                      idProgramaMostrar : 0
-                    })
-                   }
-                  }, 500);
-               }
-          }
-      })
-      .catch(error=>{
-          console.error(error)
-      });
+            .then((pagos) => {
 
-      }
-    )
-      .catch(error => {
-        // si hay algún error lo mostramos en consola
-        console.error(error)
-      });
-    //LINK ANTERIOR::
-    //'https://modulo-alumno-zuul.herokuapp.com/modulo-alumno-jdbc-client/concepto/leer/restringido/'
-    console.log("link conceptos")
-    console.log(CONFIG+'concepto/leer/restringido/' + nombrenuevo)
+                      console.log("pagos de la consulta de acuerdo al codigo  ingresado son ->",pagos);
+                      console.log(pagos[0].idPrograma)
+                      this.setState({
+                        idPrograma : pagos[0].idPrograma
+                      })
 
-    fetch(CONFIG+'concepto/leer/restringido_cod/' + nombrenuevo)
-      .then((response) => {
-        return response.json()
-      })
-      .then((conceptos) => {
-        this.setState({
-          conceptos: conceptos
-        },
-        );
-      })
-      .catch(error => {
-        console.error(error)
-      });
+                      console.log("UN IDREC");
+                      // console.log(pagos[1].idRec);
+                      var auxPagos = pagos
+
+                    var alumnoDetalle = {
+                    apeNom: nombreAlumno
+                    }
+                    /***************************************************************************** */
+                      this.setState({
+                        pagocero: pagos,
+                        pagos: pagos,
+                        alumno: alumnoDetalle,
+                      });
+                      /***************************************************************************** */
+                    var total=this.state.pagocero;
+
+                  this.state.pagocero.map((pago)=>{
+                    pago.check=false
+                  })
+                    // console.log(this.state.pagocero); colocar=()=>{
+
+                    fetch(CONFIG+'beneficio/comprobacion/' + nombrenuevo)//CONFIG+'beneficio/breporte/' + nombrenuevo+'/'+auxPagos[0].idPrograma
+                    .then((response)=>{
+                        return response.json()
+                    }).then((comprobacion)=>{//costos
+                        console.log(comprobacion);
+                        if(this.state.suma){
+                          if(this.state.costosP.creditos){
+                            this.setState({
+                              idProgramaOriginal : pagos[0].idPrograma
+                            })
+                          }
+                        else {
+                          this.setState({
+                            idProgramaOriginal : 0
+                          })
+                        }
+                        this.setState({
+                          suma: false
+                        })
+                        }
+                        if(comprobacion ==  1 ){
+                            //console.log("toffe");
+                            this.reporte_credito(comprobacion,nombrenuevo,auxPagos);
+                            setTimeout(() => {
+                              this.setState({
+                                costosP2: this.state.costosP
+                              })
+                              if(this.state.costosP.creditos){
+                                this.setState({
+                                  idProgramaMostrar : pagos[0].idPrograma
+                                })
+                              }
+                            else {
+                              this.setState({
+                                idProgramaMostrar : 0
+                              })
+                            }
+                            }, 500);
+                        }
+                        else if(comprobacion == 2) {
+                            //console.log("oso");
+                            this.reporte_ciclo(nombrenuevo,auxPagos,2);
+                            setTimeout(() => {
+                              this.setState({
+                                costosP2: this.state.costosP
+                              })
+                              if(this.state.costosP.creditos){
+                                this.setState({
+                                  idProgramaMostrar : pagos[0].idPrograma
+                                })
+                              }
+                            else {
+                              this.setState({
+                                idProgramaMostrar : 0
+                              })
+                            }
+                            }, 500);
+                        }
+                        else if(comprobacion == 3){
+                            if(comprobacion.tipo == "por ciclo"){
+                                this.reporte_ciclo(nombrenuevo,auxPagos,0);
+                                setTimeout(() => {
+                                  this.setState({
+                                    costosP2: this.state.costosP
+                                  })
+                                  if(this.state.costosP.creditos){
+                                    this.setState({
+                                      idProgramaMostrar : pagos[0].idPrograma
+                                    })
+                                  }
+                                else {
+                                  this.setState({
+                                    idProgramaMostrar : 0
+                                  })
+                                }
+                                }, 500);
+                            }
+                            else{
+                                this.reporte_credito(comprobacion,nombrenuevo,auxPagos);
+                                setTimeout(() => {
+                                  this.setState({
+                                    costosP2: this.state.costosP
+                                  })
+                                  if(this.state.costosP.creditos){
+                                    this.setState({
+                                      idProgramaMostrar : pagos[0].idPrograma
+                                    })
+                                  }
+                                else {
+                                  this.setState({
+                                    idProgramaMostrar : 0
+                                  })
+                                }
+                                }, 500);
+                            }
+                        }
+                    })
+                    .catch(error=>{
+                        console.error(error)
+                    });
+
+            })
+            .catch(error => {
+              // si hay algún error lo mostramos en consola
+              console.error(error)
+            });
+          //LINK ANTERIOR::
+          //'https://modulo-alumno-zuul.herokuapp.com/modulo-alumno-jdbc-client/concepto/leer/restringido/'
+              console.log("link conceptos")
+              console.log(CONFIG+'concepto/leer/restringido/' + nombrenuevo)
+
+            fetch(CONFIG+'concepto/leer/restringido_cod/' + nombrenuevo)
+              .then((response) => {
+                return response.json()
+              })
+              .then((conceptos) => {
+                this.setState({
+                  conceptos: conceptos
+                },
+                );
+              })
+              .catch(error => {
+                console.error(error)
+              });
     }
 
         /**set array pagos */ 
@@ -728,10 +726,12 @@ this.setState({
         .then((response) => {
         return response.json();
         })
-        .then((pagos)  =>{
-          console.log("anyiiiiiiiiiiiiiiiiiiii"+this.state.pagos[0].estado_civil)
+        .then( pagos  =>{
+          
+          
+          console.log(" estado civil ",pagos[0].estado_civil)
           this.setState({
-          estadoAlumno:this.state.pagos[0].estado_civil,
+          estadoAlumno:pagos[0].estado_civil,
           })
         });
 }

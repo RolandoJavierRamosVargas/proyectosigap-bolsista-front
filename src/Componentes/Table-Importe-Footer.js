@@ -15,31 +15,31 @@ class TableImporteFooter extends React.Component {
 
   render() {
     return(
-    <thead>
+
 			
-    
+      <React.Fragment>
       
-      <tr>      
-        
-        <th className="thVacio"></th>
-        <th className="thVacio"></th>
-        <th className="thVacio"></th>
-        <th className="th">TOTAL</th>
-        <th className="inputImporte">S/. {this.props.total}</th>
-        <th className="thVacio"></th>
-        
-      </tr>
-      <tr>      
-        
-        <th className="thVacio"></th>
-        <th className="thVacio"></th>
-        <th className="thVacio"></th>
-        <th className="th">DEUDA ACTUAL</th>
-        <th className="inputDeuda">S/. {this.props.costo-this.props.total}</th>
-        <th className="thVacio"></th>
-        
-      </tr>
-	</thead>
+          <tr>      
+            
+            <th className="thVacio"></th>
+            <th className="thVacio"></th>
+            <th className="thVacio"></th>
+            <th className="th">TOTAL</th>
+            <th className="inputImporte">S/. {this.props.total}</th>
+            <th className="thVacio"></th>
+            
+          </tr>
+          <tr>      
+            
+            <th className="thVacio"></th>
+            <th className="thVacio"></th>
+            <th className="thVacio"></th>
+            <th className="th">DEUDA ACTUAL</th>
+            <th className="inputDeuda">S/. {this.props.costo-this.props.total}</th>
+            <th className="thVacio"></th>
+            
+          </tr>
+      </React.Fragment>
     )
   }
 }

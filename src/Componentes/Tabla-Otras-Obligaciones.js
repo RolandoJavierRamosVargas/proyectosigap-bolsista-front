@@ -234,7 +234,7 @@ class TablaOtrasObligaciones extends React.Component {
               </Modal>
 
 
-<table>
+<table className="tableImporte">
 
         <tr >
             <th className="thLabel">OTRAS OBLIGACIONES PENDIENTES DE PAGO</th>

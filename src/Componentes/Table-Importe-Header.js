@@ -8,7 +8,7 @@ class TableImporteHeader extends React.Component {
   }
   render() {
     return(
-    <thead>
+    
 			
       <tr>      
         
@@ -22,7 +22,7 @@ class TableImporteHeader extends React.Component {
         
       </tr>
     
-	</thead>
+	
     )
   }
 }

@@ -20,7 +20,7 @@ class ImporteList extends React.Component {
     console.log(this.state.datos)
     return (
       
-        <tbody >
+      <React.Fragment>
           {
             this.props.listado.map((pago,key) => {
               return <ImporteRow Funciones={this.props.funcion} key={pago.idRec} numero={key}
@@ -29,7 +29,7 @@ class ImporteList extends React.Component {
                                    ubicaciones={this.props.ubicaciones}  cuentas={this.props.cuentas} configuraciones={this.props.configuraciones}/>
             })
           }
-        </tbody>
+      </React.Fragment>
         
     )
   }
