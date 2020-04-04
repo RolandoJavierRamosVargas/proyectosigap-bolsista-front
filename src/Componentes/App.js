@@ -68,6 +68,8 @@ class App extends React.Component {
       monedasvl:[],
       ubicaciones:[],
       ubicacionesv1:[],
+
+      tipo_recaudacion:[],
       
       /**
        * Aca entran las repitencias
@@ -253,6 +255,18 @@ componentDidUpdate(){
   componentWillMount() {
     console.log("esto es primero");
 
+
+    fetch(CONFIG+"tiposRecaudacion/listar")
+    .then(resp => {
+      return resp.json();
+    })
+    .then(data => {
+      console.log("los tipos de racaudacion",data)
+      this.setState({
+        tipo_recaudacion: data.tipoRecaudaciones
+      })
+    })
+
       setTimeout(() => {
         
     console.log("Este es el id del programa",this.state.idPrograma)
@@ -296,6 +310,9 @@ componentDidUpdate(){
     
     this.hallarBeneficios(this.state.alumno.apeNom);
   }, 2000);
+
+
+  
     console.log("El pago cero es: ",this.pagocero)
 
     this.pageOfItems = this.pagocero;
@@ -720,7 +737,7 @@ this.setState({
                 console.error(error)
               });
     }
-
+/****************************************************************************** */
         /**set array pagos */ 
         fetch(CONFIG+'recaudaciones/alumno/concepto/listar_cod/' + nombrenuevo)
         .then((response) => {
@@ -734,6 +751,7 @@ this.setState({
           estadoAlumno:pagos[0].estado_civil,
           })
         });
+/****************************************************************************** */
 }
 
 
@@ -1246,7 +1264,7 @@ this.setState({
               <table className="table-small">
                 <TableHeader   />
                
-                <PagoList funcion={this.Funcion} listado={this.state.pageOfItems}  conceptos={this.state.concepto} datos={this.state.datos} datosMonedas={this.state.monedas}  monedas={this.state.monedasvl} ubicaciones={this.state.ubicacionesv1} repitencia={this.state.repitenciav1} cuentas={this.state.cuentasv1} configuraciones={this.state.configuraciones}/>
+                <PagoList funcion={this.Funcion} listado={this.state.pageOfItems}  conceptos={this.state.concepto} datos={this.state.datos} datosMonedas={this.state.monedas}  monedas={this.state.monedasvl} ubicaciones={this.state.ubicacionesv1} repitencia={this.state.repitenciav1} cuentas={this.state.cuentasv1} configuraciones={this.state.configuraciones} tipo_recaudacion={this.state.tipo_recaudacion}/>
               </table>
               <div className="margen_top"> <Paginacion items={this.state.pagocero} onChangePage={this.onChangePage}/></div>
               <div className="row">
@@ -1551,11 +1569,16 @@ show_or_hide() {
   document.getElementById("ubicacion_header").style.display = statusInfo;
   document.getElementById("banco_header").style.display = statusInfo;
   document.getElementById("repitencia_header").style.display = statusInfo;
-
+/************ */
+  document.getElementById("tipo_recaudacion_header").style.display = statusInfo;
+/************ */
   for(var i=1; i<=len; i++){
     document.getElementById("ubicacion" + i).style.display = statusInfo;  
     document.getElementById("banco" + i).style.display = statusInfo; 
     document.getElementById("repitencia" + i).style.display = statusInfo; 
+    /************ */
+    document.getElementById("tipo_recaudacion"+i).style.display = statusInfo;
+    /************ */
   }
 }
 
@@ -1860,6 +1883,7 @@ class Paginacion extends React.Component {
       this.setPage(this.props.initialPage);
     }
   }
+
   setPage(page) {
     var items = this.props.items;
     var pager = this.state.pager;

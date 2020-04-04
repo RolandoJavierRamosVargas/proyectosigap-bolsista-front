@@ -20,20 +20,51 @@ class PagoRow extends React.Component {
       desabilitar4: true,
       desabilitar5: true,
       desabilitar6: true,
+      desablilitarTipoRecaudacion:true,
       selectedOption: null,
       selectedOption2: null,
       selectedOption3: null,
       selectedOption4: null,
       selectedOption5: null,
       selectedOption6: null,
+      selectedIdTipoRecaudacion:null,
       idconcepto: '',
       idmoneda: '',
       array: this.props.datos,
       moneda: '',
       estado: '',
-      isChecked: false
+      isChecked: false,
+      tipo_recaudacion:[]
+
+
     }
   }
+
+    componentWillMount(){
+      let id= this.props.pago.id_tipo_recaudacion;
+      let tiposRecaudacion=this.props.tipo_recaudacion;
+      let tiposConvertidos=[];
+      tiposRecaudacion.forEach(element => {
+        
+          let object = {
+            label:element.desc_tipo_recaudacion,
+            value:element.id_tipo_recaudacion
+          }
+          if(id==element.id_tipo_recaudacion){
+            this.setState({
+              selectedIdTipoRecaudacion:object
+          })}
+
+          tiposConvertidos.push(object);
+      });
+
+      this.setState({
+        tipo_recaudacion:tiposConvertidos
+      })
+
+    }
+
+
 
   componentDidMount() {
     // if(this.props.pago.estado=="M"){
@@ -51,6 +82,7 @@ class PagoRow extends React.Component {
       selectedOption3: { value: this.props.pago.descripcion_ubi, label: this.props.pago.descripcion_ubi },
       selectedOption4: { value: this.props.pago.descripcion_tipo, label: this.props.pago.descripcion_tipo },
       selectedOption6: { value: this.props.pago.repitencia, label: this.props.pago.repitencia=='S' ? 'SI' : 'NO'},
+      
       
       idmoneda: this.idmoneda(this.props.pago.moneda2),
       estado: this.setEstado(this.props.pago.estado),
@@ -198,6 +230,18 @@ class PagoRow extends React.Component {
     }
   }
 
+  handleChangeIdTipoRecaudacion = (selectedOption) => {
+    if (selectedOption != null) {
+      this.setState({
+        selectedIdTipoRecaudacion: selectedOption,
+      });
+      // console.log(`Option selected:`, selectedOption);
+      // console.log("idconcepto : "+this.idmoneda(selectedOption.value));
+    } else {
+      swal("Seleccione una opcion", "", "info");
+    }
+  }
+
 
   colocar = () => {
     var checkbox = document.getElementById(this.props.pago.idRec);
@@ -318,6 +362,10 @@ class PagoRow extends React.Component {
       this.setState({
         desabilitar6: false
       })
+
+      this.setState({
+        desablilitarTipoRecaudacion: false
+      })
       /*var editUbicacion;
       var num = 250296;
       editUbicacion = this.props.pago.idRec.toString() + num.toString() + "ubicacion";
@@ -395,6 +443,10 @@ class PagoRow extends React.Component {
       })
       this.setState({
         desabilitar6: false
+      })
+
+      this.setState({
+        desablilitarTipoRecaudacion: false
       })
     }
     else{
@@ -539,6 +591,13 @@ class PagoRow extends React.Component {
     var repitencia = this.state.selectedOption6.value;
     return repitencia;
 
+  }
+
+  SeleccionTipoRecaudacion = () => {
+
+    var num = 250296;
+    var tipoRecaudacion = this.state.selectedIdTipoRecaudacion.value;
+    return tipoRecaudacion;
   }
 
   SeleccionCtaBanco = () => {
@@ -700,6 +759,9 @@ class PagoRow extends React.Component {
       var repitencia = "";
       repitencia = this.SeleccionRepitencia();
 
+      var seleccionTipoRecaudacion = "";
+      seleccionTipoRecaudacion = this.SeleccionTipoRecaudacion();
+
       var ubicacion = "";
       ubicacion = this.SeleccionUbicacion();
 
@@ -722,7 +784,8 @@ class PagoRow extends React.Component {
         "repitencia":repitencia, //linea que recien se agrega
         "ubicacion": ubicacion,
         "ctabanco": ctabanco,
-        "validado": validado
+        "validado": validado,
+        "id_tipo_recaudacion":seleccionTipoRecaudacion
       }))
 
       fetch(CONFIG + "recaudaciones/alumno/concepto/actualizar",
@@ -744,7 +807,8 @@ class PagoRow extends React.Component {
               "repitencia":repitencia, //linea que recien se agrega
               "ubicacion": ubicacion,
               "ctabanco": ctabanco,
-              "validado": validado
+              "validado": validado,
+              "id_tipo_recaudacion":seleccionTipoRecaudacion
             }
 
           )
@@ -803,6 +867,9 @@ class PagoRow extends React.Component {
       var repitencia = "";
       repitencia = this.SeleccionRepitencia();
 
+      var seleccionTipoRecaudacion = "";
+      seleccionTipoRecaudacion = this.SeleccionTipoRecaudacion();
+
       var ubicacion = "";
       ubicacion = this.SeleccionUbicacion();
 
@@ -832,7 +899,8 @@ class PagoRow extends React.Component {
               "repitencia":repitencia, //linea que recien se agrega
               "ubicacion": ubicacion,
               "ctabanco": ctabanco,
-              "validado": validado
+              "validado": validado,
+              "id_tipo_recaudacion":seleccionTipoRecaudacion
             }
 
           )
@@ -1003,6 +1071,18 @@ class PagoRow extends React.Component {
                 disabled={this.state.desabilitar6} style ={{width: '100px'}}
               />
               </h6>
+        </td>
+
+        <td className="td"/*TIPO_RECAUDACION*/ id={"tipo_recaudacion" + (this.props.numero + 1)} style={{display: 'none'}}>
+          <Select
+                inputId = {this.props.pago.idRec.toString() + "250296" + "tipo_recaudacion"}
+                className="conceptos"
+                value={this.state.selectedIdTipoRecaudacion}
+                onChange={this.handleChangeIdTipoRecaudacion}
+                options= {this.state.tipo_recaudacion}
+                disabled={this.state.desablilitarTipoRecaudacion} style ={{width: '100px'}}
+                
+              />
         </td>
 
 
