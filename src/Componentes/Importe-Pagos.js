@@ -322,29 +322,11 @@ class ImportePagos extends React.Component {
       return response.json()
     })
       .then((pagos) => {
-        pagos.forEach((pago) => {
-          /**************************** */
-          if (pago.id_tipo_recaudacion == 4) {
-            this.setState((state) => {
-              return {
-                listaRepitencia: [...state.listaRepitencia, pago]
+        pagos.forEach(pago => {
+          let tipoRecaudacion=pago.id_tipo_recaudacion;
+           this.setPago(tipoRecaudacion,pago);
 
-              }
-            })
-
-          }
-          else {
-            this.setState((state) => {
-              return {
-                pagoUno: [...state.pagoUno, pago]
-
-              }
-            })
-          }
-
-          /**************************** */
-
-        })
+         });
 
 
       })
@@ -386,29 +368,12 @@ class ImportePagos extends React.Component {
       .then((pagos) => {
 
         if (pagos.length > 0) {
-          console.log("Este es el importe de DERECHO ENSEÑANZA ", pagos);
-          let listaDerechoEnseñanza = [];
-          let listaRepitencia = [];
-          pagos.forEach(pago => {
-            if (pago.id_tipo_recaudacion == 4) {
-              this.setState((state) => {
-                return {
-                  listaRepitencia: [...state.listaRepitencia, pago]
-
-                }
-              })
-
-            }
-            else {
-              this.setState((state) => {
-                return {
-                  pagoDos: [...state.pagoDos, pago]
-
-                }
-              })
-            }
-
-          });
+          //console.log("Este es el importe de DERECHO ENSEÑANZA ", pagos);
+            pagos.forEach(pago => {
+              let tipoRecaudacion=pago.id_tipo_recaudacion;
+               this.setPago(tipoRecaudacion,pago);
+   
+             });
 
           //  this.setState({  
           //    pagoDos: listaDerechoEnseñanza,
@@ -416,10 +381,8 @@ class ImportePagos extends React.Component {
           //     });
 
           //swal("Filtro realizado exitosamente!","","success");
-        } else {
-          //swal("No se encontraron registros","","info");
         }
-      })
+        }) 
       .catch(error => {
         swal("Oops, Algo salió mal!!", "", "error")// si hay algún error lo mostramos en consola
       });
@@ -447,25 +410,10 @@ class ImportePagos extends React.Component {
       .then((pagos) => {
         if (pagos.length > 0) {
           pagos.forEach(pago => {
-            if (pago.id_tipo_recaudacion == 4) {
-              this.setState((state) => {
-                return {
-                  listaRepitencia: [...state.listaRepitencia, pago]
-
-                }
-              })
-
-            }
-            else {
-              this.setState((state) => {
-                return {
-                  pagoTres: [...state.pagoTres, pago]
-
-                }
-              })
-            }
-
-          });
+            let tipoRecaudacion=pago.id_tipo_recaudacion;
+             this.setPago(tipoRecaudacion,pago);
+ 
+           });
 
           //  this.setState({  pagoTres: pagos  });
           //swal("Filtro realizado exitosamente!","","success");
@@ -515,23 +463,8 @@ class ImportePagos extends React.Component {
         console.log("Este es el importe de pagos de D -> ", pagos);
         if (pagos.length > 0) {
           pagos.forEach(pago => {
-            if (pago.id_tipo_recaudacion == 4) {
-              this.setState((state) => {
-                return {
-                  listaRepitencia: [...state.listaRepitencia, pago]
-
-                }
-              })
-
-            }
-            else {
-              this.setState((state) => {
-                return {
-                  pagoCuatro: [...state.pagoCuatro, pago]
-
-                }
-              })
-            }
+           let tipoRecaudacion=pago.id_tipo_recaudacion;
+            this.setPago(tipoRecaudacion,pago);
 
           });
           //  this.setState({  pagoCuatro: pagos  });
@@ -1225,7 +1158,7 @@ class ImportePagos extends React.Component {
       default:
         break;
 
-    e.preventDefault();
+    
   }
 }
 /***** **** ** ****** ****** ****** ****** *****/
