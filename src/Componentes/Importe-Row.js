@@ -883,7 +883,7 @@ class ImporteRow extends React.Component {
         <td className="td" id={"imports" + (this.props.numero + 1)}>
           
               <form action="#">
-                <label className="center-xs color_white">S/ {this.props.pago.importe}</label>
+                <label className="center-xs color_white">{this.state.moneda} {this.props.pago.importe}</label>
               </form>
             
         </td>

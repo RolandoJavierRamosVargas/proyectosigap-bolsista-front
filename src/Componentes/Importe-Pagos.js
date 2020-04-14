@@ -1284,7 +1284,7 @@ class ImportePagos extends React.Component {
                           </thead>
                           <tbody>
                             <ImporteList funcion={this.FuncionUno} listado={this.state.pagoUno} conceptos={this.state.concepto} datos={this.state.datos} datosMonedas={this.state.monedas} monedas={this.state.monedasvl} ubicaciones={this.state.ubicacionesv1} cuentas={this.state.cuentasv1} configuraciones={this.state.configuraciones} />
-                            <TableImporteFooter total={this.CalcularImporteUno()} costo={this.state.importeTabla1} />
+                            <TableImporteFooter total={this.CalcularImporteUno()} costo={this.state.importeTabla1} tipoMoneda = {this.state.tipoMonedaMatriculaUpg} />
                           </tbody>
                         </table>
                       </td>
@@ -1318,7 +1318,7 @@ class ImportePagos extends React.Component {
                           </thead>
                           <tbody>
                             <ImporteList funcion={this.FuncionTres} listado={this.state.pagoTres} conceptos={this.state.concepto} datos={this.state.datos} datosMonedas={this.state.monedas} monedas={this.state.monedasvl} ubicaciones={this.state.ubicacionesv1} cuentas={this.state.cuentasv1} configuraciones={this.state.configuraciones} />
-                            <TableImporteFooter total={this.CalcularImporteTres()} costo={this.state.importeTabla3} />
+                            <TableImporteFooter total={this.CalcularImporteTres()} costo={this.state.importeTabla3}  tipoMoneda = {this.state.tipoMonedaMatriculaEpg}/>
                           </tbody>
                         </table>
                       </td>
@@ -1366,7 +1366,7 @@ class ImportePagos extends React.Component {
                           </thead>
                           <tbody>
                             <ImporteList funcion={this.FuncionDos} listado={this.state.pagoDos} conceptos={this.state.concepto} datos={this.state.datos} datosMonedas={this.state.monedas} monedas={this.state.monedasvl} ubicaciones={this.state.ubicacionesv1} cuentas={this.state.cuentasv1} configuraciones={this.state.configuraciones} />
-                            <TableImporteFooter total={this.CalcularImporteDos()} costo={this.state.importeTabla2} />
+                            <TableImporteFooter total={this.CalcularImporteDos()} costo={this.state.importeTabla2} tipoMoneda = {this.state.tipoMonedaDerechoEnseñanza} />
                           </tbody>
                         </table>
                       </td>
@@ -1403,7 +1403,7 @@ class ImportePagos extends React.Component {
                           <tbody>
 
                             <ImporteList funcion={this.FuncionDos} listado={this.state.listaRepitencia} conceptos={this.state.concepto} datos={this.state.datos} datosMonedas={this.state.monedas} monedas={this.state.monedasvl} ubicaciones={this.state.ubicacionesv1} cuentas={this.state.cuentasv1} configuraciones={this.state.configuraciones} />
-                            <TableImporteFooter total={this.CalcularImporteRepitencia()} costo={this.state.importeRepitencia} />
+                            <TableImporteFooter total={this.CalcularImporteRepitencia()} costo={this.state.importeRepitencia} tipoMoneda = {this.state.tipoMonedaRepitencia} />
 
                           </tbody>
                         </table>
@@ -1482,7 +1482,7 @@ class ImportePagos extends React.Component {
 
             <div className="row">
               <div className="col-md-12">
-                <DeudaTotal deuda={this.CalcularDeudaTotal()} />
+                <DeudaTotal deuda={this.CalcularDeudaTotal()} tipoMoneda = {this.state.tipoMonedaDerechoEnseñanza} />
               </div>
 
             </div>
@@ -1952,7 +1952,7 @@ class ImportePagos extends React.Component {
     console.log("Pago Tabla 2");
     console.log(pagoDerechoEnseñanza)
     for (var indice in pagoDerechoEnseñanza) {
-      if (pagoDerechoEnseñanza[indice].moneda == "108")
+      if (pagoDerechoEnseñanza[indice].moneda == "108" || pagoDerechoEnseñanza[indice].moneda=="113" )
         importe = importe + pagoDerechoEnseñanza[indice].importe;
     }
     //this.setState({  sumaImporteDE: importe  });

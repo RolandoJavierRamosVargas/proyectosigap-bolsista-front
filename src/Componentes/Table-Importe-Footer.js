@@ -14,6 +14,8 @@ class TableImporteFooter extends React.Component {
     
 
   render() {
+    let tipoMoneda= this.props.tipoMoneda;
+    let simboloMoneda = (tipoMoneda == "108") ? 'S/.' : '$' ;
     return(
 
 			
@@ -24,8 +26,9 @@ class TableImporteFooter extends React.Component {
             <th className="thVacio"></th>
             <th className="thVacio"></th>
             <th className="thVacio"></th>
+            <th className="thVacio"></th>
             <th className="th">TOTAL</th>
-            <th className="inputImporte">S/. {this.props.total}</th>
+            <th className="inputImporte">{simboloMoneda} {this.props.total}</th>
             <th className="thVacio"></th>
             
           </tr>
@@ -34,8 +37,9 @@ class TableImporteFooter extends React.Component {
             <th className="thVacio"></th>
             <th className="thVacio"></th>
             <th className="thVacio"></th>
+            <th className="thVacio"></th>
             <th className="th">DEUDA ACTUAL</th>
-            <th className="inputDeuda">S/. {this.props.costo-this.props.total}</th>
+            <th className="inputDeuda">{simboloMoneda} {this.props.costo-this.props.total}</th>
             <th className="thVacio"></th>
             
           </tr>
