@@ -331,14 +331,18 @@ class ImportePagos extends React.Component {
             let tipoRecaudacion=pago.id_tipo_recaudacion;
             this.setPago(tipoRecaudacion,pago);
           }else{
-            pagosUPG.push(pago);
+            this.setState((state)=>{
+              return {
+                pagoUno : [...state.pagoUno,pago]
+              }
+            })
           }
           
         });
         
-        this.setState({
-          pagoUno:pagosUPG
-        })
+        // this.setState({
+        //   pagoUno:pagosUPG
+        // })
 
       })
       .catch(error => {
@@ -385,15 +389,19 @@ class ImportePagos extends React.Component {
                 let tipoRecaudacion=pago.id_tipo_recaudacion;
                  this.setPago(tipoRecaudacion,pago);
               }else{
-                pagosDerechoEnseñanza.push(pago);
+                this.setState((state)=>{
+                  return {
+                    pagoDos : [...state.pagoDos,pago]
+                  }
+                })
               }
    
              });
 
-           this.setState({  
-             pagoDos: pagosDerechoEnseñanza
+          //  this.setState({  
+          //    pagoDos: pagosDerechoEnseñanza
           
-              });
+          //     });
 
           //swal("Filtro realizado exitosamente!","","success");
         }
@@ -423,7 +431,7 @@ class ImportePagos extends React.Component {
       return response.json()
     })
       .then((pagos) => {
-        let pagosMatriculaUpg=[];
+        let pagosMatriculaEPG=[];
         if (pagos.length > 0) {
           pagos.forEach(pago => {
             if(pago.id_tipo_recaudacion!=0){
@@ -431,12 +439,16 @@ class ImportePagos extends React.Component {
               let tipoRecaudacion=pago.id_tipo_recaudacion;
                this.setPago(tipoRecaudacion,pago);
             }else{
-              pagosMatriculaUpg.push(pago);
+              this.setState((state)=>{
+                return {
+                  pagoTres : [...state.pagoTres,pago]
+                }
+              })
             }
  
            });
 
-           this.setState({  pagoTres: pagosMatriculaUpg  });
+          //  this.setState({  pagoTres: pagosMatriculaEPG  });
           //swal("Filtro realizado exitosamente!","","success");
         } else {
           //swal("No se encontraron registros","","info");
@@ -487,14 +499,19 @@ class ImportePagos extends React.Component {
           pagos.forEach(pago => {
             if(pago.id_tipo_recaudacion!=0){
               let tipoRecaudacion=pago.id_tipo_recaudacion;
+              console.log()
                this.setPago(tipoRecaudacion,pago);
 
             }else{
-              pagoOtros.push(pago);
+              this.setState((state)=>{
+                return {
+                  pagoCuatro : [...state.pagoCuatro,pago]
+                }
+              })
             }
 
           });
-           this.setState({  pagoCuatro: pagoOtros  });
+          //  this.setState({  pagoCuatro: pagoOtros  });
 
           console.log("Conceptos restantes Despues");
           console.log(conceptoResto)
