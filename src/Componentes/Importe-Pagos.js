@@ -759,8 +759,8 @@ class ImportePagos extends React.Component {
           return response.json()
         }).then((datos) => {
 
-          console.log("BENEFICIOS: datos");
-          console.log(datos);
+          console.log("BENEFICIOS: datos",datos);
+          
           this.setState({ datosformulario: datos })
 
         })
@@ -1276,7 +1276,7 @@ class ImportePagos extends React.Component {
                   <h6 align="center" className="Alumno"><b>Beneficio:</b></h6>
                       <h6 align="center" className="negro">DSTO {this.state.valorBeneficio}% UNMSM</h6>*/}
 
-                <CostoDelPrograma datosPrograma={this.state.datosformulario} datosCosto={this.state.costosP} />
+                <CostoDelPrograma datosPrograma={this.state.datosformulario} datosCosto={this.state.costosP} tipoMoneda={this.state.tipoMonedaMatriculaUpg}/>
               </div>
 
             </div>
@@ -1950,6 +1950,8 @@ class ImportePagos extends React.Component {
 
   //LO USA WILL...
   reporte_credito(idx, nombrenuevo, auxPagos) {
+    let solicitud=CONFIG + 'beneficio/breporte_cr/' + nombrenuevo + '/' + auxPagos[0].idPrograma + "/" + idx;
+    console.log("esta es la solicitud: ", solicitud);
     fetch(CONFIG + 'beneficio/breporte_cr/' + nombrenuevo + '/' + auxPagos[0].idPrograma + "/" + idx)
       .then((response) => {
         return response.json();

@@ -4,6 +4,8 @@ class CostoDelPrograma extends React.Component {
 
     
   render() {
+    let tipoMoneda= this.props.tipoMoneda;
+    let simboloMoneda = (tipoMoneda == "108") ? 'SOLES' : 'DOLARES' ;
     return(
       
 			<div>
@@ -12,7 +14,7 @@ class CostoDelPrograma extends React.Component {
       <table>
 
       <tr>      
-        
+        <th className="th">MONEDA</th>
         <th className="th">MATRÍCULA UPG</th>
         <th className="th">MATRÍCULA EPG</th>
         <th className="th">DERECHO ENSEÑANZA</th>
@@ -23,6 +25,7 @@ class CostoDelPrograma extends React.Component {
       
       <tr>      
         
+        <td className="td">{simboloMoneda}</td>
         <td className="td">{this.props.datosCosto.upg}</td>
         <td className="td">{this.props.datosCosto.epg}</td>
         <td className="td">{this.props.datosCosto.total}</td>
@@ -36,7 +39,7 @@ class CostoDelPrograma extends React.Component {
       
       <table>
       <tr>      
-        
+        <th className="th">MONEDA</th>
         <th className="th">MATRÍCULA UPG</th>
         <th className="th">MATRÍCULA EPG</th>
         <th className="th">DERECHO ENSEÑANZA</th>
@@ -47,7 +50,7 @@ class CostoDelPrograma extends React.Component {
       </tr>
 
       <tr>      
-        
+        <td className="td">{simboloMoneda}</td>
         <td className="td">{this.props.datosCosto.d_upg}</td>
         <td className="td">{this.props.datosCosto.d_epg}</td>
         <td className="td">{this.props.datosCosto.d_total}</td>
