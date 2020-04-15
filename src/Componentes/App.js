@@ -1568,14 +1568,14 @@ show_or_hide() {
 
   document.getElementById("ubicacion_header").style.display = statusInfo;
   document.getElementById("banco_header").style.display = statusInfo;
-  document.getElementById("repitencia_header").style.display = statusInfo;
+  // document.getElementById("repitencia_header").style.display = statusInfo;
 /************ */
   document.getElementById("tipo_recaudacion_header").style.display = statusInfo;
 /************ */
   for(var i=1; i<=len; i++){
     document.getElementById("ubicacion" + i).style.display = statusInfo;  
     document.getElementById("banco" + i).style.display = statusInfo; 
-    document.getElementById("repitencia" + i).style.display = statusInfo; 
+    // document.getElementById("repitencia" + i).style.display = statusInfo; 
     /************ */
     document.getElementById("tipo_recaudacion"+i).style.display = statusInfo;
     /************ */

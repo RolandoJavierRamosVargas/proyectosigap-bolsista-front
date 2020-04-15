@@ -1061,7 +1061,7 @@ class PagoRow extends React.Component {
           </table>
         </td>
 
-        <td className="td"/*REPITENCIA*/ id={"repitencia" + (this.props.numero + 1)} style={{display: 'none'}}>
+        {/* <td className="td" id={"repitencia" + (this.props.numero + 1)} style={{display: 'none'}}>
             <h6 align="left">
             <Select
                 inputId = {this.props.pago.idRec.toString() + "250296" + "repitencia"}
@@ -1071,7 +1071,7 @@ class PagoRow extends React.Component {
                 disabled={this.state.desabilitar6} style ={{width: '100px'}}
               />
               </h6>
-        </td>
+        </td> */}
 
         <td className="td"/*TIPO_RECAUDACION*/ id={"tipo_recaudacion" + (this.props.numero + 1)} style={{display: 'none'}}>
           <Select

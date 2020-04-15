@@ -322,12 +322,23 @@ class ImportePagos extends React.Component {
       return response.json()
     })
       .then((pagos) => {
+
+        console.log("estos son los pagos del concepto A" ,pagos);
+        let pagosUPG=[];
         pagos.forEach(pago => {
-          let tipoRecaudacion=pago.id_tipo_recaudacion;
-           this.setPago(tipoRecaudacion,pago);
+          if(pago.id_tipo_recaudacion!= 0){
 
-         });
-
+            let tipoRecaudacion=pago.id_tipo_recaudacion;
+            this.setPago(tipoRecaudacion,pago);
+          }else{
+            pagosUPG.push(pago);
+          }
+          
+        });
+        
+        this.setState({
+          pagoUno:pagosUPG
+        })
 
       })
       .catch(error => {
@@ -366,19 +377,23 @@ class ImportePagos extends React.Component {
       return response.json()
     })
       .then((pagos) => {
-
+        let pagosDerechoEnseñanza=[];
         if (pagos.length > 0) {
           //console.log("Este es el importe de DERECHO ENSEÑANZA ", pagos);
             pagos.forEach(pago => {
-              let tipoRecaudacion=pago.id_tipo_recaudacion;
-               this.setPago(tipoRecaudacion,pago);
+              if(pago.id_tipo_recaudacion!= 0){
+                let tipoRecaudacion=pago.id_tipo_recaudacion;
+                 this.setPago(tipoRecaudacion,pago);
+              }else{
+                pagosDerechoEnseñanza.push(pago);
+              }
    
              });
 
-          //  this.setState({  
-          //    pagoDos: listaDerechoEnseñanza,
-          //    listaRepitencia
-          //     });
+           this.setState({  
+             pagoDos: pagosDerechoEnseñanza
+          
+              });
 
           //swal("Filtro realizado exitosamente!","","success");
         }
@@ -408,14 +423,20 @@ class ImportePagos extends React.Component {
       return response.json()
     })
       .then((pagos) => {
+        let pagosMatriculaUpg=[];
         if (pagos.length > 0) {
           pagos.forEach(pago => {
-            let tipoRecaudacion=pago.id_tipo_recaudacion;
-             this.setPago(tipoRecaudacion,pago);
+            if(pago.id_tipo_recaudacion!=0){
+
+              let tipoRecaudacion=pago.id_tipo_recaudacion;
+               this.setPago(tipoRecaudacion,pago);
+            }else{
+              pagosMatriculaUpg.push(pago);
+            }
  
            });
 
-          //  this.setState({  pagoTres: pagos  });
+           this.setState({  pagoTres: pagosMatriculaUpg  });
           //swal("Filtro realizado exitosamente!","","success");
         } else {
           //swal("No se encontraron registros","","info");
@@ -461,13 +482,19 @@ class ImportePagos extends React.Component {
     })
       .then((pagos) => {
         console.log("Este es el importe de pagos de D -> ", pagos);
+        let pagoOtros=[];
         if (pagos.length > 0) {
           pagos.forEach(pago => {
-           let tipoRecaudacion=pago.id_tipo_recaudacion;
-            this.setPago(tipoRecaudacion,pago);
+            if(pago.id_tipo_recaudacion!=0){
+              let tipoRecaudacion=pago.id_tipo_recaudacion;
+               this.setPago(tipoRecaudacion,pago);
+
+            }else{
+              pagoOtros.push(pago);
+            }
 
           });
-          //  this.setState({  pagoCuatro: pagos  });
+           this.setState({  pagoCuatro: pagoOtros  });
 
           console.log("Conceptos restantes Despues");
           console.log(conceptoResto)
@@ -1939,7 +1966,7 @@ class ImportePagos extends React.Component {
     console.log("Pago Tabla 1");
     console.log(pagos)
     for (var indice in pagos) {
-      if (pagos[indice].moneda == "108")
+      if (pagos[indice].moneda == "108" || pagos[indice].moneda=='113') 
         importe = importe + pagos[indice].importe;
     }
     //this.setState({  sumaImporteUPG: importe  });
@@ -1966,7 +1993,7 @@ class ImportePagos extends React.Component {
     console.log("Pago Tabla 2");
     console.log(pagoRepitencia)
     for (var indice in pagoRepitencia) {
-      if (pagoRepitencia[indice].moneda == "108")
+      if (pagoRepitencia[indice].moneda == "108" || pagoRepitencia[indice].moneda=='113')
         importe = importe + pagoRepitencia[indice].importe;
     }
     //this.setState({  sumaImporteDE: importe  });
@@ -1981,7 +2008,7 @@ class ImportePagos extends React.Component {
     console.log("Pago Tabla 3");
     console.log(pagos)
     for (var indice in pagos) {
-      if (pagos[indice].moneda == "108")
+      if (pagos[indice].moneda == "108" || pagos[indice].moneda == "113" )
         importe = importe + pagos[indice].importe;
     }
     //this.setState({  sumaImporteEPG: importe  });
