@@ -20,11 +20,11 @@ class Imprimir2 extends React.Component {
         element.forEach(function(element0){
           importe += element0.importe_tc;
         })
-        totalimportes.push(importe);
+      totalimportes.push(importe);
     });
 
     console.log(this.props.seleccionado);
-    console.log("totalimportes");
+    console.log("totalimportes",totalimportes);
     console.log(totalimportes);
 
     return totalimportes;
@@ -79,8 +79,8 @@ class Imprimir2 extends React.Component {
 
   arreglosReporte(con,pag){
         var lista = [];
-        console.log(con);
-        console.log(pag);
+        console.log("la variable con ->",con);
+        console.log("la variable pag ->",pag);
         for(let i in con)
         {
           var flag = false;
@@ -139,6 +139,8 @@ class Imprimir2 extends React.Component {
     var checks=document.getElementsByClassName("checkbox1");
     var checks_normales=Array.from(checks);
 
+    console.log("estos son los check_normales",checks_normales);
+
 
     //DATOS DEL COSTO
     var costoTotal = null;
@@ -191,7 +193,7 @@ class Imprimir2 extends React.Component {
      if(checkbox.checked){
        checkbox_selec.push(checkbox.id);
      }
-    });
+    });//guardamos los id de los checkbox seleccionados
 
     if(checkbox_selec.length!=0){
       console.log("Validado")
@@ -219,18 +221,19 @@ class Imprimir2 extends React.Component {
       console.log(this.props.conceptos);
 
       listafinal = this.arreglosReporte(this.props.conceptos,total);
+      console.log("esta es la listaFinal",listafinal);
 
       console.log("wea abel :V")
       console.log(this.props.conceptos);
-      importe = this.CalcularImporte(listafinal);
+      importe = this.CalcularImporte(listafinal); //este es el importe total
 
       console.log("total")
       console.log(total);
       console.log("listafinal")
-      console.log(listafinal);
+      console.log(listafinal); //esta es la lista final , separando todas las recaudaciones segun el concepto al que se ha pagado
 
 
-      var conceptos=[];
+      var conceptos=[];//estos son todos los conceptos
       var aux =this.props.conceptos;
       console.log(conceptos[3]);
 
@@ -304,7 +307,7 @@ class Imprimir2 extends React.Component {
 
 
 
-  console.log("listado final con el formato requerido para generar el pdf");
+  console.log("listado final con el formato requerido para generar el pdf",listadoFinalFormato);
   console.log(listadoFinalFormato);
   console.log("select"+ this.props.seleccionado);
 
@@ -328,7 +331,7 @@ class Imprimir2 extends React.Component {
 
 
             console.log("LOS IMPORTES");
-            console.log(importe);
+            console.log(importe); // es un arreglo con todos los importes de cada concepto
 
             var sumitaDeImportes = 0;
             for(var x=0;x<importe.length;x++){
@@ -342,10 +345,10 @@ class Imprimir2 extends React.Component {
 
 
             console.log("LOS CONCEPTOS FEIK");
-            console.log(conceptos);
+            console.log(conceptos); //este es un array con todos los concetos pagados
 
 
-    if(this.props.datos.length>0){
+    if(this.props.datos.length>0){ // Los datos son en realidad solo los datos de beneficio
 
       var listadoFinalBeneficio = [];
       console.log("Cantidad de beneficio");
@@ -359,9 +362,9 @@ class Imprimir2 extends React.Component {
 
         listadoFinalBeneficio.push(beneficio_);
     }
-
-console.log("listado final del benefico para el reporte del pdf");
-console.log(listadoFinalBeneficio);
+      console.log("***************************************")
+       console.log("listado final del beneficio para el reporte del pdf ",listadoFinalBeneficio);
+       console.log("***************************************")
 
       doc.autoTable(columnsBenf2, listadoFinalBeneficio, {
         theme: 'grid',
@@ -500,7 +503,7 @@ console.log(listadoFinalBeneficio);
     }
 
     }
-
+/**************************************************************** */
         //FOOTER
         var pageCount = doc.internal.getNumberOfPages();
 
@@ -1049,16 +1052,17 @@ console.log(listadoFinalBeneficio);
     doc.setLineWidth(0.5);
     doc.line(35, 374,750, 374);
 
-    doc.setDrawColor(0, 0, 0);
-    doc.setLineWidth(0.5);
-    doc.line(35, 369, 35, 374);
+    
 
-    doc.setFont("helvetica");
-    doc.setFontType("bold");
-    doc.setFontSize(11);
-    doc.text("Datos del Beneficio", 37, 370);
+    /************************************************************ */
+
 
         if(this.props.datos.length>0){
+
+          doc.setFont("helvetica");
+          doc.setFontType("bold");
+          doc.setFontSize(11);
+          doc.text("Datos del Beneficioooooooooo", 37, 370);
 
           var listadoFinalBeneficio = [];
           console.log("Cantidad de beneficio");
@@ -1073,7 +1077,7 @@ console.log(listadoFinalBeneficio);
             listadoFinalBeneficio.push(beneficio_);
         }
 
-  console.log("listado final del benefico para el reporte del pdf");
+  console.log("listado final del benefico para el reporte del pdf",listadoFinalBeneficio);
   console.log(listadoFinalBeneficio);
 
 
@@ -1213,12 +1217,9 @@ console.log(listadoFinalBeneficio);
               }
 
 
-          }
+            }
           }else{
-            doc.setFont("helvetica");
-            doc.setFontType("normal");
-            doc.setFontSize(10);
-            doc.text("No se encontraron datos del beneficio", 35, 390);
+            
 
 
             //Mostramos el encabezado de la primera tabla
