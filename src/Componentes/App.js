@@ -1379,6 +1379,7 @@ Regresar2=(e)=>{
 Filtrar=(e)=>{
   var concep = [];
   concep = this.SeleccionConceptos();
+  
   var filtrodel = this.state.filtroDel;
 
   var filtroal = this.state.filtroAl;

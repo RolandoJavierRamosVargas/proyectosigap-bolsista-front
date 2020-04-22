@@ -7,6 +7,19 @@ require('jspdf-autotable');
 
 class Imprimir2 extends React.Component {
 
+  constructor(props){
+    super(props)
+    this.state = {
+      upg:[],
+      epg:[],
+      enseñanza:[],
+      repitencia:[],
+      otro:[],
+      allRecaudaciones:[]
+    }
+    this.toAgregarSegunConcepto=this.toAgregarSegunConcepto.bind(this)
+  }
+
   componentDidMount() {
   }
 
@@ -77,8 +90,41 @@ class Imprimir2 extends React.Component {
         return trans;
     }
 
+
+    toSepararRecaudacionesPorConcepto(con,pag){
+      var lista = [];
+      console.log("la variable con ->",con);
+      console.log("la variable pag ->",pag);
+      for(let i in con)
+      {
+        var flag = false;
+        var arr = new Array();
+        for(let j in pag){
+
+            if(con[i].concepto === pag[j].concepto){
+              arr.push(pag[j])
+              flag = true;
+            }
+        }
+        if(flag){
+          lista.push(arr);
+        }
+      }
+
+  return lista;
+}
+
+
   arreglosReporte(con,pag){
         var lista = [];
+        let objeto={
+           epg:[],
+           upg:[],
+           enseñanza:[],
+           repitencia:[],
+           otro:[]
+        
+        }
         console.log("la variable con ->",con);
         console.log("la variable pag ->",pag);
         for(let i in con)
@@ -88,6 +134,7 @@ class Imprimir2 extends React.Component {
           for(let j in pag){
 
               if(con[i].concepto === pag[j].concepto){
+                this.toAgregarSegunConcepto(con[i].concepto,pag[j],objeto)
                 arr.push(pag[j])
                 flag = true;
               }
@@ -97,8 +144,129 @@ class Imprimir2 extends React.Component {
           }
         }
 
-    return lista;
+        console.log("estos son los objetos ->",objeto);
+        console.log("esta es la lista nueva -> ",lista);
+
+        let listaNuevaOrdenada=[];
+        let listaOtrosSeparada=[];
+        listaOtrosSeparada=this.toSepararRecaudacionesPorConcepto(con,objeto.otro);
+        //solo agregar los que no sean null o vacio
+        
+        listaNuevaOrdenada=this.recolectarListasNoVacias(objeto);
+        console.log("la lista nueva ordenada sin otros ",listaNuevaOrdenada);
+        if(objeto.otro.length!=0){
+          listaOtrosSeparada.forEach(elemento=>{
+            listaNuevaOrdenada.push(elemento)
+          });
+
+        }
+        console.log("la lista nueva ordenada ",listaNuevaOrdenada);
+
+
+    return listaNuevaOrdenada;
   }
+  recolectarListasNoVacias= (objeto)=>{
+    let listaNueva=[];
+      for (const key in objeto) {
+        if(key === 'otro'){
+          continue;
+        }
+        if(objeto[key].length!=0){
+          listaNueva.push(objeto[key]);
+        }
+        
+      }
+      return listaNueva;
+  }
+
+  toAgregarSegunConcepto(concepto,recaudacion,objeto)  {
+    let idTipoRecaudacion;
+    switch(concepto.trim()){
+      case "210010": 
+            idTipoRecaudacion=recaudacion.id_tipo_recaudacion;
+            if(idTipoRecaudacion!=0){
+              
+              this.toCorregirSegunIdTipoRecaudacion(idTipoRecaudacion,recaudacion,objeto);
+            }else{
+              objeto.upg.push(recaudacion);
+            }
+            break;
+       case "207010":
+             idTipoRecaudacion=recaudacion.id_tipo_recaudacion;
+            if(idTipoRecaudacion!=0 ){
+            this.toCorregirSegunIdTipoRecaudacion(idTipoRecaudacion,recaudacion,objeto);
+            }else{
+              
+              objeto.epg.push(recaudacion);
+              
+            }
+            break;
+       case "210011":
+               idTipoRecaudacion=recaudacion.id_tipo_recaudacion;
+              if(idTipoRecaudacion!=0 ){
+              this.toCorregirSegunIdTipoRecaudacion(idTipoRecaudacion,recaudacion,objeto)
+              }else{
+                objeto.enseñanza.push(recaudacion)
+              }
+              break;
+          default:
+             idTipoRecaudacion=recaudacion.id_tipo_recaudacion;
+              if(idTipoRecaudacion!=0 ){
+                this.toCorregirSegunIdTipoRecaudacion(idTipoRecaudacion,recaudacion,objeto)
+              }else{
+                objeto.otro.push(recaudacion);
+              }
+            break;
+    }
+
+  }
+
+  toCorregirSegunIdTipoRecaudacion= (id_tipo_recaudacion,recaudacion,objeto) => {
+    
+
+          switch (id_tipo_recaudacion) {
+            case 1:    objeto.upg.push(recaudacion);
+                       break;
+            case 2:
+                      objeto.epg.push(recaudacion);
+                      break;
+            case 3:
+                      objeto.enseñanza.push(recaudacion);
+                      break;
+            case 4:
+                      objeto.repitencia.push(recaudacion);
+                      break;
+            case 5:
+                      objeto.otro.push(recaudacion);
+                      break;
+      
+            default:
+              break;
+      
+          }
+        }
+
+    toJuntarLasRecaudaciones=()=>{
+
+      let nuevaLista=[];
+      let epg;
+      let upg;
+      let enseñanza;
+      let repitencia;
+      let otro;
+
+      epg=this.state.epg;
+      upg=this.state.upg;
+      enseñanza=this.state.enseñanza;
+      repitencia=this.state.repitencia;
+      otro=this.state.otro;
+      
+      nuevaLista.push(epg,upg,enseñanza,repitencia,otro);
+      this.setState({
+        allRecaudaciones:nuevaLista
+      })
+      return nuevaLista;
+    }   
 
    addWaterMark(doc) {
     var totalPages = doc.internal.getNumberOfPages();
@@ -221,7 +389,10 @@ class Imprimir2 extends React.Component {
       console.log(this.props.conceptos);
 
       listafinal = this.arreglosReporte(this.props.conceptos,total);
+      let nuevaListaFinal= this.toJuntarLasRecaudaciones();
+      
       console.log("esta es la listaFinal",listafinal);
+      console.log("esta es la nuevaListaFinal",nuevaListaFinal);
 
       console.log("wea abel :V")
       console.log(this.props.conceptos);
@@ -1062,7 +1233,7 @@ class Imprimir2 extends React.Component {
           doc.setFont("helvetica");
           doc.setFontType("bold");
           doc.setFontSize(11);
-          doc.text("Datos del Beneficioooooooooo", 37, 370);
+          doc.text("Datos del Beneficio", 37, 370);
 
           var listadoFinalBeneficio = [];
           console.log("Cantidad de beneficio");
@@ -1115,21 +1286,9 @@ class Imprimir2 extends React.Component {
            doc.setFont("helvetica");
            doc.setFontType("bold");
            doc.setFontSize(10);
-           doc.text("PAGO POR CONCEPTO "+conceptos[0],38,first.finalY + 25);
+           doc.text("PAGO POR CONCEPTO "+ listadoFinalFormato[0][0][2],38,first.finalY + 25);
+           console.log("listadofinalFormato ",listadoFinalFormato)
 
-
-
-           /*
-           //linea horizontal
-           doc.setDrawColor(0, 0, 0);
-           doc.setLineWidth(0.5);
-           doc.line(35,first.finalY + 28 ,200,first.finalY + 28);
-           //linea vertical
-           doc.setDrawColor(0, 0, 0);
-           doc.setLineWidth(0.5);
-           doc.line(35, first.finalY + 22, 35, first.finalY + 28);*/
-
-        //Mostramos el encabezado de la primera tabla
             doc.autoTable(columns, listadoFinalFormato[0], {
               theme: 'grid',
               styles: {
@@ -1170,18 +1329,8 @@ class Imprimir2 extends React.Component {
               doc.setFont("helvetica");
               doc.setFontType("bold");
               doc.setFontSize(10);
-              doc.text("PAGO POR CONCEPTO "+conceptos[k],38, first.finalY + 25);
+              doc.text("PAGO POR CONCEPTO "+listadoFinalFormato[k][0][2],38, first.finalY + 25);
               console.log("pago por concepto");
-/*
-                 //linea horizontal
-              doc.setDrawColor(0, 0, 0);
-              doc.setLineWidth(0.5);
-              doc.line(35,first.finalY + 28 ,200,first.finalY + 28 );
-
-                //linea vertical
-              doc.setDrawColor(0, 0, 0);
-              doc.setLineWidth(0.5);
-              doc.line(35, first.finalY + 22, 35, first.finalY + 28);*/
 
               //Mostramos el encabezado de cada tabla
 
@@ -1226,7 +1375,7 @@ class Imprimir2 extends React.Component {
            doc.setFont("helvetica");
            doc.setFontType("bold");
            doc.setFontSize(10);
-           doc.text("PAGO POR CONCEPTO "+conceptos[0],38,420);
+           doc.text("PAGO POR CONCEPTO "+listadoFinalFormato[0][0][2],38,420);
 
 
         //Mostramos el encabezado de la primera tabla
@@ -1270,7 +1419,7 @@ class Imprimir2 extends React.Component {
               doc.setFont("helvetica");
               doc.setFontType("bold");
               doc.setFontSize(10);
-              doc.text("PAGO POR CONCEPTO "+conceptos[k],38, first.finalY + 25);
+              doc.text("PAGO POR CONCEPTO "+listadoFinalFormato[k][0][2],38, first.finalY + 25);
               console.log("pago por concepto");
 
 
@@ -1331,5 +1480,6 @@ class Imprimir2 extends React.Component {
 
       )
     }
+    
 }
 export default Imprimir2;
