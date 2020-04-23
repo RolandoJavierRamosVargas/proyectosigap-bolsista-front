@@ -79,45 +79,91 @@ class ImprimirImportePago extends React.Component {
 
   arreglosReporte(pag){
         var lista = [];
-        var flagC1 = false;
-        let upg=[];
-        var flagC2 = false;
-        let epg=[];
-        var flagC3 = false;
-        let enseñanza=[];
-        var flagC4 = false;
-        let repitencia=[];
+        let objeto={
+           upg:[],
+           epg:[],
+           enseñanza:[],
+           repitencia:[],
+           otro:[],
+        }
         //console.log(con);
         console.log("estos son los arreglos quee vamos a verificar ",pag);
 
         for(let j in pag){
 
           if("210010  " === pag[j].concepto){
-            upg.push(pag[j]);
-            flagC1 = true;
+                if(pag[j].id_tipo_recaudacion!=0){
+                    this.toCorregirSegunIdTipoRecaudacion(pag[j].id_tipo_recaudacion,pag[j],objeto)
+                }else{
+                  objeto.upg.push(pag[j]);
+                  
+                }
           }else if("210011  " === pag[j].concepto){
-            enseñanza.push(pag[j]);
-            flagC2 = true;
+                if(pag[j].id_tipo_recaudacion!=0){
+                  this.toCorregirSegunIdTipoRecaudacion(pag[j].id_tipo_recaudacion,pag[j],objeto)
+                }else{
+                  objeto.enseñanza.push(pag[j]);
+                  
+                }
           }else if("207010  " === pag[j].concepto){
-            epg.push(pag[j]);
-            flagC3 = true;
-         
-          }
+                if(pag[j].id_tipo_recaudacion!=0){
+                  this.toCorregirSegunIdTipoRecaudacion(pag[j].id_tipo_recaudacion,pag[j],objeto)
+                }else{
+                  objeto.epg.push(pag[j]);
+                }
+          } else {
+            if(pag[j].id_tipo_recaudacion!=0){
+              this.toCorregirSegunIdTipoRecaudacion(pag[j].id_tipo_recaudacion,pag[j],objeto)
+            }else{
+              objeto.otro.push(pag[j])
+            }
         }
+      }
 
-        if(flagC1){
-          lista.push(upg);
-        }
-        if(flagC2){
-          lista.push(enseñanza);
-        }
-        if(flagC3){
-          lista.push(epg);
-        }
-        
+      console.log("estos son los elementos ordenados",objeto);
+      lista=this.recolectarListasNoVacias(objeto);
 
 
     return lista;
+  }
+
+  recolectarListasNoVacias= (objeto)=>{
+    let listaNueva=[];
+      for (const key in objeto) {
+        if(key === 'otro'){
+          continue;
+        }
+        if(objeto[key].length!=0){
+          listaNueva.push(objeto[key]);
+        }
+        
+      }
+      return listaNueva;
+  }
+
+  toCorregirSegunIdTipoRecaudacion= (id_tipo_recaudacion,recaudacion,objeto) => {
+    
+
+    switch (id_tipo_recaudacion) {
+      case 1:    objeto.upg.push(recaudacion);
+                 break;
+      case 2:
+                objeto.epg.push(recaudacion);
+                break;
+      case 3:
+                objeto.enseñanza.push(recaudacion);
+                break;
+      case 4:
+                objeto.repitencia.push(recaudacion);
+                break;
+      case 5:
+                objeto.otro.push(recaudacion);
+                break;
+
+      default:
+        break;
+
+    }
   }
 
    addWaterMark(doc) {
@@ -292,7 +338,7 @@ class ImprimirImportePago extends React.Component {
 
   var listadoFinalFormato = [];
 
-  console.log("LISTA 100 REAL NO FEIK");
+  console.log("LISTA 100 REAL NO FEIK",listafinal);
   console.log(listafinal);
 
   //var numeroCambio = 0;
@@ -315,11 +361,11 @@ class ImprimirImportePago extends React.Component {
         ,"S/."+this.comita(arrayAntes[m].importe.toString()),"S/."+this.comita(arrayAntes[m].importe_tc.toString()),arrayAntes[m].observacion]
       */
      var pago = [m+1,arrayAntes[m].ciclo.toString(),arrayAntes[m].concepto,arrayAntes[m].numero,arrayAntes[m].fecha.replace(/^(\d{4})-(\d{2})-(\d{2})$/g,'$3-$2-$1')
-        ,"S/."+this.comita(arrayAntes[m].importe.toString())," " ]  
+        ,"S/."+this.comita(arrayAntes[m].importe.toString())," ",arrayAntes[m].id_tipo_recaudacion ]  
       }
         else{
           var pago = [m+1,arrayAntes[m].ciclo.toString(),arrayAntes[m].concepto,arrayAntes[m].numero,arrayAntes[m].fecha.replace(/^(\d{4})-(\d{2})-(\d{2})$/g,'$3-$2-$1')
-          ,"$."+this.comita(arrayAntes[m].importe.toString())," "]
+          ,"$."+this.comita(arrayAntes[m].importe.toString())," ",arrayAntes[m].id_tipo_recaudacion]
 
         }
       totalizado = totalizado + arrayAntes[m].importe;
@@ -351,23 +397,28 @@ class ImprimirImportePago extends React.Component {
       var deuda =this.props.valorCosto1-totalizado;
       agregarDeuda = [ ,,,,"Deuda","S/."+deuda]
     }else if(listafinal[l][0].concepto=="210011  "){
-      var deuda =this.props.valorCosto2-totalizado;
-      agregarDeuda = [ ,,,,"Deuda","S/."+deuda]
+      if(listafinal[l][0].id_tipo_recaudacion==4){
+        let deuda=this.props.repitencia-totalizado
+        agregarDeuda = [ ,,,,"Deuda","S/."+deuda];
+      }else{
+        var deuda =this.props.valorCosto2-totalizado;
+        agregarDeuda = [ ,,,,"Deuda","S/."+deuda]
+      }
     }else if(listafinal[l][0].concepto=="207010  "){
       var deuda =this.props.valorCosto3-totalizado;
       agregarDeuda = [ ,,,,"Deuda","S/."+deuda]
+      
     }
-
+      
+      
     arrayAuxiliar.push(agregarTotal);
     arrayAuxiliar.push(agregarDeuda);
-
     listadoFinalFormato.push(arrayAuxiliar);
-  }
+    }
 
 
 
-
-  console.log("listado final con el formato requerido para generar el pdf");
+  console.log("listado final con el formato requerido para generar el pdf",listadoFinalFormato);
   console.log(listadoFinalFormato);
   console.log("select"+ this.props.seleccionado);
 
@@ -848,13 +899,13 @@ class ImprimirImportePago extends React.Component {
     doc.setLineWidth(0.5);
     doc.line(35, 369, 35, 374);
 
-    doc.setFont("helvetica");
-    doc.setFontType("bold");
-    doc.setFontSize(11);
-    doc.text("Datos del Beneficio", 37, 370);
-
-        if(this.props.datos.length>0){
-
+    
+    if(this.props.datos.length>0){
+          
+          doc.setFont("helvetica");
+          doc.setFontType("bold");
+          doc.setFontSize(11);
+          doc.text("Datos del Beneficio", 37, 370);
           var listadoFinalBeneficio = [];
           console.log("Cantidad de beneficio");
           console.log(this.props.datos.length);
@@ -868,8 +919,8 @@ class ImprimirImportePago extends React.Component {
             listadoFinalBeneficio.push(beneficio_);
         }
 
-  console.log("listado final del benefico para el reporte del pdf");
-  console.log(listadoFinalBeneficio);
+          console.log("listado final del benefico para el reporte del pdf");
+          console.log(listadoFinalBeneficio);
 
 
 
@@ -947,7 +998,7 @@ class ImprimirImportePago extends React.Component {
 
         
         var first = doc.autoTable.previous;
-
+        console.log("Listado final formato:",listadoFinalFormato)
         //Mostramos el encabezado de la primera tabla
             doc.autoTable(columns, listadoFinalFormato[0], {
               theme: 'grid',
@@ -1000,9 +1051,14 @@ class ImprimirImportePago extends React.Component {
                 doc.text("MATRÍCULA EPG ",38, first.finalY + 25);
                 columnsCosto = ["  ","     ","        ","         ","Costo","S/."+this.comita(this.props.valorCosto3.toString()),"        "];
 
-              }else if(listadoFinalFormato[k][0][2] == "210011  "){
-                doc.text("DERECHO ENSEÑANZA ",38, first.finalY + 25);
-                columnsCosto = ["  ","     ","        ","         ","Costo","S/."+this.comita(this.props.valorCosto2.toString()),"        "];
+              }else if(listadoFinalFormato[k][0][2] == "210011  " && (listadoFinalFormato[k][0])){
+                 if(listadoFinalFormato[k][0][7] == 4){
+                  doc.text("REPITENCIA ",38, first.finalY + 25);
+                  columnsCosto = ["  ","     ","        ","         ","Costo","S/."+this.comita(this.props.repitencia.toString()),"        "];
+                }else{
+                  doc.text("DERECHO ENSEÑANZA ",38, first.finalY + 25);
+                  columnsCosto = ["  ","     ","        ","         ","Costo","S/."+this.comita(this.props.valorCosto2.toString()),"        "];
+                }
 
               }else {
                   doc.text("OTROS PAGOS ",38, first.finalY + 25);
@@ -1311,17 +1367,18 @@ class ImprimirImportePago extends React.Component {
     else{
       swal("Seleccione al menos un estado de pago","","info");
       }
+
+
     }
-
-    render() {
-
-      return (
-        <div >
-          {localStorage.getItem('tipo')=='alumno' ? '' : <button  onClick={() => this.Imprimir()} className=" waves-effect waves-light btn-small imprimir ">Imprimir<i className="large material-icons left">local_printshop</i></button>}
-        </div>
-        //className="margen2"
-
-      )
-    }
-}
+        render() {
+    
+          return (
+            <div >
+              {localStorage.getItem('tipo')=='alumno' ? '' : <button  onClick={() => this.Imprimir()} className=" waves-effect waves-light btn-small imprimir ">Imprimir<i className="large material-icons left">local_printshop</i></button>}
+            </div>
+            //className="margen2"
+    
+          )
+        }
+  }
 export default ImprimirImportePago;

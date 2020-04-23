@@ -1283,7 +1283,7 @@ class ImportePagos extends React.Component {
 
             <hr />
             <div className="SplitPane row Padding_bottom" >
-              <ImprimirImportePago validado={this.state.validado} seleccionado={this.state.seleccionado} listado={this.state.pagocero} conceptos={this.state.conceptos} alumno={this.state.alumno} costos={this.state.costosP} datos={this.state.datosformulario} valorCosto1={this.state.importeTabla1} valorCosto3={this.state.importeTabla3} valorCosto2={this.state.importeTabla2} />
+              <ImprimirImportePago validado={this.state.validado} seleccionado={this.state.seleccionado} listado={this.state.pagocero} conceptos={this.state.conceptos} alumno={this.state.alumno} costos={this.state.costosP} datos={this.state.datosformulario} valorCosto1={this.state.importeTabla1} valorCosto3={this.state.importeTabla3} valorCosto2={this.state.importeTabla2} repitencia={this.state.importeRepitencia} />
             </div>
 
 
