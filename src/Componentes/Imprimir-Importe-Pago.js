@@ -1159,11 +1159,6 @@ class ImprimirImportePago extends React.Component {
 
           }
           }else{
-            doc.setFont("helvetica");
-            doc.setFontType("normal");
-            doc.setFontSize(10);
-            doc.text("No se encontraron datos del beneficio", 35, 390);
-
 
             //Mostramos el encabezado de la primera tabla
            doc.setFont("helvetica");
@@ -1174,7 +1169,11 @@ class ImprimirImportePago extends React.Component {
           }else if(listadoFinalFormato[0][0][2] == "207010  "){
             doc.text("MATRÍCULA EPG ",38, 420);
           }else if(listadoFinalFormato[0][0][2] == "210011  "){
-            doc.text("DERECHO ENSEÑANZA ",38,420);
+            if(listadoFinalFormato[0][0][7] == 4){
+              doc.text("REPITENCIA ",38, first.finalY + 25);
+            }else{
+              doc.text("DERECHO ENSEÑANZA ",38, first.finalY + 25);
+            }
           }else {
               doc.text("OTROS PAGOS ",38,420);
           }
@@ -1256,8 +1255,13 @@ class ImprimirImportePago extends React.Component {
                 columnsCosto = ["  ","     ","        ","         ","Costo","S/."+this.comita(this.props.valorCosto3.toString()),"        "];
 
               }else if(listadoFinalFormato[k][0][2] == "210011  "){
-                doc.text("DERECHO ENSEÑANZA ",38, first.finalY + 25);
-                columnsCosto = ["  ","     ","        ","         ","Costo","S/."+this.comita(this.props.valorCosto2.toString()),"        "];
+                if(listadoFinalFormato[k][0][7] == 4){
+                  doc.text("REPITENCIA ",38, first.finalY + 25);
+                  columnsCosto = ["  ","     ","        ","         ","Costo","S/."+this.comita(this.props.repitencia.toString()),"        "];
+                }else{
+                  doc.text("DERECHO ENSEÑANZA ",38, first.finalY + 25);
+                  columnsCosto = ["  ","     ","        ","         ","Costo","S/."+this.comita(this.props.valorCosto2.toString()),"        "];
+                }
 
               }else {
                   doc.text("OTROS PAGOS ",38, first.finalY + 25);

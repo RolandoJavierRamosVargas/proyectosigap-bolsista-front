@@ -424,7 +424,7 @@ class Imprimir2 extends React.Component {
 
   var listadoFinalFormato = [];
 
-  console.log("LISTA 100 REAL NO FEIK");
+  console.log("LISTA 100 REAL NO FEIK",listafinal);
   console.log(listafinal);
 
   //var numeroCambio = 0;
@@ -439,11 +439,11 @@ class Imprimir2 extends React.Component {
 
         if(arrayAntes[m].moneda=="108"){
         var pago = [m+1,arrayAntes[m].ciclo.toString(),arrayAntes[m].concepto,arrayAntes[m].fecha.replace(/^(\d{4})-(\d{2})-(\d{2})$/g,'$3-$2-$1'),"RECIBO",arrayAntes[m].numero
-        ,"S/."+this.comita(arrayAntes[m].importe.toString()),"S/."+this.comita(arrayAntes[m].importe_tc.toString()),arrayAntes[m].observacion]
+        ,"S/."+this.comita(arrayAntes[m].importe.toString()),"S/."+this.comita(arrayAntes[m].importe_tc.toString()),arrayAntes[m].observacion,arrayAntes[m].id_tipo_recaudacion]
         }
         else{
           var pago = [m+1,arrayAntes[m].ciclo.toString(),arrayAntes[m].concepto,arrayAntes[m].fecha.replace(/^(\d{4})-(\d{2})-(\d{2})$/g,'$3-$2-$1'),"RECIBO",arrayAntes[m].numero
-          ,"$."+this.comita(arrayAntes[m].importe.toString()),"S/."+this.comita(arrayAntes[m].importe_tc.toString()),arrayAntes[m].observacion]
+          ,"$."+this.comita(arrayAntes[m].importe.toString()),"S/."+this.comita(arrayAntes[m].importe_tc.toString()),arrayAntes[m].observacion,arrayAntes[m].id_tipo_recaudacion]
 
         }
       totalizado = totalizado + arrayAntes[m].importe_tc;
@@ -455,11 +455,11 @@ class Imprimir2 extends React.Component {
       else{
         if(arrayAntes[m].moneda=="108"){
           var pago = [m+1,arrayAntes[m].ciclo.toString(),arrayAntes[m].concepto,arrayAntes[m].fecha.replace(/^(\d{4})-(\d{2})-(\d{2})$/g,'$3-$2-$1'),"RECIBO",arrayAntes[m].numero,
-          "S/."+this.comita(arrayAntes[m].importe.toString()),"S/."+this.comita(arrayAntes[m].importe_tc.toString())]
+          "S/."+this.comita(arrayAntes[m].importe.toString()),"S/."+this.comita(arrayAntes[m].importe_tc.toString()),arrayAntes[m].id_tipo_recaudacion]
           }
           else{
             var pago = [m+1,arrayAntes[m].ciclo.toString(),arrayAntes[m].concepto,arrayAntes[m].fecha.replace(/^(\d{4})-(\d{2})-(\d{2})$/g,'$3-$2-$1'),"RECIBO",arrayAntes[m].numero
-            ,"$."+this.comita(arrayAntes[m].importe.toString()),"S/."+this.comita(arrayAntes[m].importe_tc.toString())]
+            ,"$."+this.comita(arrayAntes[m].importe.toString()),"S/."+this.comita(arrayAntes[m].importe_tc.toString()),arrayAntes[m].id_tipo_recaudacion]
 
           }
         totalizado = totalizado + arrayAntes[m].importe_tc;
@@ -1324,12 +1324,12 @@ class Imprimir2 extends React.Component {
 
             for (let k = 1; k<listadoFinalFormato.length; k++) {
               var first = doc.autoTable.previous;
-
+              let pagoPorConcepto=(listadoFinalFormato[k][0][9]==4) ? listadoFinalFormato[k][0][2]+" REPITENCIA" :listadoFinalFormato[k][0][2] ;
               //Mostramos el encabezado de cada tabla
               doc.setFont("helvetica");
               doc.setFontType("bold");
               doc.setFontSize(10);
-              doc.text("PAGO POR CONCEPTO "+listadoFinalFormato[k][0][2],38, first.finalY + 25);
+              doc.text("PAGO POR CONCEPTO "+pagoPorConcepto,38, first.finalY + 25);
               console.log("pago por concepto");
 
               //Mostramos el encabezado de cada tabla
