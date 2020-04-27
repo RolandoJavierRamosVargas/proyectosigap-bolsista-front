@@ -27,6 +27,13 @@ import {
 } from 'reactstrap';
 import ImprimirImportePago from './Imprimir-Importe-Pago'
 import TablaOtrasObligaciones from './Tabla-Otras-Obligaciones'
+
+
+import jsPDF from 'jspdf'
+import 'jspdf-autotable'
+ 
+
+
 //import TablaOtrasObligCanceladas from './Tabla_Otras_Oblig_Canceladas'
 
 //ESTA ES LA VISTA PRINCIPAL POR NOMBRES Y APELLIDOS
@@ -154,6 +161,16 @@ class ImportePagos extends React.Component {
     this.AddCostoImporte = this.AddCostoImporte.bind(this);
     this.UpdateCostoImporte = this.UpdateCostoImporte.bind(this);
   }
+
+  pdf=()=>{
+    var doc = new jsPDF();
+    doc.autoTable({html: '#table'});
+
+    doc.save('table.pdf');
+  }
+
+ 
+
   componentDidUpdate() {
     if (this.state.estado != 0) {
 
@@ -381,6 +398,7 @@ class ImportePagos extends React.Component {
       return response.json()
     })
       .then((pagos) => {
+        console.log("estos son los pagos para este concepto",pagos);
         let pagosDerechoEnseñanza=[];
         if (pagos.length > 0) {
           //console.log("Este es el importe de DERECHO ENSEÑANZA ", pagos);
@@ -1286,13 +1304,15 @@ class ImportePagos extends React.Component {
               <ImprimirImportePago validado={this.state.validado} seleccionado={this.state.seleccionado} listado={this.state.pagocero} conceptos={this.state.conceptos} alumno={this.state.alumno} costos={this.state.costosP} datos={this.state.datosformulario} valorCosto1={this.state.importeTabla1} valorCosto3={this.state.importeTabla3} valorCosto2={this.state.importeTabla2} repitencia={this.state.importeRepitencia} />
             </div>
 
+            
+
+            
 
 
-
-            <div className="row">
+            <div className="row" id="table">
               <div className="col-md-12">
 
-                <table className="tableImportes">
+                <table className="tableImportes" >
                   <thead>
                     <tr>
                       <th className="thLabel">MATRÍCULA UPG</th>

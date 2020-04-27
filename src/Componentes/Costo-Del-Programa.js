@@ -5,7 +5,7 @@ class CostoDelPrograma extends React.Component {
     
   render() {
     let tipoMoneda= this.props.tipoMoneda;
-    let simboloMoneda = (tipoMoneda == "108") ? 'SOLES' : 'DOLARES' ;
+    let simboloMoneda = (tipoMoneda === "108") ? 'SOLES' : 'DOLARES' ;
     return(
       
 			<div>

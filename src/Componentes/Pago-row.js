@@ -397,6 +397,10 @@ class PagoRow extends React.Component {
       document.getElementById(editCiclo).style.background = '#F2F2F2';
       document.getElementById(editCiclo).focus();
 
+      this.setState({
+        desabilitar2: false
+      })
+
       var editFecha;
       var fechaEdit = this.props.pago.fecha;
       var anioFecha = fechaEdit.substring(0, 4);
@@ -1032,8 +1036,9 @@ class PagoRow extends React.Component {
 
         <td className="td">
           {/* {this.props.pago.moneda} */}
+          
           <Select
-
+            inputId = {this.props.pago.idRec.toString() + "250296" + "moneda"}
             value={this.state.selectedOption2}
             onChange={this.handleChange2}
             options={this.props.monedas}

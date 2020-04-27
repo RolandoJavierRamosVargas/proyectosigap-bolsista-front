@@ -5,7 +5,7 @@ import FiltroFecha1 from './FiltroFecha1'
 import ConceptoList from './Concepto-list'
 import NumeroRecibo from './NumeroRecibo'
 import '../App2.css';
-import PropTypes from 'prop-types';
+
 
 import Buscar from './Buscar';
 import {browserHistory} from 'react-router-3';

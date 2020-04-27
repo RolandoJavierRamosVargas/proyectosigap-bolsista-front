@@ -1377,7 +1377,9 @@ class ImprimirImportePago extends React.Component {
         render() {
     
           return (
-            <div >
+
+
+            <div>
               {localStorage.getItem('tipo')=='alumno' ? '' : <button  onClick={() => this.Imprimir()} className=" waves-effect waves-light btn-small imprimir ">Imprimir<i className="large material-icons left">local_printshop</i></button>}
             </div>
             //className="margen2"
