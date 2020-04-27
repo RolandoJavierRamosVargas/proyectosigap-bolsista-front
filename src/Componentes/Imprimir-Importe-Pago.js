@@ -1,6 +1,6 @@
 import React from 'react'
 import swal from 'sweetalert';
-import CONFIG from '../Configuracion/Config'
+
 
 var jsPDF = require('jspdf');
 require('jspdf-autotable');
@@ -230,6 +230,12 @@ class ImprimirImportePago extends React.Component {
     var bodyCostoFinal = null;
     var dataCostoFinal = null;
 
+    for(let j=0;j<listadopagos.length;j++){
+      if(listadopagos[j].validado==true){
+          total.push(listadopagos[j]); // ya no hay esas weas de chck box
+      }
+    }
+
     if(this.props.costos.tipo == "por credito") // // NOTE: estas weas son las que cambian segun el credito o ciclo :v
     {
                  costoTotal = this.props.costos.total;
@@ -282,19 +288,21 @@ class ImprimirImportePago extends React.Component {
      }
     });
 
+    
+
     //if(checkbox_selec.length!=0){
       if(true){
       
-      
+        
 
       console.log("wea")
-      console.log(total);
+      console.log("esta es la lista total",total);
 
       console.log("wea abel")
       console.log(this.props.conceptos);
 
       //ORDENA POR CONCEPTO
-      listafinal = this.arreglosReporte(listadopagos);
+      listafinal = this.arreglosReporte(total);
 
       console.log("wea abel :V")
       console.log(this.props.conceptos);
