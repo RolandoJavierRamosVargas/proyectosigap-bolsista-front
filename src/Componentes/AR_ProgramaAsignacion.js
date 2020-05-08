@@ -1,6 +1,5 @@
 import React from 'react'
 import CONFIG from '../Configuracion/Config'
-import {Button, Modal, ModalHeader, ModalBody, ModalFooter, Table} from 'reactstrap'
 
 class AR_ProgramaAsignacion extends React.Component {
 

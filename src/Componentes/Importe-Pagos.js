@@ -4,19 +4,13 @@ import TableImporteHeader from './Table-Importe-Header'
 import TableImporteFooter from './Table-Importe-Footer'
 import Alumno from './Alumno'
 import AlumnoCodigo from './AlumnoCodigo'
-import Importe from './Importe'
-import FiltroFecha1 from './FiltroFecha1'
-import ConceptoList from './Concepto-list'
-import NumeroRecibo from './NumeroRecibo'
 import '../App.css';
+// import '../app3.css';
 import PropTypes from 'prop-types';
 import Imprimir2 from './imprimir2';
 import { browserHistory } from 'react-router-3';
 import swal from 'sweetalert';
 import CONFIG from '../Configuracion/Config'
-import FormularioIntermio from './formulario-intermedio';
-import ComponenteEditable from './ComponenteEditable'
-import ImporteDolar from './ImporteDolar';
 import CostoDelPrograma from './Costo-Del-Programa';
 import DeudaTotal from './Deuda-Total';
 import CostoDelProgramaDet from './Costo-Del-Programa-Det';
@@ -138,7 +132,7 @@ class ImportePagos extends React.Component {
       tipoMonedaMatriculaEpg: '',
       tipoMonedaDerechoEnseñanza: '',
       tipoMonedaRepitencia: '',
-
+      fechaActual:'',
 
     }
     this.clase = '';
@@ -200,7 +194,49 @@ class ImportePagos extends React.Component {
   }
 
 
+  conseguirFechaActual = () =>{
+    // let dia;
+    // let hora;
+    // let date = new Date()
+
+    // let day = date.getDate()
+    // let month = date.getMonth() + 1
+    // let year = date.getFullYear()
+
+    // let h = date.getHours();
+    // let min = date.getMinutes();
+    // let sec= date.getSeconds();
+
+    // if(month < 10){
+    //    dia =`${day}/0${month}/${year}`;
+    // }else{
+    //    dia=`${day}/${month}/${year}`;
+    // }
+
+    // hora = `${h}:${min}:${sec}`;
+
+    // console.log("la hora",hora);
+
+    var date = new Date();
+    var dateStr =
+      "Fecha:  "+
+      ("00" + date.getDate()).slice(-2) + "/" +
+      ("00" + (date.getMonth() + 1)).slice(-2) + "/" +
+      date.getFullYear() +
+       "  Hora:  " +
+      ("00" + date.getHours()).slice(-2) + ":" +
+      ("00" + date.getMinutes()).slice(-2) + ":" +
+      ("00" + date.getSeconds()).slice(-2);
+    console.log("fecha str",dateStr);
+    this.setState({
+      fechaActual:dateStr
+    })
+  }
+
   componentWillMount() {
+
+    this.conseguirFechaActual();
+
     this.pageOfItems = this.pagocero;
     var checkbox_selec = [];
     var nombres = this.state.name;
@@ -255,7 +291,7 @@ class ImportePagos extends React.Component {
         return response.json()
       })
       .then((beneficio) => {
-        console.log("DATA BENEFICIO ");
+        console.log("DATA BENEFICIO ",beneficio);
         console.log(beneficio);
         this.setState({
           valorBeneficio: beneficio[0].benef_otrogado
@@ -1236,6 +1272,16 @@ class ImportePagos extends React.Component {
     e.preventDefault();
   }
 
+  deudaTotal = (total,upg,epg,enseñanza,repitencia) => {
+   console.log("total",total);
+   console.log("upg",upg)
+   console.log("epg",epg)
+   console.log("enseñ",enseñanza)
+   console.log("repi",repitencia)
+   let respuesta=total-upg-epg-enseñanza-repitencia;
+   return respuesta;
+  }
+
   render() {
     if (this.state.pagos.length > 0) {
       return (
@@ -1244,10 +1290,15 @@ class ImportePagos extends React.Component {
 
 
           <div>
-            <h3>Importe de pago por alumno
-            <ul id="nav-mobile" className=" row right  hide-on-med-and-down">
-                <li ><a className="seleccionar col" onClick={browserHistory.goBack} >Regresar<i className="material-icons right">reply</i></a></li>
-              </ul>
+            
+            <h3>
+                <span className="left">UPG-FISI-UNMSM &nbsp; {this.state.fechaActual} </span>
+                <span className="center">ESTADO DE PAGOS</span>
+                <ul id="nav-mobile" className=" row right  hide-on-med-and-down">
+                    <li ><a className="seleccionar col" onClick={browserHistory.goBack} >Regresar<i className="material-icons right">reply</i></a></li>
+                </ul>
+              
+              
             </h3>
             <hr />
             <div className="SplitPane row">
@@ -1300,11 +1351,13 @@ class ImportePagos extends React.Component {
             </div>
 
             <hr />
-            <div className="SplitPane row Padding_bottom" >
+            {/* <div className="SplitPane row Padding_bottom" >
               <ImprimirImportePago validado={this.state.validado} seleccionado={this.state.seleccionado} listado={this.state.pagocero} conceptos={this.state.conceptos} alumno={this.state.alumno} costos={this.state.costosP} datos={this.state.datosformulario} valorCosto1={this.state.importeTabla1} valorCosto3={this.state.importeTabla3} valorCosto2={this.state.importeTabla2} repitencia={this.state.importeRepitencia} />
-            </div>
+            </div> */}
 
-            
+          <span> <strong>Total Cancelado (UPG) : {this.CalcularImporteUno()+this.CalcularImporteDos()+this.CalcularImporteRepitencia()} </strong> &nbsp; </span>
+          <span> <strong>Total Cancelado (UPG,EPG) : {this.calcularSumaImportes()}</strong> &nbsp; </span>
+          <span><strong>Total Adeudado (UPG,EPG) : {(this.state.importeRepitencia+this.state.importeTabla1+this.state.importeTabla2+this.state.importeTabla3-this.calcularSumaImportes()).toFixed(2)}</strong></span>
 
             
 
@@ -1348,7 +1401,7 @@ class ImportePagos extends React.Component {
                           </thead>
                           <tbody>
                             <ImporteList funcion={this.FuncionUno} listado={this.state.pagoUno} conceptos={this.state.concepto} datos={this.state.datos} datosMonedas={this.state.monedas} monedas={this.state.monedasvl} ubicaciones={this.state.ubicacionesv1} cuentas={this.state.cuentasv1} configuraciones={this.state.configuraciones} />
-                            <TableImporteFooter total={this.CalcularImporteUno()} costo={this.state.importeTabla1} tipoMoneda = {this.state.tipoMonedaMatriculaUpg} />
+                            <TableImporteFooter  total={this.CalcularImporteUno()} costo={this.state.importeTabla1} tipoMoneda = {this.state.tipoMonedaMatriculaUpg} />
                           </tbody>
                         </table>
                       </td>
@@ -1382,7 +1435,7 @@ class ImportePagos extends React.Component {
                           </thead>
                           <tbody>
                             <ImporteList funcion={this.FuncionTres} listado={this.state.pagoTres} conceptos={this.state.concepto} datos={this.state.datos} datosMonedas={this.state.monedas} monedas={this.state.monedasvl} ubicaciones={this.state.ubicacionesv1} cuentas={this.state.cuentasv1} configuraciones={this.state.configuraciones} />
-                            <TableImporteFooter total={this.CalcularImporteTres()} costo={this.state.importeTabla3}  tipoMoneda = {this.state.tipoMonedaMatriculaEpg}/>
+                            <TableImporteFooter  total={this.CalcularImporteTres()} costo={this.state.importeTabla3}  tipoMoneda = {this.state.tipoMonedaMatriculaEpg}/>
                           </tbody>
                         </table>
                       </td>
@@ -1430,7 +1483,7 @@ class ImportePagos extends React.Component {
                           </thead>
                           <tbody>
                             <ImporteList funcion={this.FuncionDos} listado={this.state.pagoDos} conceptos={this.state.concepto} datos={this.state.datos} datosMonedas={this.state.monedas} monedas={this.state.monedasvl} ubicaciones={this.state.ubicacionesv1} cuentas={this.state.cuentasv1} configuraciones={this.state.configuraciones} />
-                            <TableImporteFooter total={this.CalcularImporteDos()} costo={this.state.importeTabla2} tipoMoneda = {this.state.tipoMonedaDerechoEnseñanza} />
+                            <TableImporteFooter  total={this.CalcularImporteDos()} costo={this.state.importeTabla2} tipoMoneda = {this.state.tipoMonedaDerechoEnseñanza} />
                           </tbody>
                         </table>
                       </td>
@@ -1467,7 +1520,7 @@ class ImportePagos extends React.Component {
                           <tbody>
 
                             <ImporteList funcion={this.FuncionDos} listado={this.state.listaRepitencia} conceptos={this.state.concepto} datos={this.state.datos} datosMonedas={this.state.monedas} monedas={this.state.monedasvl} ubicaciones={this.state.ubicacionesv1} cuentas={this.state.cuentasv1} configuraciones={this.state.configuraciones} />
-                            <TableImporteFooter total={this.CalcularImporteRepitencia()} costo={this.state.importeRepitencia} tipoMoneda = {this.state.tipoMonedaRepitencia} />
+                            <TableImporteFooter  total={this.CalcularImporteRepitencia()} costo={this.state.importeRepitencia} tipoMoneda = {this.state.tipoMonedaRepitencia} />
 
                           </tbody>
                         </table>
@@ -1544,12 +1597,12 @@ class ImportePagos extends React.Component {
               </div>
             </div>
 
-            <div className="row">
+            {/* <div className="row">
               <div className="col-md-12">
                 <DeudaTotal deuda={this.CalcularDeudaTotal()} tipoMoneda = {this.state.tipoMonedaDerechoEnseñanza} />
               </div>
 
-            </div>
+            </div> */}
 
           </div>
           <hr />
@@ -1816,6 +1869,11 @@ class ImportePagos extends React.Component {
     console.log("BOOL1:" + this.state.bool3);
   }
 
+  calcularSumaImportes=()=>{
+    let monto=this.CalcularImporteDos()+this.CalcularImporteRepitencia()+this.CalcularImporteTres()+this.CalcularImporteUno();
+    return monto; 
+  }
+
   CalcularDeudaTotal = (e) => {
 
     var deudaUpg = this.state.importeTabla1 - this.CalcularImporteUno();
@@ -1823,12 +1881,6 @@ class ImportePagos extends React.Component {
     var deudaDE = this.state.importeTabla2 - this.CalcularImporteDos();
     var deudaRepitencia = this.state.importeRepitencia - this.CalcularImporteRepitencia();
     var deudaTotal = 0;
-
-    console.log("DeudaUPGl:" + this.state.importeTabla1);
-    console.log("DeudaUPG2:" + this.CalcularImporteUno);
-    console.log("DeudaUPG:" + deudaUpg);
-    console.log("DeudaEpg:" + deudaEpg);
-    console.log("DeudaDE:" + deudaDE);
 
     if (deudaUpg >= 0) {
       deudaTotal = deudaTotal + deudaUpg;

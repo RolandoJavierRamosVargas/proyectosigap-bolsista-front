@@ -2,11 +2,7 @@ import React from 'react'
 import CONFIG from '../Configuracion/Config'
 import swal from 'sweetalert';
 import Select from 'react-select';
-const options = [
-  { value: 'chocolate', label: 'Chocolate' },
-  { value: 'strawberry', label: 'Strawberry' },
-  { value: 'vanilla', label: 'Vanilla' }
-];
+
 
 
 
@@ -278,15 +274,7 @@ class PagoRow extends React.Component {
 
 
     if (estadoAlumno == "M" && digitado == "S") {
-      var editConcepto;
-      editConcepto = this.props.pago.idRec.toString() + this.props.pago.concepto;
-
-      var conceptoEdit = this.props.pago.concepto;
-
-      //document.getElementById(editConcepto).value= conceptoEdit;
-      //document.getElementById(editConcepto).disabled = false;
-      //document.getElementById(editConcepto).style.background='#F2F2F2';
-
+      
       this.setState({
         desabilitar: false
       })
@@ -328,7 +316,7 @@ class PagoRow extends React.Component {
       document.getElementById(editCiclo).focus();
 
       var editImporte;
-      var num = 250296;
+      num = 250296;
       editImporte = this.props.pago.idRec.toString() + num.toString() + "importe";
       var _importe_ = this.props.pago.importe;
 
@@ -336,16 +324,6 @@ class PagoRow extends React.Component {
       document.getElementById(editImporte).disabled = false;
       document.getElementById(editImporte).style.background = '#F2F2F2';
       document.getElementById(editImporte).focus();
-
-      /*var editCuentaBanco;
-      var num = 250296;
-      editCuentaBanco = this.props.pago.idRec.toString() + num.toString() + "ctabanco";
-      var __cuentabanco__ = this.props.pago.descripcion_tipo;
-
-      document.getElementById(editCuentaBanco).value = __cuentabanco__;
-      document.getElementById(editCuentaBanco).disabled = false;
-      document.getElementById(editCuentaBanco).style.background = '#F2F2F2';
-      document.getElementById(editCuentaBanco).focus();*/
 
       this.setState({
         desabilitar3: false
@@ -366,15 +344,6 @@ class PagoRow extends React.Component {
       this.setState({
         desablilitarTipoRecaudacion: false
       })
-      /*var editUbicacion;
-      var num = 250296;
-      editUbicacion = this.props.pago.idRec.toString() + num.toString() + "ubicacion";
-      var __ubicacion__ = this.props.pago.descripcion_ubi;
-
-      document.getElementById(editUbicacion).value = __ubicacion__;
-      document.getElementById(editUbicacion).disabled = false;
-      document.getElementById(editUbicacion).style.background = '#F2F2F2';
-      document.getElementById(editUbicacion).focus();*/
 
       var numRecibo;
       numRecibo = this.props.pago.idRec.toString() + this.props.pago.numero;
@@ -421,19 +390,6 @@ class PagoRow extends React.Component {
       document.getElementById(editFecha).disabled = false;
       document.getElementById(editFecha).style.background = '#F2F2F2';
 
-      /*var editImporte;
-      var num = 250296;
-      editImporte = this.props.pago.idRec.toString() + num.toString() + "importe";
-      var _importe_ = this.props.pago.importe;
-
-      document.getElementById(editImporte).value = _importe_;
-      document.getElementById(editImporte).disabled = false;
-      document.getElementById(editImporte).style.background = '#F2F2F2';
-      document.getElementById(editImporte).focus();*/
-
-
-      //document.getElementById(conceptos)
-
       this.setState({
         desabilitar3: false
       })
@@ -454,12 +410,8 @@ class PagoRow extends React.Component {
       })
     }
     else{
-      //no haga ni pincho
+      
     }
-    //console.log("No tiene permiso para editar");
-    //swal("No es posible realizar cambios", "", "info");
-
-
   }
 
 

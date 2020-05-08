@@ -1,5 +1,4 @@
 import React from 'react';
-
 import swal from 'sweetalert';
 import { browserHistory } from 'react-router-3';
 import CONFIG from '../Configuracion/Config';

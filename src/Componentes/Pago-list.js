@@ -1,6 +1,6 @@
 import React from 'react'
 import PagoRow from './Pago-row'
-import CONFIG from '../Configuracion/Config'
+
 class PagoList extends React.Component {
 
   constructor(props) {

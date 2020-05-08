@@ -3,8 +3,6 @@ import '../sass/_loginSty.css';
 import swal from 'sweetalert';
 import {browserHistory,Redirect,Route} from 'react-router-3';
 import CONFIG from '../Configuracion/Config';
-import LoginApp from './LoginApp';
-
 
 class Login extends React.Component {
   

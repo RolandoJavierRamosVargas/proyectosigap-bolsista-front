@@ -1,5 +1,4 @@
 import React from 'react'
-import Select from 'react-select'
 import AR_tableHeaderReciboResultado from './AR_tableHeaderReciboResultado';
 
 class AR_ReciboResultadoAlumnos extends React.Component {

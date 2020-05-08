@@ -1,7 +1,5 @@
 import React from 'react'
 import swal from 'sweetalert';
-
-
 var jsPDF = require('jspdf');
 require('jspdf-autotable');
 

@@ -3,7 +3,7 @@ import '../App.css';
 class CostoDelProgramaDet extends React.Component {
 
   render() {
-    // console.log("El costo por ciclo es _>>>>>>>>>>>>", this.props.costoxciclo);
+    
 
     return(
       

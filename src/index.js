@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './Componentes/App';
-//import AppCodigo from './Componentes/AppCodigo';
 import AppNueva from './Componentes/AppNueva';
 import AppNueva2 from './Componentes/AppNueva2';
 import LoginFormNombreApellidos from './Componentes/LoginFormNombreApellidos';
@@ -19,7 +18,6 @@ import Formulario from './Componentes/formulario';
 import VistaSeguimientoEgresado from './Componentes/VistaSeguimientoEgresado';
 import AsignarPresupuesto from './Componentes/AsignarPresupuesto';
 import ImportePagos from './Componentes/Importe-Pagos';
-import RegistroCostoPrograma from './Componentes/RegistroCostoPrograma';
 import RegistroPresupuesto from './Componentes/RegistroPresupuesto';
 
 

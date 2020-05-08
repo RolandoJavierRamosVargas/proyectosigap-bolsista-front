@@ -4,7 +4,6 @@ import Select from 'react-select'
 import swal from 'sweetalert'
 import CONFIG from '../Configuracion/Config';
 import AR_tableHeaderRecibo from './AR_tableHeaderRecibo'
-import AR_tableHeaderReciboResultado from './AR_tableHeaderReciboResultado'
 import AR_CodigoAsignacion from './AR_CodigoAsignacion'
 import AR_ReciboResultadoAlumnos from './AR_ReciboResultadoAlumnos'
 import AR_EstadoAsignacion from './AR_EstadoAsginacion'

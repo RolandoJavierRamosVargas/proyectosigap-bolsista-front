@@ -43,17 +43,6 @@ class Imprimir2 extends React.Component {
     return totalimportes;
   }
 
-  demoTwoPageDocument() {
-    var doc = new jsPDF('landscape');
-    doc.text(20, 20, 'Hello world!');
-    doc.text(20, 30, 'This is client-side Javascript, pumping out a PDF.');
-    doc.addPage();
-    doc.text(20, 20, 'Do you like that?');
-
-    // Save the PDF
-    doc.save('Test.pdf');
-}
-
     comita(importecito2){
 
         var trans = 0;
@@ -439,11 +428,11 @@ class Imprimir2 extends React.Component {
 
         if(arrayAntes[m].moneda=="108"){
         var pago = [m+1,arrayAntes[m].ciclo.toString(),arrayAntes[m].concepto,arrayAntes[m].fecha.replace(/^(\d{4})-(\d{2})-(\d{2})$/g,'$3-$2-$1'),"RECIBO",arrayAntes[m].numero
-        ,"S/."+this.comita(arrayAntes[m].importe.toString()),"S/."+this.comita(arrayAntes[m].importe_tc.toString()),arrayAntes[m].observacion,arrayAntes[m].id_tipo_recaudacion]
+        ,"S/."+this.comita(arrayAntes[m].importe.toString()),"S/."+this.comita(arrayAntes[m].importe_tc.toString()),arrayAntes[m].observacion,arrayAntes[m].id_tipo_recaudacion,arrayAntes[m].descripcion_recaudacion]
         }
         else{
           var pago = [m+1,arrayAntes[m].ciclo.toString(),arrayAntes[m].concepto,arrayAntes[m].fecha.replace(/^(\d{4})-(\d{2})-(\d{2})$/g,'$3-$2-$1'),"RECIBO",arrayAntes[m].numero
-          ,"$."+this.comita(arrayAntes[m].importe.toString()),"S/."+this.comita(arrayAntes[m].importe_tc.toString()),arrayAntes[m].observacion,arrayAntes[m].id_tipo_recaudacion]
+          ,"$."+this.comita(arrayAntes[m].importe.toString()),"S/."+this.comita(arrayAntes[m].importe_tc.toString()),arrayAntes[m].observacion,arrayAntes[m].id_tipo_recaudacion,arrayAntes[m].descripcion_recaudacion]
 
         }
       totalizado = totalizado + arrayAntes[m].importe_tc;
@@ -455,11 +444,11 @@ class Imprimir2 extends React.Component {
       else{
         if(arrayAntes[m].moneda=="108"){
           var pago = [m+1,arrayAntes[m].ciclo.toString(),arrayAntes[m].concepto,arrayAntes[m].fecha.replace(/^(\d{4})-(\d{2})-(\d{2})$/g,'$3-$2-$1'),"RECIBO",arrayAntes[m].numero,
-          "S/."+this.comita(arrayAntes[m].importe.toString()),"S/."+this.comita(arrayAntes[m].importe_tc.toString()),arrayAntes[m].id_tipo_recaudacion]
+          "S/."+this.comita(arrayAntes[m].importe.toString()),"S/."+this.comita(arrayAntes[m].importe_tc.toString()),arrayAntes[m].id_tipo_recaudacion,arrayAntes[m].descripcion_recaudacion]
           }
           else{
             var pago = [m+1,arrayAntes[m].ciclo.toString(),arrayAntes[m].concepto,arrayAntes[m].fecha.replace(/^(\d{4})-(\d{2})-(\d{2})$/g,'$3-$2-$1'),"RECIBO",arrayAntes[m].numero
-            ,"$."+this.comita(arrayAntes[m].importe.toString()),"S/."+this.comita(arrayAntes[m].importe_tc.toString()),arrayAntes[m].id_tipo_recaudacion]
+            ,"$."+this.comita(arrayAntes[m].importe.toString()),"S/."+this.comita(arrayAntes[m].importe_tc.toString()),arrayAntes[m].id_tipo_recaudacion,arrayAntes[m].descripcion_recaudacion]
 
           }
         totalizado = totalizado + arrayAntes[m].importe_tc;
@@ -909,10 +898,10 @@ class Imprimir2 extends React.Component {
 
     if(costo_tipo=="por credito"){
 
-        doc.setFont("helvetica");
-        doc.setFontType("bold");
-        doc.setFontSize(9);
-        doc.text("Costo Real", 35, 230);
+      doc.setFont("helvetica");
+      doc.setFontType("bold");
+      doc.setFontSize(9);
+      doc.text("Costo Real", 35, 230);
 
       doc.setFont("helvetica");
       doc.setFontType("bold");
@@ -1001,13 +990,50 @@ class Imprimir2 extends React.Component {
     doc.text("Total", 500, 310);
 
 
+ /************************************************************ */
+ /************************************************************ */
+ /************************************************************ */
+
+//  let datosCostoPrograma = ["N°","Matricula UPG","Matricula EPG","Derecho Enseñanza","Total","Costo Aplicado"];
+//  let costoReal = [['Costo real',costo_credito.toString(),'asdad','adada','dad','adadad']]
+//  doc.autoTable(datosCostoPrograma, costoReal, {
+//    theme: 'grid',
+//    styles: {
+//        cellPadding: 5, // a number, array or object (see margin below)
+//        fontSize: 8,
+//        font: "helvetica", // helvetica, times, courier
+//        lineColor: 0,
+//        lineWidth: 0.5,
+//        fontStyle: 'normal', // normal, bold, italic, bolditalic
+//        overflow: 'ellipsize', // visible, hidden, ellipsize or linebreak
+//        fillColor: false, // false for transparent or a color as described below
+//        textColor: 0,
+//        halign: 'center', // left, center, right
+//        valign: 'middle', // top, middle, bottom
+//        columnWidth: 'auto' // 'auto', 'wrap' or a number
+//    },
+//    headerStyles: {fillColor: [180, 180, 180],
+//    textColor:0,
+//    fontStyle:'bold'},
+//    startY : 380,
+//    showHeader:'firstPage'
+
+// });
+// var first = doc.autoTable.previous;
+
+
+  /************************************************************ */
+  /************************************************************ */
+  /************************************************************ */
+
+
 
 }else{  // supongo que en este else, por algun lado, va la wea del ciclo
     //AQUI ES EL ELSE DEL POR CREDITO :vV
-        doc.setFont("helvetica");
-        doc.setFontType("bold");
-        doc.setFontSize(9);
-        doc.text("Costo Real(Ciclo)", 35, 230);
+      doc.setFont("helvetica");
+      doc.setFontType("bold");
+      doc.setFontSize(9);
+      doc.text("Costo Real (Ciclo)", 35, 230);
 
       doc.setFont("helvetica");
       doc.setFontType("bold");
@@ -1040,7 +1066,7 @@ class Imprimir2 extends React.Component {
         doc.setFont("helvetica");
         doc.setFontType("normal");
         doc.setFontSize(9);
-        doc.text("", 620, 330); //AQUI VA EL TOTAL DEL COSTO FINAL
+        doc.text("", 620, 290); //AQUI VA EL TOTAL DEL COSTO FINAL
       }
 
       if(d_ciclo!=null){
@@ -1071,9 +1097,51 @@ class Imprimir2 extends React.Component {
       doc.text("Total", 35, 310);
 
       doc.setFont("helvetica");
-    doc.setFontType("bold");
-    doc.setFontSize(9);
-    doc.text("Total", 500, 310);
+      doc.setFontType("bold");
+      doc.setFontSize(9);
+      doc.text("Total", 500, 310);
+
+      /************************************ */ 
+      /************************************ */ 
+      /************************************ */ 
+      /************************************ */ 
+      /************************************ */ 
+      /************************************ */ 
+       //    Datos del costo del programa
+//   let datosCostoPrograma = ["N°","Matricula UPG","Matricula EPG","Derecho Enseñanza","Total","Costo Aplicado"];
+//   let costoReal = [['Costo real','adad','asdad','adada','dad','adadad']]
+//   doc.autoTable(datosCostoPrograma, costoReal, {
+//     theme: 'grid',
+//     styles: {
+//         cellPadding: 5, // a number, array or object (see margin below)
+//         fontSize: 8,
+//         font: "helvetica", // helvetica, times, courier
+//         lineColor: 0,
+//         lineWidth: 0.5,
+//         fontStyle: 'normal', // normal, bold, italic, bolditalic
+//         overflow: 'ellipsize', // visible, hidden, ellipsize or linebreak
+//         fillColor: false, // false for transparent or a color as described below
+//         textColor: 0,
+//         halign: 'center', // left, center, right
+//         valign: 'middle', // top, middle, bottom
+//         columnWidth: 'auto' // 'auto', 'wrap' or a number
+//     },
+//     headerStyles: {fillColor: [180, 180, 180],
+//     textColor:0,
+//     fontStyle:'bold'},
+//     startY : 380,
+//     showHeader:'firstPage'
+
+// });
+// var first = doc.autoTable.previous;
+
+/*************************************** */
+/*************************************** */
+/*************************************** */
+/*************************************** */
+/*************************************** */
+/*************************************** */
+
 
 
     }
@@ -1107,7 +1175,7 @@ class Imprimir2 extends React.Component {
       doc.setFont("helvetica");
       doc.setFontType("normal");
       doc.setFontSize(9);
-      doc.text("S/. "+this.comita(costoTotal.toString()), 160, 290); //AQUI VA EL DERECHO DE ENSEÑANZA DEL COSTO REAL
+      doc.text("S/. "+this.comita(costoTotal.toString()), 160, 310); //AQUI VA EL DERECHO DE ENSEÑANZA DEL COSTO REAL
     }else{
       doc.setFont("helvetica");
       doc.setFontType("normal");
@@ -1223,7 +1291,17 @@ class Imprimir2 extends React.Component {
     doc.setLineWidth(0.5);
     doc.line(35, 374,750, 374);
 
+        /************************************************************ */
+        /************************************************************ */
+        /************************************************************ */
+        /************************************************************ */
+
+ 
     
+    /************************************************************ */
+    /************************************************************ */
+    /************************************************************ */
+    /************************************************************ */
 
     /************************************************************ */
 
@@ -1248,8 +1326,8 @@ class Imprimir2 extends React.Component {
             listadoFinalBeneficio.push(beneficio_);
         }
 
-  console.log("listado final del benefico para el reporte del pdf",listadoFinalBeneficio);
-  console.log(listadoFinalBeneficio);
+          console.log("listado final del benefico para el reporte del pdf",listadoFinalBeneficio);
+          console.log(listadoFinalBeneficio);
 
 
 
@@ -1275,7 +1353,8 @@ class Imprimir2 extends React.Component {
             headerStyles: {fillColor: [180, 180, 180],
             textColor:0,
             fontStyle:'bold'},
-            startY : 380,
+            //startY : first.finalY + 30,
+            startY :  380,
             showHeader:'firstPage'
 
         });
@@ -1286,7 +1365,7 @@ class Imprimir2 extends React.Component {
            doc.setFont("helvetica");
            doc.setFontType("bold");
            doc.setFontSize(10);
-           doc.text("PAGO POR CONCEPTO "+ listadoFinalFormato[0][0][2],38,first.finalY + 25);
+           doc.text("PAGO POR CONCEPTO "+ listadoFinalFormato[0][0][10],38,first.finalY + 25);
            console.log("listadofinalFormato ",listadoFinalFormato)
 
             doc.autoTable(columns, listadoFinalFormato[0], {
@@ -1324,12 +1403,12 @@ class Imprimir2 extends React.Component {
 
             for (let k = 1; k<listadoFinalFormato.length; k++) {
               var first = doc.autoTable.previous;
-              let pagoPorConcepto=(listadoFinalFormato[k][0][9]==4) ? listadoFinalFormato[k][0][2]+" REPITENCIA" :listadoFinalFormato[k][0][2] ;
+              let encabezado=listadoFinalFormato[k][0][10];
               //Mostramos el encabezado de cada tabla
               doc.setFont("helvetica");
               doc.setFontType("bold");
               doc.setFontSize(10);
-              doc.text("PAGO POR CONCEPTO "+pagoPorConcepto,38, first.finalY + 25);
+              doc.text("PAGO POR CONCEPTO "+encabezado,38, first.finalY + 25);
               console.log("pago por concepto");
 
               //Mostramos el encabezado de cada tabla
@@ -1375,7 +1454,7 @@ class Imprimir2 extends React.Component {
            doc.setFont("helvetica");
            doc.setFontType("bold");
            doc.setFontSize(10);
-           doc.text("PAGO POR CONCEPTO "+listadoFinalFormato[0][0][2],38,420);
+           doc.text("PAGO POR CONCEPTO "+listadoFinalFormato[0][0][10],38,420);
 
 
         //Mostramos el encabezado de la primera tabla
@@ -1414,12 +1493,12 @@ class Imprimir2 extends React.Component {
 
             for (let k = 1; k<listadoFinalFormato.length; k++) {
               var first = doc.autoTable.previous;
-
+              let encabezado=listadoFinalFormato[k][0][10];
               //Mostramos el encabezado de cada tabla
               doc.setFont("helvetica");
               doc.setFontType("bold");
               doc.setFontSize(10);
-              doc.text("PAGO POR CONCEPTO "+listadoFinalFormato[k][0][2],38, first.finalY + 25);
+              doc.text("PAGO POR CONCEPTO "+encabezado,38, first.finalY + 25);
               console.log("pago por concepto");
 
 

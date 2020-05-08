@@ -96,7 +96,7 @@ class CodigoRow extends React.Component{
                 .catch(error => {
                     // si hay algún error lo mostramos en consola
                     swal("Oops, Algo salió mal!!", "", "error")
-                    console.error(error)
+                    
                 });
         }
     }
@@ -106,7 +106,9 @@ class CodigoRow extends React.Component{
         e.preventDefault();
         if (this.state.defuncion == 1) {
             this.state.defuncion = 0;
-            this.state.estadoAlumno = "Alumno fallecido"
+            this.setState({
+                estadoAlumno : "Alumno fallecido"
+            })
             fetch(CONFIG+'recaudaciones/alumno/concepto/' + this.state.alumno.nombre_alumno + '/estado_civil_alumno/' + this.state.defuncion,
                 {
                     headers: {
@@ -123,13 +125,10 @@ class CodigoRow extends React.Component{
                     if (this.state.defuncion == 0) {
                         //  swal("¿El alumno falleció?", "", "")
                     }
-
-
                 })
                 .catch(error => {
                     // si hay algún error lo mostramos en consola
                     swal("Oops, Algo salió mal!!", "", "error")
-                    console.error(error)
                 });
         } else {
             this.state.defuncion = 1;
@@ -147,25 +146,29 @@ class CodigoRow extends React.Component{
             })
                 .then((defuncion) => {
                     if (this.state.defuncion == 1) {
-                        console.log("ptm")
-                        console.log(this.state.estadoAlumno)
-                        this.state.estadoAlumno = "Alumno fallecido"
-                        //  swal("¿Modificar el estado del alumno?", "", "")
+                        
+                        this.setState({
+                            estadoAlumno : "Alumno fallecido"
+                        })
+                        
                     }
                 })
                 .catch(error => {
-                    // si hay algún error lo mostramos en consola
                     swal("Oops, Algo salió mal!!", "", "error")
-                    console.error(error)
+                    
                 });
         }
         var uno = document.getElementById('FbotonStatus');
         if (this.state.valor) {
             uno.innerText = "";
-            this.state.estadoAlumno = uno;
+            this.setState({
+                estadoAlumno : uno
+            })
         } else {
             uno.innerText = "";
-            this.state.estadoAlumno = uno;
+            this.setState({
+                estadoAlumno : uno
+            })
         }
 
         this.state.valor = !this.state.valor
@@ -191,7 +194,6 @@ class CodigoRow extends React.Component{
                 return response.json();
             })
             .then((pagos) => {
-                console.log("anyiiiiiiiiiiiiiiiiiiii" + this.state.estadoAlumno)
                 this.setState({
                    estadoAlumno: this.props.alumno.estado_civil,
                 })

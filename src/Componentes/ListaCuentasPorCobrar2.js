@@ -4,7 +4,6 @@ import {
   } from 'reactstrap';
 import CONFIG from '../Configuracion/Config'
 import swal from 'sweetalert'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 class ListaCuentasPorCobrar2 extends Component{ 
 

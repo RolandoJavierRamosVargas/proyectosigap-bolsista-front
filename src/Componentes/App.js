@@ -514,6 +514,7 @@ this.setState({
         return response.json()
       })
       .then((pagos) => {
+        console.log("se estan viendo los pagos",pagos);
 
         var auxPagos = pagos;
 
@@ -1644,6 +1645,7 @@ reporte_credito(idx,nombrenuevo,auxPagos){
  }
 
  reporte_ciclo(nombrenuevo,auxPagos,idx){
+      // console.log("este es el beneficio-reporte-ciclo",CONFIG+'beneficio/breporte_ci/'+ nombrenuevo+'/'+auxPagos[0].idPrograma+"/"+idx)
       fetch(CONFIG+'beneficio/breporte_ci/'+ nombrenuevo+'/'+auxPagos[0].idPrograma+"/"+idx)
       .then((response)=>{
           return response.json();
