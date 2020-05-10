@@ -98,14 +98,14 @@ class PagoRow extends React.Component {
 
   }
 
-  idconcepto(valor) {
+    idconcepto(valor) {
 
     let id_concepto = "";
     // console.log("valor:  "+valor);
     // console.log("tamaño " +this.state.array.length)  ;
 
     for (let i = 0; i < this.props.datos.length; i++) {
-      if (valor == this.props.datos[i].concepto) {
+      if (valor.trim() == this.props.datos[i].concepto.trim()) {
         id_concepto = this.props.datos[i].idConcepto;
         //  console.log("el valor" +valor +"es igual a"+this.props.datos[i].concepto);
       }
@@ -438,6 +438,7 @@ class PagoRow extends React.Component {
     var stringss;
     var prueba;
     stringss = this.props.pago.idRec.toString() + this.props.pago.concepto;
+    
     //prueba = document.getElementById(stringss).value;
 
     if (prueba == "") {
@@ -552,7 +553,7 @@ class PagoRow extends React.Component {
   SeleccionTipoRecaudacion = () => {
 
     var num = 250296;
-    var tipoRecaudacion = this.state.selectedIdTipoRecaudacion.value;
+    var tipoRecaudacion = (this.state.selectedIdTipoRecaudacion===null) ? 0 : this.state.selectedIdTipoRecaudacion.value;
     return tipoRecaudacion;
   }
 
@@ -717,6 +718,7 @@ class PagoRow extends React.Component {
 
       var seleccionTipoRecaudacion = "";
       seleccionTipoRecaudacion = this.SeleccionTipoRecaudacion();
+      
 
       var ubicacion = "";
       ubicacion = this.SeleccionUbicacion();

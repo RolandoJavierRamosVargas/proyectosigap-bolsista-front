@@ -1645,12 +1645,12 @@ reporte_credito(idx,nombrenuevo,auxPagos){
  }
 
  reporte_ciclo(nombrenuevo,auxPagos,idx){
-      // console.log("este es el beneficio-reporte-ciclo",CONFIG+'beneficio/breporte_ci/'+ nombrenuevo+'/'+auxPagos[0].idPrograma+"/"+idx)
+       console.log("este es el beneficio-reporte-ciclo",CONFIG+'beneficio/breporte_ci/'+ nombrenuevo+'/'+auxPagos[0].idPrograma+"/"+idx)
       fetch(CONFIG+'beneficio/breporte_ci/'+ nombrenuevo+'/'+auxPagos[0].idPrograma+"/"+idx)
       .then((response)=>{
           return response.json();
       }).then((costos)=>{
-          console.log("costos");
+          console.log("costos del reporte por ciclo",costos);
           console.log(costos);
           this.setState({costosP: costos})
       }) .catch(error=>{

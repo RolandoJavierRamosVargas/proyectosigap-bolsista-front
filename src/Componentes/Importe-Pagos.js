@@ -5,7 +5,6 @@ import TableImporteFooter from './Table-Importe-Footer'
 import Alumno from './Alumno'
 import AlumnoCodigo from './AlumnoCodigo'
 import '../App.css';
-// import '../app3.css';
 import PropTypes from 'prop-types';
 import Imprimir2 from './imprimir2';
 import { browserHistory } from 'react-router-3';

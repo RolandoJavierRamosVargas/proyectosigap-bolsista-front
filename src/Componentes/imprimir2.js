@@ -330,6 +330,19 @@ class Imprimir2 extends React.Component {
                  costo_credito = this.props.costos.costo_credito;
                  costo_credito_d = this.props.costos.costo_credito_d;
                  creditos = this.props.costos.creditos;
+
+                 var costoRealLabel='Costo Real';
+                 var costoFinalLabel='Costo Final';
+                 var costoDelPrograma=[];
+
+                 var headerPorCredito = [' ','Matricula UPG','Matricula EPG','Derecho Enseñanza','Total','Costo Aplicado']
+                 var costoReal = [costoRealLabel,costoUPG,costoEPG,costoTotal,costo_TOTAL,`${creditos} x ${costo_credito} por credito`];
+                 var costoFinal = [costoFinalLabel,dcostoUPG,dcostoEPG,dcostoTotal,dcosto_TOTAL,`${creditos} x ${costo_credito_d} por credito`]
+
+                 costoDelPrograma.push(costoReal,costoFinal);
+
+
+
     }
     else{
          costoTotal = this.props.costos.total;
@@ -896,136 +909,163 @@ class Imprimir2 extends React.Component {
     doc.setFontSize(8);
     doc.text(":", 140, 310);
 
-    if(costo_tipo=="por credito"){
+    if(costo_tipo=="por credito") {
 
-      doc.setFont("helvetica");
-      doc.setFontType("bold");
-      doc.setFontSize(9);
-      doc.text("Costo Real", 35, 230);
+              doc.setFont("helvetica");
+              doc.setFontType("bold");
+              doc.setFontSize(9);
+              doc.text("Costo Real", 35, 230);
 
-      doc.setFont("helvetica");
-      doc.setFontType("bold");
-      doc.setFontSize(9);
-      doc.text("Valor por credito", 35, 330);
+              doc.setFont("helvetica");
+              doc.setFontType("bold");
+              doc.setFontSize(9);
+              doc.text("Valor por credito", 35, 330);
 
-      doc.setFont("helvetica");
-      doc.setFontType("bold");
-      doc.setFontSize(8);
-      doc.text(":", 140, 330);
+              doc.setFont("helvetica");
+              doc.setFontType("bold");
+              doc.setFontSize(8);
+              doc.text(":", 140, 330);
 
-      if(costo_credito!=null){
-        doc.setFont("helvetica");
-        doc.setFontType("normal");
-        doc.setFontSize(9);
-        doc.text(creditos.toString()+" x "+costo_credito.toString(), 160, 330); //AQUI VA EL TOTAL DEL COSTO REAL
-      }else{
-        doc.setFont("helvetica");
-        doc.setFontType("normal");
-        doc.setFontSize(9);
-        doc.text("", 160, 330); //AQUI VA EL TOTAL DEL COSTO REAL
-      }
+              if(costo_credito!=null){
+                doc.setFont("helvetica");
+                doc.setFontType("normal");
+                doc.setFontSize(9);
+                doc.text(creditos.toString()+" x "+costo_credito.toString(), 160, 330); //AQUI VA EL TOTAL DEL COSTO REAL
+              }else{
+                doc.setFont("helvetica");
+                doc.setFontType("normal");
+                doc.setFontSize(9);
+                doc.text("", 160, 330); //AQUI VA EL TOTAL DEL COSTO REAL
+              }
 
-    doc.setFont("helvetica");
-    doc.setFontType("bold");
-    doc.setFontSize(9);
-    doc.text("Valor por credito", 500, 330);
+            doc.setFont("helvetica");
+            doc.setFontType("bold");
+            doc.setFontSize(9);
+            doc.text("Valor por credito", 500, 330);
 
-    doc.setFont("helvetica");
-    doc.setFontType("bold");
-    doc.setFontSize(9);
-    doc.text("Descuento aplicado", 500, 350);
+            doc.setFont("helvetica");
+            doc.setFontType("bold");
+            doc.setFontSize(9);
+            doc.text("Descuento aplicado", 500, 350);
 
-    doc.setFont("helvetica");
-    doc.setFontType("bold");
-    doc.setFontSize(8);
-    doc.text(":", 600, 330);
+            doc.setFont("helvetica");
+            doc.setFontType("bold");
+            doc.setFontSize(8);
+            doc.text(":", 600, 330);
 
-    doc.setFont("helvetica");
-    doc.setFontType("bold");
-    doc.setFontSize(8);
-    doc.text(":", 600, 350);
+            doc.setFont("helvetica");
+            doc.setFontType("bold");
+            doc.setFontSize(8);
+            doc.text(":", 600, 350);
 
-    if(costo_credito_d!=null){
-      doc.setFont("helvetica");
-      doc.setFontType("normal");
-      doc.setFontSize(9);
-      doc.text(creditos+" x "+costo_credito_d, 620, 330);
-    }else{
-      doc.setFont("helvetica");
-      doc.setFontType("normal");
-      doc.setFontSize(9);
-      doc.text("", 620, 330);
-    }
+            if(costo_credito_d!=null){
+              doc.setFont("helvetica");
+              doc.setFontType("normal");
+              doc.setFontSize(9);
+              doc.text(creditos+" x "+costo_credito_d, 620, 330);
+            }else{
+              doc.setFont("helvetica");
+              doc.setFontType("normal");
+              doc.setFontSize(9);
+              doc.text("", 620, 330);
+            }
 
-    if(costo_tipo!=null){
-      doc.setFont("helvetica");
-      doc.setFontType("normal");
-      doc.setFontSize(9);
-      doc.text(costo_tipo, 620, 350); //AQUI VA EL TOTAL DEL COSTO FINAL
-    }else{
-      doc.setFont("helvetica");
-      doc.setFontType("normal");
-      doc.setFontSize(9);
-      doc.text("", 620, 350); //AQUI VA EL TOTAL DEL COSTO FINAL
-    }
+            if(costo_tipo!=null){
+              doc.setFont("helvetica");
+              doc.setFontType("normal");
+              doc.setFontSize(9);
+              doc.text(costo_tipo, 620, 350); //AQUI VA EL TOTAL DEL COSTO FINAL
+            }else{
+              doc.setFont("helvetica");
+              doc.setFontType("normal");
+              doc.setFontSize(9);
+              doc.text("", 620, 350); //AQUI VA EL TOTAL DEL COSTO FINAL
+            }
 
-    doc.setFont("helvetica");
-      doc.setFontType("bold");
-      doc.setFontSize(9);
-      doc.text("Derecho Enseñanza", 500, 290);
+            doc.setFont("helvetica");
+              doc.setFontType("bold");
+              doc.setFontSize(9);
+              doc.text("Derecho Enseñanza", 500, 290);
 
-      doc.setFont("helvetica");
-      doc.setFontType("bold");
-      doc.setFontSize(9);
-      doc.text("Derecho Enseñanza", 35, 290);
+              doc.setFont("helvetica");
+              doc.setFontType("bold");
+              doc.setFontSize(9);
+              doc.text("Derecho Enseñanza", 35, 290);
 
-      doc.setFont("helvetica");
-      doc.setFontType("bold");
-      doc.setFontSize(9);
-      doc.text("Total", 35, 310);
+              doc.setFont("helvetica");
+              doc.setFontType("bold");
+              doc.setFontSize(9);
+              doc.text("Total", 35, 310);
 
-      doc.setFont("helvetica");
-    doc.setFontType("bold");
-    doc.setFontSize(9);
-    doc.text("Total", 500, 310);
-
-
- /************************************************************ */
- /************************************************************ */
- /************************************************************ */
-
-//  let datosCostoPrograma = ["N°","Matricula UPG","Matricula EPG","Derecho Enseñanza","Total","Costo Aplicado"];
-//  let costoReal = [['Costo real',costo_credito.toString(),'asdad','adada','dad','adadad']]
-//  doc.autoTable(datosCostoPrograma, costoReal, {
-//    theme: 'grid',
-//    styles: {
-//        cellPadding: 5, // a number, array or object (see margin below)
-//        fontSize: 8,
-//        font: "helvetica", // helvetica, times, courier
-//        lineColor: 0,
-//        lineWidth: 0.5,
-//        fontStyle: 'normal', // normal, bold, italic, bolditalic
-//        overflow: 'ellipsize', // visible, hidden, ellipsize or linebreak
-//        fillColor: false, // false for transparent or a color as described below
-//        textColor: 0,
-//        halign: 'center', // left, center, right
-//        valign: 'middle', // top, middle, bottom
-//        columnWidth: 'auto' // 'auto', 'wrap' or a number
-//    },
-//    headerStyles: {fillColor: [180, 180, 180],
-//    textColor:0,
-//    fontStyle:'bold'},
-//    startY : 380,
-//    showHeader:'firstPage'
-
-// });
-// var first = doc.autoTable.previous;
+              doc.setFont("helvetica");
+            doc.setFontType("bold");
+            doc.setFontSize(9);
+            doc.text("Total", 500, 310);
 
 
-  /************************************************************ */
-  /************************************************************ */
-  /************************************************************ */
+        /************************************************************ */
+        /************************************************************ */
+        /************************************************************ */
 
+        //  let datosCostoPrograma = ["N°","Matricula UPG","Matricula EPG","Derecho Enseñanza","Total","Costo Aplicado"];
+        //  let costoReal = [['Costo real',costo_credito.toString(),'asdad','adada','dad','adadad']]
+        //  doc.autoTable(datosCostoPrograma, costoReal, {
+        //    theme: 'grid',
+        //    styles: {
+        //        cellPadding: 5, // a number, array or object (see margin below)
+        //        fontSize: 8,
+        //        font: "helvetica", // helvetica, times, courier
+        //        lineColor: 0,
+        //        lineWidth: 0.5,
+        //        fontStyle: 'normal', // normal, bold, italic, bolditalic
+        //        overflow: 'ellipsize', // visible, hidden, ellipsize or linebreak
+        //        fillColor: false, // false for transparent or a color as described below
+        //        textColor: 0,
+        //        halign: 'center', // left, center, right
+        //        valign: 'middle', // top, middle, bottom
+        //        columnWidth: 'auto' // 'auto', 'wrap' or a number
+        //    },
+        //    headerStyles: {fillColor: [180, 180, 180],
+        //    textColor:0,
+        //    fontStyle:'bold'},
+        //    startY : 380,
+        //    showHeader:'firstPage'
+
+        // });
+        // var first = doc.autoTable.previous;
+
+
+          /************************************************************ */
+          /************************************************************ */
+          /************************************************************ */
+
+
+          doc.autoTable(headerPorCredito, costoDelPrograma, {
+            theme: 'grid',
+            styles: {
+                cellPadding: 5, // a number, array or object (see margin below)
+                fontSize: 8,
+                font: "helvetica", // helvetica, times, courier
+                lineColor: 0,
+                lineWidth: 0.5,
+                fontStyle: 'normal', // normal, bold, italic, bolditalic
+                overflow: 'ellipsize', // visible, hidden, ellipsize or linebreak
+                fillColor: false, // false for transparent or a color as described below
+                textColor: 0,
+                halign: 'center', // left, center, right
+                valign: 'middle', // top, middle, bottom
+                columnWidth: 'auto' // 'auto', 'wrap' or a number
+            },
+            headerStyles: {fillColor: [180, 180, 180],
+            textColor:0,
+            fontStyle:'bold'},
+            //startY : first.finalY + 30,
+            startY :  380,
+            showHeader:'firstPage'
+
+        });
+    
+        var first = doc.autoTable.previous;
 
 
 }else{  // supongo que en este else, por algun lado, va la wea del ciclo
@@ -1175,12 +1215,12 @@ class Imprimir2 extends React.Component {
       doc.setFont("helvetica");
       doc.setFontType("normal");
       doc.setFontSize(9);
-      doc.text("S/. "+this.comita(costoTotal.toString()), 160, 310); //AQUI VA EL DERECHO DE ENSEÑANZA DEL COSTO REAL
+      doc.text("S/. "+this.comita(costoTotal.toString()), 160, 290); //AQUI VA EL DERECHO DE ENSEÑANZA DEL COSTO REAL
     }else{
       doc.setFont("helvetica");
       doc.setFontType("normal");
       doc.setFontSize(9);
-      doc.text("", 160, 310); //A //AQUI VA EL DERECHO DE ENSEÑANZA DEL COSTO REAL
+      doc.text("", 160, 290); //A //AQUI VA EL DERECHO DE ENSEÑANZA DEL COSTO REAL
     }
 
     if(costo_TOTAL!=null){
@@ -1297,7 +1337,6 @@ class Imprimir2 extends React.Component {
         /************************************************************ */
 
  
-    
     /************************************************************ */
     /************************************************************ */
     /************************************************************ */
@@ -1354,7 +1393,7 @@ class Imprimir2 extends React.Component {
             textColor:0,
             fontStyle:'bold'},
             //startY : first.finalY + 30,
-            startY :  380,
+            startY : first.finalY +30,
             showHeader:'firstPage'
 
         });
@@ -1454,7 +1493,7 @@ class Imprimir2 extends React.Component {
            doc.setFont("helvetica");
            doc.setFontType("bold");
            doc.setFontSize(10);
-           doc.text("PAGO POR CONCEPTO "+listadoFinalFormato[0][0][10],38,420);
+           doc.text("PAGO POR CONCEPTO "+listadoFinalFormato[0][0][10],38,first.finalY +25);
 
 
         //Mostramos el encabezado de la primera tabla
@@ -1477,7 +1516,7 @@ class Imprimir2 extends React.Component {
               headerStyles: {fillColor: [180, 180, 180],
               textColor:0,
               fontStyle:'bold'},
-              startY : 425,
+              startY : first.finalY +30,
               showHeader:'firstPage'
 
           });
