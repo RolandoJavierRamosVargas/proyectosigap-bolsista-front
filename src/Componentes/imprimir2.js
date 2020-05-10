@@ -355,7 +355,17 @@ class Imprimir2 extends React.Component {
          dcosto_TOTAL = this.props.costos.d_Total;
          costo_tipo = this.props.costos.tipo;
          ciclo = this.props.costos.ciclo;
-         d_ciclo = this.props.costos.d_ciclo;       
+         d_ciclo = this.props.costos.d_ciclo;   
+
+         var costoRealLabel='Costo Real';
+         var costoFinalLabel='Costo Final';
+         var costoDelProgramaPorCiclo=[];
+         
+         var headerPorCiclo = [' ','Matricula UPG','Matricula EPG','Derecho Enseñanza','Total','Costo Aplicado']
+         var costoRealPorCiclo = [costoRealLabel,costoUPG,costoEPG,ciclo,costoTotal,`--`];
+         var costoFinalPorCiclo = [costoFinalLabel,dcostoUPG,dcostoEPG,d_ciclo,dcosto_TOTAL,`--`]
+
+         costoDelProgramaPorCiclo.push(costoRealPorCiclo,costoFinalPorCiclo);
     }
 
 
@@ -879,128 +889,128 @@ class Imprimir2 extends React.Component {
     doc.setFontSize(9);
     doc.text("Costo Real", 35, 230);
 */
-    doc.setFont("helvetica");
-    doc.setFontType("bold");
-    doc.setFontSize(9);
-    doc.text("Matricula UPG", 35, 250);
+    // doc.setFont("helvetica");
+    // doc.setFontType("bold");
+    // doc.setFontSize(9);
+    // doc.text("Matricula UPG", 35, 250);
 
-    doc.setFont("helvetica");
-    doc.setFontType("bold");
-    doc.setFontSize(9);
-    doc.text("Matricula EPG", 35, 270);
+    // doc.setFont("helvetica");
+    // doc.setFontType("bold");
+    // doc.setFontSize(9);
+    // doc.text("Matricula EPG", 35, 270);
 
-    doc.setFont("helvetica");
-    doc.setFontType("bold");
-    doc.setFontSize(8);
-    doc.text(":", 140, 250);
+    // doc.setFont("helvetica");
+    // doc.setFontType("bold");
+    // doc.setFontSize(8);
+    // doc.text(":", 140, 250);
 
-    doc.setFont("helvetica");
-    doc.setFontType("bold");
-    doc.setFontSize(8);
-    doc.text(":", 140, 270);
+    // doc.setFont("helvetica");
+    // doc.setFontType("bold");
+    // doc.setFontSize(8);
+    // doc.text(":", 140, 270);
 
-    doc.setFont("helvetica");
-    doc.setFontType("bold");
-    doc.setFontSize(8);
-    doc.text(":", 140, 290);
+    // doc.setFont("helvetica");
+    // doc.setFontType("bold");
+    // doc.setFontSize(8);
+    // doc.text(":", 140, 290);
 
-    doc.setFont("helvetica");
-    doc.setFontType("bold");
-    doc.setFontSize(8);
-    doc.text(":", 140, 310);
+    // doc.setFont("helvetica");
+    // doc.setFontType("bold");
+    // doc.setFontSize(8);
+    // doc.text(":", 140, 310);
 
     if(costo_tipo=="por credito") {
 
-              doc.setFont("helvetica");
-              doc.setFontType("bold");
-              doc.setFontSize(9);
-              doc.text("Costo Real", 35, 230);
+            //   doc.setFont("helvetica");
+            //   doc.setFontType("bold");
+            //   doc.setFontSize(9);
+            //   doc.text("Costo Real", 35, 230);
 
-              doc.setFont("helvetica");
-              doc.setFontType("bold");
-              doc.setFontSize(9);
-              doc.text("Valor por credito", 35, 330);
+            //   doc.setFont("helvetica");
+            //   doc.setFontType("bold");
+            //   doc.setFontSize(9);
+            //   doc.text("Valor por credito", 35, 330);
 
-              doc.setFont("helvetica");
-              doc.setFontType("bold");
-              doc.setFontSize(8);
-              doc.text(":", 140, 330);
+            //   doc.setFont("helvetica");
+            //   doc.setFontType("bold");
+            //   doc.setFontSize(8);
+            //   doc.text(":", 140, 330);
 
-              if(costo_credito!=null){
-                doc.setFont("helvetica");
-                doc.setFontType("normal");
-                doc.setFontSize(9);
-                doc.text(creditos.toString()+" x "+costo_credito.toString(), 160, 330); //AQUI VA EL TOTAL DEL COSTO REAL
-              }else{
-                doc.setFont("helvetica");
-                doc.setFontType("normal");
-                doc.setFontSize(9);
-                doc.text("", 160, 330); //AQUI VA EL TOTAL DEL COSTO REAL
-              }
+            //   if(costo_credito!=null){
+            //     doc.setFont("helvetica");
+            //     doc.setFontType("normal");
+            //     doc.setFontSize(9);
+            //     doc.text(creditos.toString()+" x "+costo_credito.toString(), 160, 330); //AQUI VA EL TOTAL DEL COSTO REAL
+            //   }else{
+            //     doc.setFont("helvetica");
+            //     doc.setFontType("normal");
+            //     doc.setFontSize(9);
+            //     doc.text("", 160, 330); //AQUI VA EL TOTAL DEL COSTO REAL
+            //   }
 
-            doc.setFont("helvetica");
-            doc.setFontType("bold");
-            doc.setFontSize(9);
-            doc.text("Valor por credito", 500, 330);
+            // doc.setFont("helvetica");
+            // doc.setFontType("bold");
+            // doc.setFontSize(9);
+            // doc.text("Valor por credito", 500, 330);
 
-            doc.setFont("helvetica");
-            doc.setFontType("bold");
-            doc.setFontSize(9);
-            doc.text("Descuento aplicado", 500, 350);
+            // doc.setFont("helvetica");
+            // doc.setFontType("bold");
+            // doc.setFontSize(9);
+            // doc.text("Descuento aplicado", 500, 350);
 
-            doc.setFont("helvetica");
-            doc.setFontType("bold");
-            doc.setFontSize(8);
-            doc.text(":", 600, 330);
+            // doc.setFont("helvetica");
+            // doc.setFontType("bold");
+            // doc.setFontSize(8);
+            // doc.text(":", 600, 330);
 
-            doc.setFont("helvetica");
-            doc.setFontType("bold");
-            doc.setFontSize(8);
-            doc.text(":", 600, 350);
+            // doc.setFont("helvetica");
+            // doc.setFontType("bold");
+            // doc.setFontSize(8);
+            // doc.text(":", 600, 350);
 
-            if(costo_credito_d!=null){
-              doc.setFont("helvetica");
-              doc.setFontType("normal");
-              doc.setFontSize(9);
-              doc.text(creditos+" x "+costo_credito_d, 620, 330);
-            }else{
-              doc.setFont("helvetica");
-              doc.setFontType("normal");
-              doc.setFontSize(9);
-              doc.text("", 620, 330);
-            }
+            // if(costo_credito_d!=null){
+            //   doc.setFont("helvetica");
+            //   doc.setFontType("normal");
+            //   doc.setFontSize(9);
+            //   doc.text(creditos+" x "+costo_credito_d, 620, 330);
+            // }else{
+            //   doc.setFont("helvetica");
+            //   doc.setFontType("normal");
+            //   doc.setFontSize(9);
+            //   doc.text("", 620, 330);
+            // }
 
-            if(costo_tipo!=null){
-              doc.setFont("helvetica");
-              doc.setFontType("normal");
-              doc.setFontSize(9);
-              doc.text(costo_tipo, 620, 350); //AQUI VA EL TOTAL DEL COSTO FINAL
-            }else{
-              doc.setFont("helvetica");
-              doc.setFontType("normal");
-              doc.setFontSize(9);
-              doc.text("", 620, 350); //AQUI VA EL TOTAL DEL COSTO FINAL
-            }
+            // if(costo_tipo!=null){
+            //   doc.setFont("helvetica");
+            //   doc.setFontType("normal");
+            //   doc.setFontSize(9);
+            //   doc.text(costo_tipo, 620, 350); //AQUI VA EL TOTAL DEL COSTO FINAL
+            // }else{
+            //   doc.setFont("helvetica");
+            //   doc.setFontType("normal");
+            //   doc.setFontSize(9);
+            //   doc.text("", 620, 350); //AQUI VA EL TOTAL DEL COSTO FINAL
+            // }
 
-            doc.setFont("helvetica");
-              doc.setFontType("bold");
-              doc.setFontSize(9);
-              doc.text("Derecho Enseñanza", 500, 290);
+            // doc.setFont("helvetica");
+            //   doc.setFontType("bold");
+            //   doc.setFontSize(9);
+            //   doc.text("Derecho Enseñanza", 500, 290);
 
-              doc.setFont("helvetica");
-              doc.setFontType("bold");
-              doc.setFontSize(9);
-              doc.text("Derecho Enseñanza", 35, 290);
+            //   doc.setFont("helvetica");
+            //   doc.setFontType("bold");
+            //   doc.setFontSize(9);
+            //   doc.text("Derecho Enseñanza", 35, 290);
 
-              doc.setFont("helvetica");
-              doc.setFontType("bold");
-              doc.setFontSize(9);
-              doc.text("Total", 35, 310);
+            //   doc.setFont("helvetica");
+            //   doc.setFontType("bold");
+            //   doc.setFontSize(9);
+            //   doc.text("Total", 35, 310);
 
-              doc.setFont("helvetica");
-            doc.setFontType("bold");
-            doc.setFontSize(9);
-            doc.text("Total", 500, 310);
+            //   doc.setFont("helvetica");
+            // doc.setFontType("bold");
+            // doc.setFontSize(9);
+            // doc.text("Total", 500, 310);
 
 
         /************************************************************ */
@@ -1060,7 +1070,7 @@ class Imprimir2 extends React.Component {
             textColor:0,
             fontStyle:'bold'},
             //startY : first.finalY + 30,
-            startY :  380,
+            startY :  230,
             showHeader:'firstPage'
 
         });
@@ -1070,76 +1080,76 @@ class Imprimir2 extends React.Component {
 
 }else{  // supongo que en este else, por algun lado, va la wea del ciclo
     //AQUI ES EL ELSE DEL POR CREDITO :vV
-      doc.setFont("helvetica");
-      doc.setFontType("bold");
-      doc.setFontSize(9);
-      doc.text("Costo Real (Ciclo)", 35, 230);
+      // doc.setFont("helvetica");
+      // doc.setFontType("bold");
+      // doc.setFontSize(9);
+      // doc.text("Costo Real (Ciclo)", 35, 230);
 
-      doc.setFont("helvetica");
-      doc.setFontType("bold");
-      doc.setFontSize(9);
-      doc.text("Descuento aplicado", 500, 330);
+      // doc.setFont("helvetica");
+      // doc.setFontType("bold");
+      // doc.setFontSize(9);
+      // doc.text("Descuento aplicado", 500, 330);
 
-      doc.setFont("helvetica");
-      doc.setFontType("bold");
-      doc.setFontSize(8);
-      doc.text(":", 600, 330);
+      // doc.setFont("helvetica");
+      // doc.setFontType("bold");
+      // doc.setFontSize(8);
+      // doc.text(":", 600, 330);
 
-      if(costo_tipo!=null){
-        doc.setFont("helvetica");
-        doc.setFontType("normal");
-        doc.setFontSize(9);
-        doc.text(costo_tipo, 620, 330); //AQUI VA EL TOTAL DEL COSTO FINAL
-      }else{
-        doc.setFont("helvetica");
-        doc.setFontType("normal");
-        doc.setFontSize(9);
-        doc.text("", 620, 330); //AQUI VA EL TOTAL DEL COSTO FINAL
-      }
+      // if(costo_tipo!=null){
+      //   doc.setFont("helvetica");
+      //   doc.setFontType("normal");
+      //   doc.setFontSize(9);
+      //   doc.text(costo_tipo, 620, 330); //AQUI VA EL TOTAL DEL COSTO FINAL
+      // }else{
+      //   doc.setFont("helvetica");
+      //   doc.setFontType("normal");
+      //   doc.setFontSize(9);
+      //   doc.text("", 620, 330); //AQUI VA EL TOTAL DEL COSTO FINAL
+      // }
 
-      if(ciclo!=null){
-        doc.setFont("helvetica");
-        doc.setFontType("normal");
-        doc.setFontSize(9);
-       doc.text("S/. "+this.comita(ciclo.toString()), 160, 290); //AQUI VA EL TOTAL DEL COSTO FINAL
-      }else{
-        doc.setFont("helvetica");
-        doc.setFontType("normal");
-        doc.setFontSize(9);
-        doc.text("", 620, 290); //AQUI VA EL TOTAL DEL COSTO FINAL
-      }
+      // if(ciclo!=null){
+      //   doc.setFont("helvetica");
+      //   doc.setFontType("normal");
+      //   doc.setFontSize(9);
+      //  doc.text("S/. "+this.comita(ciclo.toString()), 160, 290); //AQUI VA EL TOTAL DEL COSTO FINAL
+      // }else{
+      //   doc.setFont("helvetica");
+      //   doc.setFontType("normal");
+      //   doc.setFontSize(9);
+      //   doc.text("", 620, 290); //AQUI VA EL TOTAL DEL COSTO FINAL
+      // }
 
-      if(d_ciclo!=null){
-        doc.setFont("helvetica");
-        doc.setFontType("normal");
-        doc.setFontSize(9);
-        doc.text("S/. "+this.comita(d_ciclo.toString()), 620, 290); //AQUI VA EL TOTAL DEL COSTO FINAL
-      }else{
-        doc.setFont("helvetica");
-        doc.setFontType("normal");
-        doc.setFontSize(9);
-        doc.text("", 620, 290); //AQUI VA EL TOTAL DEL COSTO FINAL
-      }
+      // if(d_ciclo!=null){
+      //   doc.setFont("helvetica");
+      //   doc.setFontType("normal");
+      //   doc.setFontSize(9);
+      //   doc.text("S/. "+this.comita(d_ciclo.toString()), 620, 290); //AQUI VA EL TOTAL DEL COSTO FINAL
+      // }else{
+      //   doc.setFont("helvetica");
+      //   doc.setFontType("normal");
+      //   doc.setFontSize(9);
+      //   doc.text("", 620, 290); //AQUI VA EL TOTAL DEL COSTO FINAL
+      // }
 
-      doc.setFont("helvetica");
-      doc.setFontType("bold");
-      doc.setFontSize(9);
-      doc.text("Derecho Enseñanza", 500, 290);
+      // doc.setFont("helvetica");
+      // doc.setFontType("bold");
+      // doc.setFontSize(9);
+      // doc.text("Derecho Enseñanza", 500, 290);
 
-      doc.setFont("helvetica");
-      doc.setFontType("bold");
-      doc.setFontSize(9);
-      doc.text("Derecho Enseñanza", 35, 290);
+      // doc.setFont("helvetica");
+      // doc.setFontType("bold");
+      // doc.setFontSize(9);
+      // doc.text("Derecho Enseñanza", 35, 290);
 
-      doc.setFont("helvetica");
-      doc.setFontType("bold");
-      doc.setFontSize(9);
-      doc.text("Total", 35, 310);
+      // doc.setFont("helvetica");
+      // doc.setFontType("bold");
+      // doc.setFontSize(9);
+      // doc.text("Total", 35, 310);
 
-      doc.setFont("helvetica");
-      doc.setFontType("bold");
-      doc.setFontSize(9);
-      doc.text("Total", 500, 310);
+      // doc.setFont("helvetica");
+      // doc.setFontType("bold");
+      // doc.setFontSize(9);
+      // doc.text("Total", 500, 310);
 
       /************************************ */ 
       /************************************ */ 
@@ -1182,144 +1192,169 @@ class Imprimir2 extends React.Component {
 /*************************************** */
 /*************************************** */
 
+         doc.autoTable(headerPorCiclo, costoDelProgramaPorCiclo, {
+          theme: 'grid',
+          styles: {
+              cellPadding: 5, // a number, array or object (see margin below)
+              fontSize: 8,
+              font: "helvetica", // helvetica, times, courier
+              lineColor: 0,
+              lineWidth: 0.5,
+              fontStyle: 'normal', // normal, bold, italic, bolditalic
+              overflow: 'ellipsize', // visible, hidden, ellipsize or linebreak
+              fillColor: false, // false for transparent or a color as described below
+              textColor: 0,
+              halign: 'center', // left, center, right
+              valign: 'middle', // top, middle, bottom
+              columnWidth: 'auto' // 'auto', 'wrap' or a number
+          },
+          headerStyles: {fillColor: [180, 180, 180],
+          textColor:0,
+          fontStyle:'bold'},
+          //startY : first.finalY + 30,
+          startY :  230,
+          showHeader:'firstPage'
 
+      });
+  
+      var first = doc.autoTable.previous;
 
     }
 
 
-    if(costoUPG!=null){
-      doc.setFont("helvetica");
-      doc.setFontType("normal");
-      doc.setFontSize(9);
-      doc.text("S/. "+this.comita(costoUPG.toString()), 160, 250); //AQUI VA LA MATRICULA UPG DEL COSTO REAL
-    }else{
-      doc.setFont("helvetica");
-      doc.setFontType("normal");
-      doc.setFontSize(9);
-      doc.text("", 160, 250); //AQUI VA LA MATRICULA UPG DEL COSTO REAL
-    }
+    // if(costoUPG!=null){
+    //   doc.setFont("helvetica");
+    //   doc.setFontType("normal");
+    //   doc.setFontSize(9);
+    //   doc.text("S/. "+this.comita(costoUPG.toString()), 160, 250); //AQUI VA LA MATRICULA UPG DEL COSTO REAL
+    // }else{
+    //   doc.setFont("helvetica");
+    //   doc.setFontType("normal");
+    //   doc.setFontSize(9);
+    //   doc.text("", 160, 250); //AQUI VA LA MATRICULA UPG DEL COSTO REAL
+    // }
 
-    if(costoEPG!=null){
-      doc.setFont("helvetica");
-      doc.setFontType("normal");
-      doc.setFontSize(9);
-      doc.text("S/. "+this.comita(costoEPG.toString()), 160, 270); //AQUI VA LA MATRICULA EPG DEL COSTO REAL
-    }else{
-      doc.setFont("helvetica");
-      doc.setFontType("normal");
-      doc.setFontSize(9);
-      doc.text("", 160, 270); //AQUI VA LA MATRICULA EPG DEL COSTO REAL
-    }
+    // if(costoEPG!=null){
+    //   doc.setFont("helvetica");
+    //   doc.setFontType("normal");
+    //   doc.setFontSize(9);
+    //   doc.text("S/. "+this.comita(costoEPG.toString()), 160, 270); //AQUI VA LA MATRICULA EPG DEL COSTO REAL
+    // }else{
+    //   doc.setFont("helvetica");
+    //   doc.setFontType("normal");
+    //   doc.setFontSize(9);
+    //   doc.text("", 160, 270); //AQUI VA LA MATRICULA EPG DEL COSTO REAL
+    // }
 
-    if(costoTotal!=null){
-      doc.setFont("helvetica");
-      doc.setFontType("normal");
-      doc.setFontSize(9);
-      doc.text("S/. "+this.comita(costoTotal.toString()), 160, 290); //AQUI VA EL DERECHO DE ENSEÑANZA DEL COSTO REAL
-    }else{
-      doc.setFont("helvetica");
-      doc.setFontType("normal");
-      doc.setFontSize(9);
-      doc.text("", 160, 290); //A //AQUI VA EL DERECHO DE ENSEÑANZA DEL COSTO REAL
-    }
+    // if(costoTotal!=null){
+    //   doc.setFont("helvetica");
+    //   doc.setFontType("normal");
+    //   doc.setFontSize(9);
+    //   doc.text("S/. "+this.comita(costoTotal.toString()), 160, 290); //AQUI VA EL DERECHO DE ENSEÑANZA DEL COSTO REAL
+    // }else{
+    //   doc.setFont("helvetica");
+    //   doc.setFontType("normal");
+    //   doc.setFontSize(9);
+    //   doc.text("", 160, 290); //A //AQUI VA EL DERECHO DE ENSEÑANZA DEL COSTO REAL
+    // }
 
-    if(costo_TOTAL!=null){
-      doc.setFont("helvetica");
-      doc.setFontType("normal");
-      doc.setFontSize(9);
-      doc.text("S/. "+this.comita(costo_TOTAL.toString()), 160, 310); //AQUI VA EL TOTAL DEL COSTO REAL
-    }else{
-      doc.setFont("helvetica");
-      doc.setFontType("normal");
-      doc.setFontSize(9);
-      doc.text("", 160, 310); //AQUI VA EL TOTAL DEL COSTO REAL
-    }
-
-
-    doc.setFont("helvetica");
-    doc.setFontType("bold");
-    doc.setFontSize(9);
-    doc.text("Costo Final", 500, 230);
-
-    doc.setFont("helvetica");
-    doc.setFontType("bold");
-    doc.setFontSize(9);
-    doc.text("Matricula UPG", 500, 250);
-
-    doc.setFont("helvetica");
-    doc.setFontType("bold");
-    doc.setFontSize(9);
-    doc.text("Matricula EPG", 500, 270);
-
-    doc.setFont("helvetica");
-    doc.setFontType("bold");
-    doc.setFontSize(8);
-    doc.text(":", 600, 250);
-
-    doc.setFont("helvetica");
-    doc.setFontType("bold");
-    doc.setFontSize(8);
-    doc.text(":", 600, 270);
-
-    doc.setFont("helvetica");
-    doc.setFontType("bold");
-    doc.setFontSize(8);
-    doc.text(":", 600, 290);
-
-    doc.setFont("helvetica");
-    doc.setFontType("bold");
-    doc.setFontSize(8);
-    doc.text(":", 600, 310);
+    // if(costo_TOTAL!=null){
+    //   doc.setFont("helvetica");
+    //   doc.setFontType("normal");
+    //   doc.setFontSize(9);
+    //   doc.text("S/. "+this.comita(costo_TOTAL.toString()), 160, 310); //AQUI VA EL TOTAL DEL COSTO REAL
+    // }else{
+    //   doc.setFont("helvetica");
+    //   doc.setFontType("normal");
+    //   doc.setFontSize(9);
+    //   doc.text("", 160, 310); //AQUI VA EL TOTAL DEL COSTO REAL
+    // }
 
 
-    if(dcostoUPG!=null){
-      doc.setFont("helvetica");
-      doc.setFontType("normal");
-      doc.setFontSize(9);
-      doc.text("S/. "+this.comita(dcostoUPG.toString()), 620, 250); //AQUI VA LA MATRICULA UPG DEL COSTO FINAL
-    }else{
-      doc.setFont("helvetica");
-      doc.setFontType("normal");
-      doc.setFontSize(9);
-      doc.text("", 620, 250); //AQUI VA LA MATRICULA UPG DEL COSTO FINAL
-    }
+    // doc.setFont("helvetica");
+    // doc.setFontType("bold");
+    // doc.setFontSize(9);
+    // doc.text("Costo Final", 500, 230);
 
-    if(dcostoEPG!=null){
-      doc.setFont("helvetica");
-      doc.setFontType("normal");
-      doc.setFontSize(9);
-      doc.text("S/. "+this.comita(dcostoEPG.toString()), 620, 270); //AQUI VA LA MATRICULA EPG DEL COSTO FINAL
-    }else{
-      doc.setFont("helvetica");
-      doc.setFontType("normal");
-      doc.setFontSize(9);
-      doc.text("", 620, 270); //AQUI VA LA MATRICULA EPG DEL COSTO FINAL
-    }
+    // doc.setFont("helvetica");
+    // doc.setFontType("bold");
+    // doc.setFontSize(9);
+    // doc.text("Matricula UPG", 500, 250);
+
+    // doc.setFont("helvetica");
+    // doc.setFontType("bold");
+    // doc.setFontSize(9);
+    // doc.text("Matricula EPG", 500, 270);
+
+    // doc.setFont("helvetica");
+    // doc.setFontType("bold");
+    // doc.setFontSize(8);
+    // doc.text(":", 600, 250);
+
+    // doc.setFont("helvetica");
+    // doc.setFontType("bold");
+    // doc.setFontSize(8);
+    // doc.text(":", 600, 270);
+
+    // doc.setFont("helvetica");
+    // doc.setFontType("bold");
+    // doc.setFontSize(8);
+    // doc.text(":", 600, 290);
+
+    // doc.setFont("helvetica");
+    // doc.setFontType("bold");
+    // doc.setFontSize(8);
+    // doc.text(":", 600, 310);
 
 
-    if(dcostoTotal!=null){
-      doc.setFont("helvetica");
-      doc.setFontType("normal");
-      doc.setFontSize(9);
-      doc.text("S/. "+this.comita(dcostoTotal.toString()), 620, 290); //AQUI VA EL DERECHO DE ENSEÑANZA DEL COSTO FINAL
-    }else{
-      doc.setFont("helvetica");
-      doc.setFontType("normal");
-      doc.setFontSize(9);
-      doc.text("", 620, 290); //AQUI VA EL DERECHO DE ENSEÑANZA DEL COSTO FINAL
-    }
+    // if(dcostoUPG!=null){
+    //   doc.setFont("helvetica");
+    //   doc.setFontType("normal");
+    //   doc.setFontSize(9);
+    //   doc.text("S/. "+this.comita(dcostoUPG.toString()), 620, 250); //AQUI VA LA MATRICULA UPG DEL COSTO FINAL
+    // }else{
+    //   doc.setFont("helvetica");
+    //   doc.setFontType("normal");
+    //   doc.setFontSize(9);
+    //   doc.text("", 620, 250); //AQUI VA LA MATRICULA UPG DEL COSTO FINAL
+    // }
 
-    if(dcosto_TOTAL!=null){
-      doc.setFont("helvetica");
-      doc.setFontType("normal");
-      doc.setFontSize(9);
-      doc.text("S/. "+this.comita(dcosto_TOTAL.toString()), 620, 310); //AQUI VA EL TOTAL DEL COSTO FINAL
-    }else{
-      doc.setFont("helvetica");
-      doc.setFontType("normal");
-      doc.setFontSize(9);
-      doc.text("", 620, 310); //AQUI VA EL TOTAL DEL COSTO FINAL
-    }
+    // if(dcostoEPG!=null){
+    //   doc.setFont("helvetica");
+    //   doc.setFontType("normal");
+    //   doc.setFontSize(9);
+    //   doc.text("S/. "+this.comita(dcostoEPG.toString()), 620, 270); //AQUI VA LA MATRICULA EPG DEL COSTO FINAL
+    // }else{
+    //   doc.setFont("helvetica");
+    //   doc.setFontType("normal");
+    //   doc.setFontSize(9);
+    //   doc.text("", 620, 270); //AQUI VA LA MATRICULA EPG DEL COSTO FINAL
+    // }
+
+
+    // if(dcostoTotal!=null){
+    //   doc.setFont("helvetica");
+    //   doc.setFontType("normal");
+    //   doc.setFontSize(9);
+    //   doc.text("S/. "+this.comita(dcostoTotal.toString()), 620, 290); //AQUI VA EL DERECHO DE ENSEÑANZA DEL COSTO FINAL
+    // }else{
+    //   doc.setFont("helvetica");
+    //   doc.setFontType("normal");
+    //   doc.setFontSize(9);
+    //   doc.text("", 620, 290); //AQUI VA EL DERECHO DE ENSEÑANZA DEL COSTO FINAL
+    // }
+
+    // if(dcosto_TOTAL!=null){
+    //   doc.setFont("helvetica");
+    //   doc.setFontType("normal");
+    //   doc.setFontSize(9);
+    //   doc.text("S/. "+this.comita(dcosto_TOTAL.toString()), 620, 310); //AQUI VA EL TOTAL DEL COSTO FINAL
+    // }else{
+    //   doc.setFont("helvetica");
+    //   doc.setFontType("normal");
+    //   doc.setFontSize(9);
+    //   doc.text("", 620, 310); //AQUI VA EL TOTAL DEL COSTO FINAL
+    // }
 
 
 
@@ -1327,9 +1362,7 @@ class Imprimir2 extends React.Component {
 
     doc.addImage(imgData, 'JPG', 35, 12, 50, 60);
 
-    doc.setDrawColor(0, 0, 0);
-    doc.setLineWidth(0.5);
-    doc.line(35, 374,750, 374);
+    
 
         /************************************************************ */
         /************************************************************ */
@@ -1347,10 +1380,14 @@ class Imprimir2 extends React.Component {
 
         if(this.props.datos.length>0){
 
+          doc.setDrawColor(0, 0, 0);
+          doc.setLineWidth(0.5);
+          doc.line(35, first.finalY + 25,750, first.finalY + 25);
+
           doc.setFont("helvetica");
           doc.setFontType("bold");
           doc.setFontSize(11);
-          doc.text("Datos del Beneficio", 37, 370);
+          doc.text("Datos del Beneficio", 37,first.finalY + 25);
 
           var listadoFinalBeneficio = [];
           console.log("Cantidad de beneficio");
