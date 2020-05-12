@@ -649,6 +649,16 @@ class PagoRow extends React.Component {
       });
   }
 
+  showObservacion = () => {
+    let obs = this.props.pago.observacion;
+    if(obs === '' || obs === '0' ){
+      swal("Ops! ", `Aun no tiene asignado ninguna observacion`, "warning")
+    }else{
+      swal("Observacion", `La observacion es : " ${obs} "`, "success")
+    }
+  }
+
+
 
   SeleccionIdRec = () => {
 
@@ -1088,6 +1098,14 @@ class PagoRow extends React.Component {
         <td className="td" id={"search" + (this.props.numero + 1)}>
           <button
             onClick={this.editarObservacion}
+            className="waves-effect waves-light btn-small">
+            <i className="large material-icons center">search</i>
+          </button>
+        </td>
+
+        <td className="td" id={"show" + (this.props.numero + 1)}>
+          <button
+            onClick={this.showObservacion}
             className="waves-effect waves-light btn-small">
             <i className="large material-icons center">search</i>
           </button>
