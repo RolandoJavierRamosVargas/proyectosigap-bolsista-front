@@ -619,7 +619,6 @@ class PagoRow extends React.Component {
               if (value != '') {
                 fetch(CONFIG + 'recaudaciones/alumno/concepto/obs/' + value + '/' + idRecG)
                   .then((resp) => {
-                    console.log(resp)
                     if (!(resp == true)) {
                       swal("Editado exitoso!", "", "success").then(function () { // te descubri abel fake :v
                         window.location.reload();

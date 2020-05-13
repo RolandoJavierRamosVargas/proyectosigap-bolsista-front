@@ -961,6 +961,10 @@ class ImportePagos extends React.Component {
               this.setState({
                 importeTabla2: data.importe,
                 bool2: 1,
+                tipoMonedaMatriculaUpg: data.id_moneda,
+                tipoMonedaMatriculaEpg: data.id_moneda,
+                tipoMonedaDerechoEnseñanza:data.id_moneda,
+                tipoMonedaRepitencia:data.id_moneda,
 
               })
               listaImportesTabla.push(data.importe);
