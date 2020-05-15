@@ -649,7 +649,7 @@ class PagoRow extends React.Component {
   }
 
   showObservacion = () => {
-    let obs = this.props.pago.observacion;
+    let obs = this.props.pago.observacion_upg;
     if(obs === '' || obs === '0' ){
       swal("Ops! ", `Aun no tiene asignado ninguna observacion`, "warning")
     }else{

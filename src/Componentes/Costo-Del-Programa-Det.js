@@ -15,9 +15,11 @@ class CostoDelProgramaDet extends React.Component {
       <tr>      
         
         <th className="th">N°</th>
-        <th className="th">MATRÍCULA</th>
+        <th className="th">CICLO</th>
         <th className="th">CONCEPTO</th>
-        <th className="th">MONTO</th>
+        <th className="th">DESCR. MIN</th>
+        <th className="th">MONEDA</th>
+        <th className="th">IMPORTE</th>
         
       </tr>
       </thead>
@@ -25,10 +27,12 @@ class CostoDelProgramaDet extends React.Component {
       {this.props.costoxciclo.map((data,key)=>
         
         <tr key={key}>
-            <td className="td">{data.id}</td>
-            <td className="td">Ciclo {data.ciclo}</td>
+            <td className="td">{key+1}</td>
+            <td className="td">{data.ciclo}</td>
             <td className="td">{data.concepto}</td>
-            <td className="td">{data.monto}</td>
+            <td className="td">{data.descripcion_min}</td>
+            <td className="td">{data.moneda}</td>
+            <td className="td">{data.importe}</td>
         </tr>
 
       )}

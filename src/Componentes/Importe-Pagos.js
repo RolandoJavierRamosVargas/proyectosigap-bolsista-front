@@ -398,7 +398,7 @@ class ImportePagos extends React.Component {
 
       })
       .catch(error => {
-        swal("Oops, Algo salió mal!!", "", "error")// si hay algún error lo mostramos en consola
+        swal("Oops, Algo2 salió mal!!", "", "error")// si hay algún error lo mostramos en consola
       });
 
     console.log("DERECHO ENSEÑANZA", JSON.stringify(
@@ -460,7 +460,7 @@ class ImportePagos extends React.Component {
         }
         }) 
       .catch(error => {
-        swal("Oops, Algo salió mal!!", "", "error")// si hay algún error lo mostramos en consola
+        swal("Oops, Algo3salió mal!!", "", "error")// si hay algún error lo mostramos en consola
       });
 
     fetch(CONFIG + 'recaudaciones/alumno/concepto/listar/filtrar', //CONFIG+'recaudaciones/alumno/concepto/listar/filtrar'
@@ -508,7 +508,7 @@ class ImportePagos extends React.Component {
         }
       })
       .catch(error => {
-        swal("Oops, Algo salió mal!!", "", "error")// si hay algún error lo mostramos en consola
+        swal("Oops, Algo4 salió mal!!", "", "error")// si hay algún error lo mostramos en consola
       });
 
     console.log("Conceptos restantes Antes");
@@ -574,7 +574,7 @@ class ImportePagos extends React.Component {
         }
       })
       .catch(error => {
-        swal("Oops, Algo salió mal!!", "", "error")// si hay algún error lo mostramos en consola
+        // swal("Oops, Algo5 salió mal!!", "", "error")// si hay algún error lo mostramos en consola
       });
 
     {/*XXXXXXXXXXXXXXXXXXXXXXXXXX*/ }
@@ -1090,32 +1090,46 @@ class ImportePagos extends React.Component {
           importeTabla: listaImportesTabla
         })
         /**Costos x Ciclo */
-        var arrayCostosDet = [];
+        // var arrayCostosDet = [];
         var num = 0;
-        fetch("https://costoprogramas-back.herokuapp.com/presupuestos/" + this.state.codigoPrograma)
-          .then((response) => {
+        fetch(CONFIG+"/programa_presupuesto/listar/" + this.state.codigoAlumno)
+        .then((response) => {
             return response.json()
           })
           .then((data) => {
-            console.log("DATA COSTOxCICLO2");
-            console.log(data)
 
-            data.programaPresupuestoDetalles.forEach(function (concepto) {
-              num = num + 1;
-              var e = { id: num, ciclo: concepto.programaCiclo.ciclo, concepto: concepto.concepto.concepto, monto: concepto.importe };
-              arrayCostosDet.push(e);
-
-            });
-            console.log("DATA COSTOxCICLO3");
-            console.log(arrayCostosDet);
+            this.setState({
+              costoxciclo: data,
+            })
 
           })
           .catch(error => {
             console.error(error)
           });
-        this.setState({
-          costoxciclo: arrayCostosDet,
-        })
+          // fetch("https://costoprogramas-back.herokuapp.com/presupuestos/" + this.state.codigoPrograma)
+          // .then((response) => {
+          //   return response.json()
+          // })
+          // .then((data) => {
+          //   console.log("DATA COSTOxCICLO2");
+          //   console.log(data)
+
+          //   data.programaPresupuestoDetalles.forEach(function (concepto) {
+          //     num = num + 1;
+          //     var e = { id: num, ciclo: concepto.programaCiclo.ciclo, concepto: concepto.concepto.concepto, monto: concepto.importe };
+          //     arrayCostosDet.push(e);
+
+          //   });
+          //   console.log("DATA COSTOxCICLO3");
+          //   console.log(arrayCostosDet);
+
+          // })
+          // .catch(error => {
+          //   console.error(error)
+          // });
+
+          
+        
 
         //****************************************** */
         //*********************FIN***************** */
@@ -1294,7 +1308,7 @@ class ImportePagos extends React.Component {
 
           <div>
             
-            <h3>
+            <h3 >
                 <span className="left">UPG-FISI-UNMSM &nbsp; {this.state.fechaActual} </span>
                 <span className="center">ESTADO DE PAGOS</span>
                 <ul id="nav-mobile" className=" row right  hide-on-med-and-down">
@@ -1322,7 +1336,6 @@ class ImportePagos extends React.Component {
                 <h6 align="center" className="negro">{this.state.anioIngresoAlumno}</h6>
 
               </div>
-
 
               {this.state.showDetCosto ? (
 

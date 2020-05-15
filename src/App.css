@@ -101,7 +101,7 @@ width: 130px !important; /*Aquí va el ancho de la Celda*/
   height: 350px;  /*Altura definida para que aplique el scroll*/
   display: inherit;
   
-  overflow-x: hidden; /*oculta el scroll horicontal*/
+  overflow-x: auto; /*oculta el scroll horicontal*/
   overflow-y: auto; /*muestra el scroll vertical*/
  
 }
