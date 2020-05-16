@@ -738,3 +738,6 @@ table tbody tr td .centrar-label {
   transition: margin-right .5s;
 }
 
+.mover-izquierda{
+  margin-right: 200px;
+}

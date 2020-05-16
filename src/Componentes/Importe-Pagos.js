@@ -1310,7 +1310,7 @@ class ImportePagos extends React.Component {
             
             <h3 >
                 <span className="left">UPG-FISI-UNMSM &nbsp; {this.state.fechaActual} </span>
-                <span className="center">ESTADO DE PAGOS</span>
+                <span className="center mover-izquierda">ESTADO DE PAGOS</span>
                 <ul id="nav-mobile" className=" row right  hide-on-med-and-down">
                     <li ><a className="seleccionar col" onClick={browserHistory.goBack} >Regresar<i className="material-icons right">reply</i></a></li>
                 </ul>

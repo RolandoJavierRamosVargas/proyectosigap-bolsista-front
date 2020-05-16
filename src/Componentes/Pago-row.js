@@ -587,7 +587,7 @@ class PagoRow extends React.Component {
 
   editarObservacion = () => {
 
-    var obs = this.props.pago.observacion;
+    var obs = this.props.pago.observacion_upg;
     console.log("obs: " + obs)
     //var estadoAlumno = this.props.pago.estado;
     var idRecG = "";
@@ -649,7 +649,7 @@ class PagoRow extends React.Component {
   }
 
   showObservacion = () => {
-    let obs = this.props.pago.observacion_upg;
+    let obs = this.props.pago.observacion;
     if(obs === '' || obs === '0' ){
       swal("Ops! ", `Aun no tiene asignado ninguna observacion`, "warning")
     }else{
